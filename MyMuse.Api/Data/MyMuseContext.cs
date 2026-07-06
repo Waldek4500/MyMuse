@@ -1,0 +1,13 @@
+﻿using Microsoft.EntityFrameworkCore;
+using MyMuse.Api.Entities;
+
+namespace MyMuse.Api.Data;
+
+public class MyMuseContext(DbContextOptions<MyMuseContext> options) : DbContext(options)
+{
+    public DbSet<Band> Bands => Set<Band>();
+    public DbSet<Role> Roles => Set<Role>();
+    public DbSet<BandMember> BandMembers => Set<BandMember>();
+    public DbSet<Album> Albums => Set<Album>();
+    public DbSet<Song> Songs => Set<Song>();
+}

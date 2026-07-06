@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
+
+    <Style TargetType="Label"
+           x:Key="Header">
+        <Setter Property="FontFamily" Value="Archivo"/>
+        <Setter Property="TextColor" Value="#F0EEFF"/>
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style TargetType="Label"
+           x:Key="Large">
+        <Setter Property="FontFamily" Value="Archivo"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="FontSize" Value="22"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style TargetType="Label"
+           x:Key="Medium">
+        <Setter Property="FontFamily" Value="DMSans"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style TargetType="Label"
+       x:Key="Small">
+        <Setter Property="FontFamily" Value="DMSans"/>
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style TargetType="Label"
+           x:Key="Micro">
+        <Setter Property="FontFamily" Value="DMSans"/>
+        <Setter Property="TextColor" Value="LightSlateGray"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+
+    <Style TargetType="Label"
+       x:Key="MicroViolet">
+        <Setter Property="FontFamily" Value="DMSans"/>
+        <Setter Property="TextColor" Value="#5E5C80"/>
+        <Setter Property="FontSize" Value="13"/>
+    </Style>
+</ResourceDictionary>

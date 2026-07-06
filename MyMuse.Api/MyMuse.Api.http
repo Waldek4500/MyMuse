@@ -1,0 +1,16 @@
+@MyMuse.Api_HostAddress = http://localhost:5010
+
+GET {{MyMuse.Api_HostAddress}}/songs/
+
+###
+GET {{MyMuse.Api_HostAddress}}/songs/album/1
+
+###
+GET {{MyMuse.Api_HostAddress}}/songs/featured
+
+###
+GET {{MyMuse.Api_HostAddress}}/songs/trending/4
+
+
+###
+GET {{MyMuse.Api_HostAddress}}/bands/
