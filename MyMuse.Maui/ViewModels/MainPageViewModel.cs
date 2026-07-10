@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels.Base;
+using MyMuse.Maui.Views;
 using MyMuse.Shared.Dtos;
 using System;
 using System.Collections.Generic;
@@ -44,13 +45,17 @@ namespace MyMuse.Maui.ViewModels
 
         public async Task InitializeAsync()
         {
-            await GetFeaturedSongsAsync();       
+            await GetSongsAsync();       
         }
 
+        #region Commands
 
-
+        /// <summary>
+        /// Gets all songs from service and assigns to ObservableCollections
+        /// </summary>
+        /// <returns></returns>
         [RelayCommand]
-        private async Task GetFeaturedSongsAsync()
+        private async Task GetSongsAsync()
         {
             try
             {
@@ -63,6 +68,8 @@ namespace MyMuse.Maui.ViewModels
             }
             catch (Exception ex)
             {
+                await Shell.Current.DisplayAlertAsync("Error occurred", "We coudn't provide you songs.", "Try again");
+                await GetSongsAsync();
                 Debug.WriteLine(ex);
             }
             finally
@@ -71,5 +78,27 @@ namespace MyMuse.Maui.ViewModels
                 IsRefreshing = false;
             }
         }
+
+        /// <summary>
+        /// Navigates to song details page
+        /// </summary>
+        /// <param name="song">Selected song</param>
+        /// <returns></returns>
+        [RelayCommand]
+        private async Task GoToSongDetailsAsync(SongDto song)
+        {
+            if (song is null)
+                return;
+
+            Debug.WriteLine($"==== {song.Title}");
+
+            await Shell.Current.GoToAsync(nameof(SongDetailsPage), true,
+                new Dictionary<string, object>
+                {
+                    {"Song", song }
+                }
+            );
+        }
+        #endregion
     }
 }

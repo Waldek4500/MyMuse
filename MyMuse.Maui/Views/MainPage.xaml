@@ -6,14 +6,12 @@
              x:DataType="viewmodel:MainPageViewModel"
              x:Class="MyMuse.Maui.MainPage"
              Title=""
-             BackgroundColor="#07070F"
-             Shell.TabBarTitleColor="#07070F"
-             Shell.TabBarForegroundColor="#07070F"
-             >
-
-    <RefreshView Command="{Binding GetFeaturedSongsCommand}"
-                 IsRefreshing="{Binding IsRefreshing}">
-        <ScrollView VerticalScrollBarVisibility="Never" BackgroundColor="#07070F" Padding="20,20,20,0">
+             BackgroundColor="{StaticResource BackgroundDark}">
+    
+    <RefreshView Command="{Binding GetSongsCommand}"
+                 IsRefreshing="{Binding IsRefreshing}"
+                 Margin="0,30,0,0">
+        <ScrollView VerticalScrollBarVisibility="Never" BackgroundColor="#07070F" Padding="20,0">
             <Grid RowSpacing="25"
               RowDefinitions="Auto, Auto, Auto, Auto, Auto">
 
@@ -64,6 +62,12 @@
                                                Style="{StaticResource Micro}"/>
                                         </VerticalStackLayout>
                                     </Border>
+
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}},
+                                                                                Path=GoToSongDetailsCommand}"/>
+                                    </Grid.GestureRecognizers>
                                 </Grid>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
