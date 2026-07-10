@@ -9,119 +9,51 @@ namespace MyMuse.Maui.Services
 {
     public class SongsService
     {
-        private HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
+        private const string _host = "http://192.168.0.52:5010";
 
         public SongsService()
         {
-            _httpClient = new();
+            _httpClient = new()
+            {
+                Timeout = TimeSpan.FromSeconds(5)
+            };
         }
 
         public async Task<List<SongDto>> GetFeaturedSongsAsync()
         {
-            List<SongDto> songs = [];
-
-            string url = "http://10.0.2.2:5010/songs/featured";
-
-            try
-            {
-                var response = await _httpClient.GetAsync(url);
-
-                if (response.IsSuccessStatusCode)
-                {
-                    var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
-
-                    if (data != null)
-                        songs = data;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Błąd: {ex}");
-            }
-
-            return songs;
+            var response = await _httpClient.GetAsync($"{_host}/songs/featured");
+            response.EnsureSuccessStatusCode();
+                
+            var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
+            return data ?? [];
         }
 
         public async Task<List<SongDto>> GetRecentSongsAsync()
         {
-            List<SongDto> songs = [];
+            var response = await _httpClient.GetAsync($"{_host}/songs/featured");
+            response.EnsureSuccessStatusCode();
 
-            string url = "http://10.0.2.2:5010/songs/featured";
-
-            try
-            {
-                var response = await _httpClient.GetAsync(url);
-
-                if (!response.IsSuccessStatusCode)
-                    return songs;
-                
-                var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
-
-                if (data != null)
-                    songs = data;
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Błąd: {ex}");
-            }
-
-            return songs;
+            var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
+            return data ?? [];
         }
 
         public async Task<List<SongDto>> GetTrendingSongsAsync()
         {
-            List<SongDto> songs = [];
+            var response = await _httpClient.GetAsync($"{_host}/songs/trending/5");
+            response.EnsureSuccessStatusCode();
 
-            string url = "http://10.0.2.2:5010/songs/trending/5";
-
-            try
-            {
-                var response = await _httpClient.GetAsync(url);
-
-                if (!response.IsSuccessStatusCode)
-                    return songs;
-
-                var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
-
-                if (data != null)
-                    songs = data;
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Błąd: {ex}");
-            }
-
-            return songs;
+            var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
+            return data ?? [];
         }
 
         public async Task<List<BandDto>> GetBandsAsync()
         {
-            List<BandDto> bands = [];
+            var response = await _httpClient.GetAsync($"{_host}/bands/");
+            response.EnsureSuccessStatusCode();
 
-            string url = "http://10.0.2.2:5010/bands/";
-
-            try
-            {
-                var response = await _httpClient.GetAsync(url);
-
-                if (!response.IsSuccessStatusCode)
-                    return bands;
-
-                var data = await response.Content.ReadFromJsonAsync<List<BandDto>>();
-
-                if (data != null)
-                    bands = data;
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Błąd: {ex}");
-            }
-
-            return bands;
+            var data = await response.Content.ReadFromJsonAsync<List<BandDto>>();
+            return data ?? [];
         }
     }
 }

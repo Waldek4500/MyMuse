@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:icons="clr-namespace:MyMuse.Maui.Resources.Images.Icons"
+             xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="MyMuse.Maui.Views.SongDetailsPage"
+             x:DataType="viewmodel:SongDetailsPageViewModel"
+             BackgroundColor="{StaticResource BackgroundDark}"
+             Title="">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
+    </Shell.BackButtonBehavior>
+    
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20,20,20,0">
+
+        <ActivityIndicator IsRunning="{Binding IsBuffering}"
+                           IsVisible="{Binding IsBuffering}"
+                           Grid.RowSpan="3"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+
+        <!-- Row 0: Header -->
+        <Grid ColumnDefinitions="Auto, *, Auto">
+            <ImageButton BackgroundColor="#44FFFFFF"
+                         CornerRadius="22"
+                         HorizontalOptions="Start"
+                         WidthRequest="20"
+                         HeightRequest="20"
+                         Padding="8"
+                         Command="{Binding GoBackCommand}">
+                <ImageButton.Source>
+                    <FontImageSource Glyph="{Static icons:MaterialIcons.ArrowDown}"
+                                     FontFamily="MaterialSymbols"
+                                     Color="White"/>
+                </ImageButton.Source>
+            </ImageButton>
+            
+            <Label Grid.Column="1"
+                   Style="{StaticResource Small}"
+                   FontFamily="Archivo"
+                   Text="NOW PLAYING"
+                   TextColor="#AAFFFFFF"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"/>
+            
+            <ImageButton Grid.Column="2"
+                         HorizontalOptions="End"
+                         BackgroundColor="#44FFFFFF"
+                         CornerRadius="22"
+                         WidthRequest="20"
+                         HeightRequest="20"
+                         Padding="8">
+                <ImageButton.Source>
+                    <FontImageSource Glyph="{Static icons:MaterialIcons.MoreHorizontal}"
+                         FontFamily="MaterialSymbols"
+                         Color="White"/>
+                </ImageButton.Source>
+            </ImageButton>
+        </Grid>
+
+        <!-- Row 1: Image -->
+        <Border Grid.Row="1" Stroke="Transparent"
+                StrokeShape="RoundRectangle 40"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Margin="20">
+            <Image Source="{Binding Song.ImageUrl}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Aspect="AspectFit"/>
+        </Border>
+
+        <!-- Row 2: Audio Player -->
+        <VerticalStackLayout Grid.Row="2" Margin="0,0,0,20">
+            <toolkit:MediaElement Source="{Binding Song.AudioUrl}"
+                                  x:Name="AudioPlayer"
+                                  IsVisible="Collapse"
+                                  MetadataArtist="{Binding Song.Band}"
+                                  MetadataTitle="{Binding Song.Title}"
+                                  MetadataArtworkUrl="{Binding Song.ImageUrl}"
+                                  ShouldAutoPlay="True"
+                                  StateChanged="AudioPlayer_StateChanged"
+                                  PositionChanged="AudioPlayer_PositionChanged"
+                                  PropertyChanged="AudioPlayer_PropertyChanged"/>
+            <Grid ColumnDefinitions="*,*"
+                  Margin="10">
+                <VerticalStackLayout>
+                    <Label Text="{Binding Song.Title}"
+                           Style="{StaticResource Large}"/>
+                    <Label Text="{Binding Song.Band}"
+                           Style="{StaticResource Micro}"/>
+                </VerticalStackLayout>
+                <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End"
+                                       Spacing="10">
+                    <ImageButton BackgroundColor="#44FFFFFF"
+                                 CornerRadius="22"
+                                 HeightRequest="20"
+                                 WidthRequest="20"
+                                 Padding="8">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{Static icons:MaterialIcons.AlignLeft}"
+                                             FontFamily="MaterialSymbols"
+                                             Color="White"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                    <ImageButton HeightRequest="20"
+                                 WidthRequest="20"
+                                 Padding="8"
+                                 CornerRadius="20">
+                        <ImageButton.Source>
+                            <FontImageSource Glyph="{Static icons:MaterialIcons.Favorite}"
+                                             FontFamily="MaterialSymbols"
+                                             Color="White"/>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <VerticalStackLayout>
+                <Slider ThumbColor="White"
+                        MinimumTrackColor="#A855F7"
+                        DragStarted="Slider_DragStarted"
+                        DragCompleted="Slider_DragCompleted"
+                        Value="{Binding PositionSeconds}"
+                        Minimum="0"
+                        Maximum="{Binding DurationSeconds}"/>
+                <Grid ColumnDefinitions="*, *"
+                      Margin="10,0">
+                    <Label Text="{Binding PositionText}"
+                           Style="{StaticResource Micro}"
+                           Margin="0" Padding="0"/>
+                    <Label Grid.Column="1"
+                           HorizontalTextAlignment="End"
+                           Text="{Binding DurationText}"
+                           Style="{StaticResource Micro}"
+                           Margin="0" Padding="0"/>
+                </Grid>
+            </VerticalStackLayout>
+            <Grid ColumnDefinitions="*,*,*,*,*"
+                  Margin="10">
+                <Image Source="shuffle_icon.png"
+                       Aspect="AspectFit"
+                       WidthRequest="20"
+                       HorizontalOptions="Start"
+                       VerticalOptions="Center"/>
+                <Image Grid.Column="1"
+                       WidthRequest="40">
+                    <Image.Source>
+                        <FontImageSource Glyph="{Static icons:MaterialIcons.SkipPrevious}"
+                                         FontFamily="MaterialSymbols"/>
+                    </Image.Source>
+                </Image>
+                <ImageButton Grid.Column="2"
+                             Source="{Binding PlayPauseBtnImage}"
+                             BackgroundColor="#A855F7"
+                             WidthRequest="60"
+                             HeightRequest="60"
+                             CornerRadius="30"
+                             Padding="15"
+                             Command="{Binding PlayPauseCommand}"/>
+                <Image Grid.Column="3"
+                       WidthRequest="40">
+                    <Image.Source>
+                        <FontImageSource Glyph="{Static icons:MaterialIcons.SkipNext}"
+                         FontFamily="MaterialSymbols"/>
+                    </Image.Source>
+                </Image>
+                <Image Grid.Column="4"
+                       Source="repeat_icon.png"
+                       Aspect="AspectFit"
+                       WidthRequest="20"
+                       HorizontalOptions="End"
+                       VerticalOptions="Center"/>
+            </Grid>
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

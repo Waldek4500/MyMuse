@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels;
+using MyMuse.Maui.Views;
 
 namespace MyMuse.Maui
 {
@@ -11,6 +13,7 @@ namespace MyMuse.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkitMediaElement(true)
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -24,8 +27,11 @@ namespace MyMuse.Maui
             builder.Services.AddSingleton<MainPageViewModel>();
             builder.Services.AddSingleton<SongsService>();
 
+            builder.Services.AddSingleton<SongDetailsPage>();
+            builder.Services.AddSingleton<SongDetailsPageViewModel>();
+
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
