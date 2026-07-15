@@ -1,4 +1,4 @@
-﻿using MyMuse.Maui.Views;
+﻿using MyMuse.Maui.Pages;
 
 namespace MyMuse.Maui
 {

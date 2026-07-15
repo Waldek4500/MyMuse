@@ -25,7 +25,7 @@ namespace MyMuse.Api.Endpoints
                         song.ReleaseDate,
                         song.IsSingle,
                         song.PlaysNumber,
-                        song.Album!.ImageUrl))
+                        song.ImageUrl ?? song.Album!.ImageUrl))
                     .AsNoTracking()
                     .ToListAsync()
             );
@@ -45,7 +45,7 @@ namespace MyMuse.Api.Endpoints
                         song.ReleaseDate,
                         song.IsSingle,
                         song.PlaysNumber,
-                        song.Album!.ImageUrl))
+                        song.ImageUrl ?? song.Album!.ImageUrl))
                     .AsNoTracking()
                     .ToListAsync();
 
@@ -68,7 +68,7 @@ namespace MyMuse.Api.Endpoints
                         song.ReleaseDate,
                         song.IsSingle,
                         song.PlaysNumber,
-                        song.Album!.ImageUrl))
+                        song.ImageUrl ?? song.Album!.ImageUrl))
                     .AsNoTracking()
                     .ToListAsync();
 
@@ -90,7 +90,7 @@ namespace MyMuse.Api.Endpoints
                         song.ReleaseDate,
                         song.IsSingle,
                         song.PlaysNumber,
-                        song.Album!.ImageUrl))
+                        song.ImageUrl ?? song.Album!.ImageUrl))
                     .AsNoTracking()
                     .ToListAsync()
             );
@@ -110,7 +110,7 @@ namespace MyMuse.Api.Endpoints
                         song.ReleaseDate,
                         song.IsSingle,
                         song.PlaysNumber,
-                        song.Album!.ImageUrl))
+                        song.ImageUrl ?? song.Album!.ImageUrl))
                     .AsNoTracking()
                     .ToListAsync()
             );

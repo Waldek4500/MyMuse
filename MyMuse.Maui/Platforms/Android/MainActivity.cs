@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Views;
+using AndroidX.Core.View;
 
 namespace MyMuse.Maui
 {
@@ -12,10 +13,8 @@ namespace MyMuse.Maui
         {
             base.OnCreate(savedInstanceState);
 
-
-            Window?.SetStatusBarColor(Android.Graphics.Color.ParseColor("#07070F")); // kolor paska
-
-            Window?.InsetsController?.SetSystemBarsAppearance(0, (int)WindowInsetsControllerAppearance.LightStatusBars);
+            var controller = WindowCompat.GetInsetsController(Window, Window.DecorView);
+            controller.AppearanceLightStatusBars = false;
         }
     }
 }

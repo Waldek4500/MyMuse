@@ -4,22 +4,24 @@
              xmlns:icons="clr-namespace:MyMuse.Maui.Resources.Images.Icons"
              xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="MyMuse.Maui.Views.SongDetailsPage"
-             x:DataType="viewmodel:SongDetailsPageViewModel"
+             x:Class="MyMuse.Maui.Pages.SongDetailsPage"
+             x:DataType="viewmodel:MusicPlayerViewModel"
              BackgroundColor="{StaticResource BackgroundDark}"
-             Title="">
+             Title=""
+             Shell.PresentationMode="ModalAnimated">
 
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
     </Shell.BackButtonBehavior>
-    
-    <Grid RowDefinitions="Auto, *, Auto" Padding="20,20,20,0">
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20,10,20,0">
 
         <ActivityIndicator IsRunning="{Binding IsBuffering}"
                            IsVisible="{Binding IsBuffering}"
                            Grid.RowSpan="3"
                            HorizontalOptions="Center"
-                           VerticalOptions="Center"/>
+                           VerticalOptions="Center"
+                           ZIndex="5"/>
 
         <!-- Row 0: Header -->
         <Grid ColumnDefinitions="Auto, *, Auto">
@@ -54,8 +56,8 @@
                          Padding="8">
                 <ImageButton.Source>
                     <FontImageSource Glyph="{Static icons:MaterialIcons.MoreHorizontal}"
-                         FontFamily="MaterialSymbols"
-                         Color="White"/>
+                                     FontFamily="MaterialSymbols"
+                                     Color="White"/>
                 </ImageButton.Source>
             </ImageButton>
         </Grid>
@@ -74,16 +76,6 @@
 
         <!-- Row 2: Audio Player -->
         <VerticalStackLayout Grid.Row="2" Margin="0,0,0,20">
-            <toolkit:MediaElement Source="{Binding Song.AudioUrl}"
-                                  x:Name="AudioPlayer"
-                                  IsVisible="Collapse"
-                                  MetadataArtist="{Binding Song.Band}"
-                                  MetadataTitle="{Binding Song.Title}"
-                                  MetadataArtworkUrl="{Binding Song.ImageUrl}"
-                                  ShouldAutoPlay="True"
-                                  StateChanged="AudioPlayer_StateChanged"
-                                  PositionChanged="AudioPlayer_PositionChanged"
-                                  PropertyChanged="AudioPlayer_PropertyChanged"/>
             <Grid ColumnDefinitions="*,*"
                   Margin="10">
                 <VerticalStackLayout>
@@ -140,18 +132,21 @@
             </VerticalStackLayout>
             <Grid ColumnDefinitions="*,*,*,*,*"
                   Margin="10">
-                <Image Source="shuffle_icon.png"
-                       Aspect="AspectFit"
-                       WidthRequest="20"
-                       HorizontalOptions="Start"
-                       VerticalOptions="Center"/>
-                <Image Grid.Column="1"
-                       WidthRequest="40">
-                    <Image.Source>
+                <ImageButton Source="shuffle_icon.png"
+                             CornerRadius="22"
+                             Padding="10"
+                             Aspect="AspectFit"
+                             WidthRequest="20"
+                             HorizontalOptions="Start"
+                             VerticalOptions="Center"/>
+                <ImageButton Grid.Column="1"
+                             WidthRequest="40"
+                             CornerRadius="20">
+                    <ImageButton.Source>
                         <FontImageSource Glyph="{Static icons:MaterialIcons.SkipPrevious}"
                                          FontFamily="MaterialSymbols"/>
-                    </Image.Source>
-                </Image>
+                    </ImageButton.Source>
+                </ImageButton>
                 <ImageButton Grid.Column="2"
                              Source="{Binding PlayPauseBtnImage}"
                              BackgroundColor="#A855F7"
@@ -160,19 +155,22 @@
                              CornerRadius="30"
                              Padding="15"
                              Command="{Binding PlayPauseCommand}"/>
-                <Image Grid.Column="3"
-                       WidthRequest="40">
-                    <Image.Source>
+                <ImageButton Grid.Column="3"
+                             WidthRequest="40"
+                             CornerRadius="20">
+                    <ImageButton.Source>
                         <FontImageSource Glyph="{Static icons:MaterialIcons.SkipNext}"
                          FontFamily="MaterialSymbols"/>
-                    </Image.Source>
-                </Image>
-                <Image Grid.Column="4"
-                       Source="repeat_icon.png"
-                       Aspect="AspectFit"
-                       WidthRequest="20"
-                       HorizontalOptions="End"
-                       VerticalOptions="Center"/>
+                    </ImageButton.Source>
+                </ImageButton>
+                <ImageButton Grid.Column="4"
+                             CornerRadius="22"
+                             Padding="10"
+                             Source="repeat_icon.png"
+                             Aspect="AspectFit"
+                             WidthRequest="20"
+                             HorizontalOptions="End"
+                             VerticalOptions="Center"/>
             </Grid>
         </VerticalStackLayout>
 

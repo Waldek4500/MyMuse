@@ -14,4 +14,5 @@ public class Song
     public DateOnly ReleaseDate { get; set; }
     public bool IsSingle { get; set; }
     public int PlaysNumber { get; set; }
+    public string? ImageUrl { get; set; }
 }
