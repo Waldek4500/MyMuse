@@ -10,4 +10,6 @@ public class MyMuseContext(DbContextOptions<MyMuseContext> options) : DbContext(
     public DbSet<BandMember> BandMembers => Set<BandMember>();
     public DbSet<Album> Albums => Set<Album>();
     public DbSet<Song> Songs => Set<Song>();
+    public DbSet<Genre> Genres => Set<Genre>();
+    public DbSet<SongGenre> SongGenres => Set<SongGenre>();
 }

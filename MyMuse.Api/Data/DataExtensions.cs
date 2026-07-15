@@ -35,6 +35,50 @@ namespace MyMuse.Api.Data
                             );
                         }
 
+                        if (!context.Set<Genre>().Any())
+                        {
+                            context.AddRange(
+                                new Genre { Name = "Pop" },
+                                new Genre { Name = "Rock" },
+                                new Genre { Name = "Hip Hop" },
+                                new Genre { Name = "Rap" },
+                                new Genre { Name = "R&B" },
+                                new Genre { Name = "Soul" },
+                                new Genre { Name = "Jazz" },
+                                new Genre { Name = "Blues" },
+                                new Genre { Name = "Country" },
+                                new Genre { Name = "Folk" },
+                                new Genre { Name = "Metal" },
+                                new Genre { Name = "Heavy Metal" },
+                                new Genre { Name = "Hard Rock" },
+                                new Genre { Name = "Punk" },
+                                new Genre { Name = "Alternative" },
+                                new Genre { Name = "Indie" },
+                                new Genre { Name = "Indie Pop" },
+                                new Genre { Name = "Grunge" },
+                                new Genre { Name = "Electronic" },
+                                new Genre { Name = "EDM" },
+                                new Genre { Name = "House" },
+                                new Genre { Name = "Techno" },
+                                new Genre { Name = "Trance" },
+                                new Genre { Name = "Dubstep" },
+                                new Genre { Name = "Drum and Bass" },
+                                new Genre { Name = "Future Bass" },
+                                new Genre { Name = "Synthwave" },
+                                new Genre { Name = "Ambient" },
+                                new Genre { Name = "Classical" },
+                                new Genre { Name = "Modern Classical" },
+                                new Genre { Name = "Classical Piano" },
+                                new Genre { Name = "Solo Piano" },
+                                new Genre { Name = "Solo Guitar" },
+                                new Genre { Name = "Solo Instruments" },
+                                new Genre { Name = "Solo Classical Instruments" },
+                                new Genre { Name = "Orchestral" },
+                                new Genre { Name = "Soundtrack" },
+                                new Genre { Name = "Video Games" }
+                            );
+                        }
+
                         context.SaveChanges();
                     });
                 }

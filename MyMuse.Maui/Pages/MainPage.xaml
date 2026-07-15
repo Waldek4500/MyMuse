@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:MusicAwarePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
+             xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
+             xmlns:pages="clr-namespace:MyMuse.Maui.Pages"
+             x:DataType="viewmodel:MainPageViewModel"
+             x:Class="MyMuse.Maui.Pages.MainPage"
+             Title=""
+             BackgroundColor="{StaticResource BackgroundDark}">
+
+    <Grid RowDefinitions="*,Auto" Margin="0" Padding="0">
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Center"
+                           ZIndex="5"/>
+
+        <RefreshView Command="{Binding GetSongsCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
+            <ScrollView VerticalScrollBarVisibility="Never">
+                <Grid RowSpacing="25"
+                      RowDefinitions="Auto, Auto, Auto, Auto, Auto"
+                      Padding="20,10,20,0">
+
+                    <!-- Row 0 -->
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Label Text="Good Evening, Alex."
+                           Style="{StaticResource Header}"
+                           VerticalOptions="Center"/>
+                        <Border Grid.Column="1"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            Stroke="#a855f7"
+                            StrokeShape="RoundRectangle 20"
+                            HorizontalOptions="End"
+                            VerticalOptions="Center">
+                            <Image Grid.Column="1" Source="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde"/>
+                        </Border>
+                    </Grid>
+
+                    <!-- Row 1 -->
+                    <VerticalStackLayout Grid.Row="1">
+                        <Label Text="Featured Songs" Style="{StaticResource Large}"/>
+                        <CollectionView ItemsSource="{Binding FeaturedSongs}">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Span="2" Orientation="Vertical" VerticalItemSpacing="10" HorizontalItemSpacing="10"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:SongDto">
+                                    <Grid MaximumWidthRequest="300">
+                                        <Border Stroke="Transparent" StrokeShape="RoundRectangle 20">
+                                            <Image Source="{Binding ImageUrl}"
+                                                   Aspect="AspectFill"/>
+                                        </Border>
+
+                                        <Border Stroke="Transparent" StrokeShape="RoundRectangle 20">
+                                            <VerticalStackLayout VerticalOptions="End" Padding="10,0,10,10">
+                                                <VerticalStackLayout.Background>
+                                                    <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                        <GradientStop Color="#FF000000" Offset="0"/>
+                                                        <GradientStop Color="#00000000" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </VerticalStackLayout.Background>
+                                                <Label Text="{Binding Title}"
+                                                   Style="{StaticResource Medium}"
+                                                   LineBreakMode="TailTruncation"
+                                                   MaxLines="1"/>
+                                                <Label Text="{Binding Band}"
+                                                   Style="{StaticResource Micro}"/>
+                                            </VerticalStackLayout>
+                                        </Border>
+
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                                  Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}},
+                                                                                    Path=GoToSongDetailsCommand}"/>
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+
+                    <!-- Row 2 -->
+                    <VerticalStackLayout Grid.Row="2" Spacing="5">
+                        <Grid ColumnDefinitions="*,*">
+                            <Label Text="Recently Played"
+                               Style="{StaticResource Large}"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"/>
+                            <Label Grid.Column="1"
+                               Text="See all  >"
+                               Style="{StaticResource MicroViolet}"
+                               HorizontalOptions="End"
+                               VerticalOptions="Center"/>
+                        </Grid>
+
+                        <CollectionView ItemsSource="{Binding RecentSongs}" HorizontalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:SongDto">
+                                    <VerticalStackLayout>
+                                        <Border Stroke="Transparent" StrokeShape="RoundRectangle 20" WidthRequest="120">
+                                            <Image Source="{Binding ImageUrl}"
+                                                   Aspect="AspectFill"
+                                                   HeightRequest="120"/>
+                                        </Border>
+
+                                        <VerticalStackLayout Margin="2,5,0,0">
+                                            <Label Text="{Binding Title}"
+                                                   Style="{StaticResource Small}"
+                                                   LineBreakMode="TailTruncation"
+                                                   MaxLines="1"/>
+                                            <Label Text="{Binding Band}"
+                                                   Style="{StaticResource MicroViolet}"/>
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+
+                    <!-- Row 3 -->
+                    <VerticalStackLayout Grid.Row="3" Spacing="5">
+                        <Grid ColumnDefinitions="*,*">
+                            <Label Text="Trending"
+                               Style="{StaticResource Large}"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"/>
+                            <Label Grid.Column="1"
+                               Text="See all  >"
+                               Style="{StaticResource MicroViolet}"
+                               HorizontalOptions="End"
+                               VerticalOptions="Center"/>
+                        </Grid>
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding TrendingSongs}" 
+                                         Spacing="5">
+
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:SongDto">
+                                    <Grid ColumnDefinitions="Auto, *">
+                                        <HorizontalStackLayout Spacing="10">
+                                            <Border Stroke="Transparent" StrokeShape="RoundRectangle 15">
+                                                <Image Source="{Binding ImageUrl}"
+                                                       WidthRequest="70"
+                                                       Aspect="AspectFill"/>
+                                            </Border>
+                                            <VerticalStackLayout VerticalOptions="Center">
+                                                <Label Text="{Binding Title}"
+                                                   Style="{StaticResource Small}"/>
+                                                <Label Text="{Binding Band}"
+                                                   Style="{StaticResource MicroViolet}"/>
+                                            </VerticalStackLayout>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                                            <Label Text="{Binding PlaysNumber, StringFormat='{0} Plays'}"
+                                               Style="{StaticResource MicroViolet}"/>
+                                        </HorizontalStackLayout>
+                                    </Grid>
+
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Row 4 -->
+                    <VerticalStackLayout Grid.Row="4" Spacing="5">
+                        <Grid ColumnDefinitions="*,*">
+                            <Label Text="Artists for You"
+                               Style="{StaticResource Large}"
+                               HorizontalOptions="Start"
+                               VerticalOptions="Center"/>
+                            <Label Grid.Column="1"
+                               Text="See all  >"
+                               Style="{StaticResource MicroViolet}"
+                               HorizontalOptions="End"
+                               VerticalOptions="Center"/>
+                        </Grid>
+                        <CollectionView ItemsSource="{Binding Bands}" HorizontalScrollBarVisibility="Never">
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:BandDto">
+                                    <VerticalStackLayout>
+                                        <Border Stroke="Transparent" StrokeShape="RoundRectangle 80" WidthRequest="80">
+                                            <Image Source="https://images.unsplash.com/photo-1534528741775-53994a69daeb"
+                                               WidthRequest="80"
+                                               HeightRequest="80"
+                                               Aspect="Fill"/>
+                                        </Border>
+
+                                        <VerticalStackLayout Margin="2,5,0,0" HorizontalOptions="Center">
+                                            <Label Text="{Binding Name}"
+                                               Style="{StaticResource Small}"
+                                               HorizontalTextAlignment="Center"/>
+                                            <Label Text="Genre"
+                                               Style="{StaticResource MicroViolet}"
+                                               HorizontalTextAlignment="Center"/>
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Grid>
+            </ScrollView>
+        </RefreshView>
+        
+        <ContentView Grid.Row="1" x:Name="MiniPlayerSlot"/>
+    </Grid>
+</pages:MusicAwarePage>

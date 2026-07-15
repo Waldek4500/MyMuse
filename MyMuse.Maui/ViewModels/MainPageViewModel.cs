@@ -1,14 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MyMuse.Maui.Pages;
 using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels.Base;
-using MyMuse.Maui.Views;
 using MyMuse.Shared.Dtos;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Text;
 
 namespace MyMuse.Maui.ViewModels
 {
@@ -59,6 +56,7 @@ namespace MyMuse.Maui.ViewModels
         {
             try
             {
+                IsRefreshing = false;
                 IsBusy = true;
 
                 FeaturedSongs = [.. await _songsService.GetFeaturedSongsAsync()];
@@ -75,7 +73,6 @@ namespace MyMuse.Maui.ViewModels
             finally
             {
                 IsBusy = false;
-                IsRefreshing = false;
             }
         }
 

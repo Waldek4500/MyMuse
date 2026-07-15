@@ -1,18 +1,21 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Views;
+using MyMuse.Maui.Pages;
+using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels;
+using MyMuse.Maui.Views;
 using MyMuse.Shared.Dtos;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-namespace MyMuse.Maui
+namespace MyMuse.Maui.Pages
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : MusicAwarePage
     {
         private MainPageViewModel _mainPageViewModel;
         private bool _isInitalized;
 
-        public MainPage(MainPageViewModel mainPageViewModel)
+        public MainPage(MainPageViewModel mainPageViewModel, MiniPlayerBar miniPlayerBar) : base(miniPlayerBar)
         {
             InitializeComponent();
             BindingContext = _mainPageViewModel = mainPageViewModel;
@@ -20,6 +23,8 @@ namespace MyMuse.Maui
 
         protected override async void OnAppearing()
         {
+            base.OnAppearing();
+
             if (_isInitalized)
                 return;
 

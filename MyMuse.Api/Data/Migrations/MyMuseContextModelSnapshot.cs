@@ -103,6 +103,23 @@ namespace MyMuse.Api.Data.Migrations
                     b.ToTable("BandMembers");
                 });
 
+            modelBuilder.Entity("MyMuse.Api.Entities.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
             modelBuilder.Entity("MyMuse.Api.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -141,6 +158,9 @@ namespace MyMuse.Api.Data.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("integer");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsSingle")
                         .HasColumnType("boolean");
 
@@ -164,6 +184,29 @@ namespace MyMuse.Api.Data.Migrations
                     b.HasIndex("BandId");
 
                     b.ToTable("Songs");
+                });
+
+            modelBuilder.Entity("MyMuse.Api.Entities.SongGenre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GenreId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SongId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GenreId");
+
+                    b.HasIndex("SongId");
+
+                    b.ToTable("SongGenres");
                 });
 
             modelBuilder.Entity("MyMuse.Api.Entities.Album", b =>
@@ -211,6 +254,25 @@ namespace MyMuse.Api.Data.Migrations
                     b.Navigation("Album");
 
                     b.Navigation("Band");
+                });
+
+            modelBuilder.Entity("MyMuse.Api.Entities.SongGenre", b =>
+                {
+                    b.HasOne("MyMuse.Api.Entities.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyMuse.Api.Entities.Song", "Song")
+                        .WithMany()
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
+
+                    b.Navigation("Song");
                 });
 #pragma warning restore 612, 618
         }

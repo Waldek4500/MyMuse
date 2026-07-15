@@ -5,22 +5,23 @@ using MyMuse.Maui.ViewModels.Base;
 using MyMuse.Shared.Dtos;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Text;
 
 namespace MyMuse.Maui.ViewModels
 {
-    public partial class SongDetailsPageViewModel : BaseViewModel, IQueryAttributable
+    public partial class MusicPlayerViewModel : BaseViewModel, IQueryAttributable
     {
         #region Public Properties
         [ObservableProperty]
-        public partial SongDto Song { get; set; } = new(0, "", null, "", null, "", 0, new(1, 1, 1), false, 0, "");
+        [NotifyPropertyChangedFor(nameof(HasTrack))]
+        public partial SongDto Song { get; set; } //= new(0, "", null, "", null, "", 0, new(1, 1, 1), false, 0, "");
 
         [ObservableProperty]
         public partial MediaElementState State { get; set; } = MediaElementState.None;
 
         [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(PositionProgress))]
         public partial double PositionSeconds { get; set; }
 
         [ObservableProperty]
@@ -32,20 +33,22 @@ namespace MyMuse.Maui.ViewModels
         [ObservableProperty]
         public partial string DurationText { get; set; }
 
+        public double PositionProgress => (PositionSeconds / DurationSeconds);
+
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsPlaying))]
         public partial bool IsBuffering { get; set; }
 
         public bool IsPlaying => State == MediaElementState.Playing;
 
+        public bool HasTrack => Song is not null && !String.IsNullOrEmpty(Song.AudioUrl);
+
         public string PlayPauseBtnImage => IsPlaying ? "Icons/pause_icon.png" : "Icons/play_icon.png";
         #endregion
 
-
         #region Methods
-
         /// <summary>
-        /// Sets new value of State property when MediaElement's state changed
+        /// Sets a new value of State property when MediaElement's state changed
         /// </summary>
         /// <param name="value">New MediaElement's state</param>
         partial void OnStateChanged(MediaElementState value)
@@ -53,6 +56,11 @@ namespace MyMuse.Maui.ViewModels
             IsBuffering = value is MediaElementState.Opening or MediaElementState.Buffering;
             OnPropertyChanged(nameof(PlayPauseBtnImage));
             PlayPauseCommand.NotifyCanExecuteChanged();
+        }
+
+        partial void OnStateChanging(MediaElementState value)
+        {
+            Debug.WriteLine($"==== State: {value.ToString()}");
         }
 
         /// <summary>
@@ -90,6 +98,9 @@ namespace MyMuse.Maui.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
+            if (!query.TryGetValue("Song", out var song) || song is not SongDto)
+                return;
+
             Song = (SongDto)query["Song"];
         }
         #endregion
@@ -117,14 +128,13 @@ namespace MyMuse.Maui.ViewModels
         [RelayCommand]
         private void PlayPause()
         {
-            if(IsPlaying)
+            if (IsPlaying)
                 PauseRequested?.Invoke(this, EventArgs.Empty);
             else
                 PlayRequested?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
-
 
         /// <summary>
         /// Changes TimeSpan to string with correct format
