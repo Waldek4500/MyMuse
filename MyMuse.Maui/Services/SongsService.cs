@@ -20,27 +20,27 @@ namespace MyMuse.Maui.Services
             };
         }
 
-        public async Task<List<SongDto>> GetFeaturedSongsAsync()
+        public async Task<List<SongDto>> GetFeaturedSongsAsync(int count)
         {
-            var response = await _httpClient.GetAsync($"{_host}/songs/featured");
+            var response = await _httpClient.GetAsync($"{_host}/songs/featured/{count}");
             response.EnsureSuccessStatusCode();
                 
             var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
             return data ?? [];
         }
 
-        public async Task<List<SongDto>> GetRecentSongsAsync()
+        public async Task<List<SongDto>> GetRecentSongsAsync(int count = 10)
         {
-            var response = await _httpClient.GetAsync($"{_host}/songs/featured");
+            var response = await _httpClient.GetAsync($"{_host}/songs/featured/{count}");
             response.EnsureSuccessStatusCode();
 
             var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
             return data ?? [];
         }
 
-        public async Task<List<SongDto>> GetTrendingSongsAsync()
+        public async Task<List<SongDto>> GetTrendingSongsAsync(int count)
         {
-            var response = await _httpClient.GetAsync($"{_host}/songs/trending/5");
+            var response = await _httpClient.GetAsync($"{_host}/songs/trending/{count}");
             response.EnsureSuccessStatusCode();
 
             var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
@@ -53,6 +53,15 @@ namespace MyMuse.Maui.Services
             response.EnsureSuccessStatusCode();
 
             var data = await response.Content.ReadFromJsonAsync<List<BandDto>>();
+            return data ?? [];
+        }
+
+        public async Task<List<SongDto>> GetQueueFromBand(int bandId, int count)
+        {
+            var response = await _httpClient.GetAsync($"{_host}/songs/bandRandom/{bandId}/{count}");
+            response.EnsureSuccessStatusCode();
+
+            var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
             return data ?? [];
         }
     }

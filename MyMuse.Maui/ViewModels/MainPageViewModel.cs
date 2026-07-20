@@ -17,17 +17,19 @@ namespace MyMuse.Maui.ViewModels
 
         #region Public Properties
         [ObservableProperty]
-        public partial ObservableCollection<SongDto> FeaturedSongs { get; set; } = [];
+        public partial ObservableCollection<SongDto> FeaturedSongs { get; set; } = [.. new SongDto[4]];
 
         [ObservableProperty]
-        public partial ObservableCollection<SongDto> RecentSongs { get; set; } = [];
+        public partial ObservableCollection<SongDto> RecentSongs { get; set; } = [.. new SongDto[4]];
 
         [ObservableProperty]
-        public partial ObservableCollection<SongDto> TrendingSongs { get; set; } = [];
+        public partial ObservableCollection<SongDto> TrendingSongs { get; set; } = [.. new SongDto[5]];
 
         [ObservableProperty]
-        public partial ObservableCollection<BandDto> Bands { get; set; } = [];
+        public partial ObservableCollection<BandDto> Bands { get; set; } = [.. new BandDto[4]];
 
+        [ObservableProperty]
+        public partial bool[] ShowPlaceHolder { get; set; } = { true, true, true, true };
 
         [ObservableProperty]
         public partial bool IsRefreshing { get; set; }
@@ -59,16 +61,26 @@ namespace MyMuse.Maui.ViewModels
                 IsRefreshing = false;
                 IsBusy = true;
 
-                FeaturedSongs = [.. await _songsService.GetFeaturedSongsAsync()];
+                FeaturedSongs = [.. await _songsService.GetFeaturedSongsAsync(4)];
+                ShowPlaceHolder[0] = false;
+
                 RecentSongs = [.. await _songsService.GetRecentSongsAsync()];
-                TrendingSongs = [.. await _songsService.GetTrendingSongsAsync()];
+                ShowPlaceHolder[1] = false;
+
+                TrendingSongs = [.. await _songsService.GetTrendingSongsAsync(5)];
+                ShowPlaceHolder[2] = false;
+
                 Bands = [.. await _songsService.GetBandsAsync()];
+                ShowPlaceHolder[3] = false;
             }
             catch (Exception ex)
             {
-                await Shell.Current.DisplayAlertAsync("Error occurred", "We coudn't provide you songs.", "Try again");
-                await GetSongsAsync();
-                Debug.WriteLine(ex);
+                bool isAccepted = await Shell.Current.DisplayAlertAsync("Error occurred", "We coudn't provide you songs.", "Try again", "Cancel");
+                
+                if(isAccepted || ShowPlaceHolder[0])
+                    await GetSongsAsync();
+
+                Debug.WriteLine($"====GetSongsAsync Error: {ex}");
             }
             finally
             {
@@ -86,8 +98,6 @@ namespace MyMuse.Maui.ViewModels
         {
             if (song is null)
                 return;
-
-            Debug.WriteLine($"==== {song.Title}");
 
             await Shell.Current.GoToAsync(nameof(SongDetailsPage), true,
                 new Dictionary<string, object>

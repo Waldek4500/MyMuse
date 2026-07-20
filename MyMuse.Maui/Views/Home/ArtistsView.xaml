@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:partialViews="clr-namespace:MyMuse.Maui.Views.PartialViews"
+             xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
+             xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
+             x:DataType="viewmodel:MainPageViewModel"
+             x:Class="MyMuse.Maui.Views.Home.ArtistsView">
+    <VerticalStackLayout Grid.Row="4" Spacing="5">
+        <Grid ColumnDefinitions="*,*">
+            <Label Text="Artists for You"
+                   Style="{StaticResource Large}"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"/>
+            <Label Grid.Column="1"
+                   Text="See all  >"
+                   Style="{StaticResource MicroViolet}"
+                   HorizontalOptions="End"
+                   VerticalOptions="Center"/>
+        </Grid>
+        <CollectionView ItemsSource="{Binding Bands}" HorizontalScrollBarVisibility="Never">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:BandDto">
+                    <VerticalStackLayout>
+                        <Grid>
+                            <partialViews:ImagePlaceholderView
+                                HeightRequest="80"
+                                WidthRequest="80"
+                                CornerRadius="40"
+                                ShowPlaceholder="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=ShowPlaceHolder[3]}"/>
+
+                            <Border Stroke="Transparent" StrokeShape="RoundRectangle 40" WidthRequest="80">
+                                <Image Source="{Binding ImageUrl}"
+                                       WidthRequest="80"
+                                       HeightRequest="80"
+                                       Aspect="Fill"/>
+                            </Border>
+                        </Grid>
+
+                        <VerticalStackLayout Margin="2,5,0,0" HorizontalOptions="Center">
+                            <Label Text="{Binding Name}"
+                                   Style="{StaticResource Small}"
+                                   HorizontalTextAlignment="Center"/>
+                            <Label Text=""
+                                   Style="{StaticResource MicroViolet}"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentView>

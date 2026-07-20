@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:partialViews="clr-namespace:MyMuse.Maui.Views.PartialViews"
+             xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
+             xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
+             x:DataType="viewmodel:MainPageViewModel"
+             x:Class="MyMuse.Maui.Views.Home.TrendingSongsView">
+    <VerticalStackLayout Grid.Row="3" Spacing="5">
+        <Grid ColumnDefinitions="*,*">
+            <Label Text="Trending"
+                   Style="{StaticResource Large}"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"/>
+            <Label Grid.Column="1"
+                   Text="See all  >"
+                   Style="{StaticResource MicroViolet}"
+                   HorizontalOptions="End"
+                   VerticalOptions="Center"/>
+        </Grid>
+        <VerticalStackLayout BindableLayout.ItemsSource="{Binding TrendingSongs}" 
+                             Spacing="5">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="models:SongDto">
+                    <Grid ColumnDefinitions="Auto, *">
+                        <HorizontalStackLayout Spacing="10">
+                            <Grid>
+                                <Border Stroke="Transparent" StrokeShape="RoundRectangle 15">
+                                    <Image Source="{Binding ImageUrl}"
+                                           WidthRequest="70"
+                                           Aspect="AspectFill"/>
+                                </Border>
+                            </Grid>
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label Text="{Binding Title}"
+                                       Style="{StaticResource Small}"/>
+                                <Label Text="{Binding Band}"
+                                       Style="{StaticResource MicroViolet}"/>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
+                            <Label Text="{Binding PlaysNumber, StringFormat='{0} Plays'}"
+                                   Style="{StaticResource MicroViolet}"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+    </VerticalStackLayout>
+</ContentView>

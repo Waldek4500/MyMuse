@@ -45,8 +45,5 @@ public partial class MiniPlayerBar : ContentView
         _viewModel.UpdateDuration(AudioPlayer.Duration);
     }
 
-    private async void OnBarTapped(object sender, TappedEventArgs e)
-    {
-        await Shell.Current.GoToAsync(nameof(SongDetailsPage));
-    }
+    private void AudioPlayer_MediaEnded(object sender, EventArgs e) => _viewModel.GoToNextSongWhenMusicOver();
 }

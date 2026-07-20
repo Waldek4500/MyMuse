@@ -10,15 +10,17 @@
         <toolkit:MediaElement
             x:Name="AudioPlayer"
             IsVisible="Collapse"
-            Source="{Binding Song.AudioUrl}"
-            MetadataTitle="{Binding Song.Title}"
-            MetadataArtist="{Binding Song.Band}"
-            MetadataArtworkUrl="{Binding Song.ImageUrl}"
+            Source="{Binding CurrentSong.AudioUrl}"
+            MetadataTitle="{Binding CurrentSong.Title}"
+            MetadataArtist="{Binding CurrentSong.Band}"
+            MetadataArtworkUrl="{Binding CurrentSong.ImageUrl}"
             ShouldAutoPlay="True"
             ShouldShowPlaybackControls="False"
             StateChanged="AudioPlayer_StateChanged"
             PropertyChanged="AudioPlayer_PropertyChanged"
-            PositionChanged="AudioPlayer_PositionChanged" />
+            PositionChanged="AudioPlayer_PositionChanged"
+            MediaEnded="AudioPlayer_MediaEnded"
+            ShouldLoopPlayback="{Binding ShouldPlayInLoop}"/>
 
         <Border IsVisible="{Binding HasTrack}"
                 Stroke="#25153B"
@@ -32,7 +34,7 @@
             </Border.Background>
 
             <Border.GestureRecognizers>
-                <TapGestureRecognizer Tapped="OnBarTapped" />
+                <TapGestureRecognizer Command="{Binding GoToDetailsCommand}" />
             </Border.GestureRecognizers>
 
             <VerticalStackLayout>
@@ -46,17 +48,17 @@
                             WidthRequest="50"
                             HeightRequest="50">
                         <Image Grid.Column="0"
-                               Source="{Binding Song.ImageUrl}"
+                               Source="{Binding CurrentSong.ImageUrl}"
                                Aspect="AspectFill"
                                WidthRequest="50"
                                HeightRequest="50" />
                     </Border>
 
                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="0">
-                        <Label Text="{Binding Song.Title}"
+                        <Label Text="{Binding CurrentSong.Title}"
                                Style="{StaticResource Small}"
                                LineBreakMode="TailTruncation" />
-                        <Label Text="{Binding Song.Band}"
+                        <Label Text="{Binding CurrentSong.Band}"
                                Style="{StaticResource Micro}"
                                LineBreakMode="TailTruncation" />
                     </VerticalStackLayout>

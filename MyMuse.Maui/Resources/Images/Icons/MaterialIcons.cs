@@ -12,5 +12,6 @@ namespace MyMuse.Maui.Resources.Images.Icons
         public const string Favorite = "\uE87d";
         public const string SkipNext = "\uE044";
         public const string SkipPrevious = "\uE045";
+        public const string Autorenew = "\uE863";
     }
 }

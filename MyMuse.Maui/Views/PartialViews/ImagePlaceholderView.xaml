@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:code="clr-namespace:MyMuse.Maui.Views.PartialViews"
+             x:Class="MyMuse.Maui.Views.PartialViews.ImagePlaceholderView"
+             x:DataType="code:ImagePlaceholderView">
+    <Grid>
+        <Border StrokeThickness="0"
+                Stroke="Transparent"
+                StrokeShape="{RoundRectangle CornerRadius={Binding CornerRadius}}"
+                IsVisible="{Binding ShowPlaceholder}">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="1,1" EndPoint="0,0">
+                    <GradientStop Color="#111111"  Offset="0.3"/>
+                    <GradientStop Color="Gray" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+    </Grid>
+</ContentView>

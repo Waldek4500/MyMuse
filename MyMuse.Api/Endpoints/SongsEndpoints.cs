@@ -19,6 +19,7 @@ namespace MyMuse.Api.Endpoints
                         song.Title,
                         song.Album != null ? song.Album.Title : null,
                         song.Band!.Name,
+                        song.BandId,
                         song.Lyrics,
                         song.AudioUrl,
                         song.Duration,
@@ -39,6 +40,7 @@ namespace MyMuse.Api.Endpoints
                         song.Title,
                         song.Album != null ? song.Album.Title : null,
                         song.Band!.Name,
+                        song.BandId,
                         song.Lyrics,
                         song.AudioUrl,
                         song.Duration,
@@ -62,6 +64,7 @@ namespace MyMuse.Api.Endpoints
                         song.Title,
                         song.Album != null ? song.Album.Title : null,
                         song.Band!.Name,
+                        song.BandId,
                         song.Lyrics,
                         song.AudioUrl,
                         song.Duration,
@@ -75,15 +78,16 @@ namespace MyMuse.Api.Endpoints
                 return songs.Count == 0 ? Results.NotFound() : Results.Ok(songs);
             });
 
-            group.MapGet("/featured", async (MyMuseContext dbContext)
+            group.MapGet("/featured/{count}", async (int count, MyMuseContext dbContext)
                 => await dbContext.Songs
                     .OrderBy(song => EF.Functions.Random())
-                    .Take(4)
+                    .Take(count)
                     .Select(song => new SongDto(
                         song.Id,
                         song.Title,
                         song.Album != null ? song.Album.Title : null,
                         song.Band!.Name,
+                        song.BandId,
                         song.Lyrics,
                         song.AudioUrl,
                         song.Duration,
@@ -104,6 +108,29 @@ namespace MyMuse.Api.Endpoints
                         song.Title,
                         song.Album != null ? song.Album.Title : null,
                         song.Band!.Name,
+                        song.BandId,
+                        song.Lyrics,
+                        song.AudioUrl,
+                        song.Duration,
+                        song.ReleaseDate,
+                        song.IsSingle,
+                        song.PlaysNumber,
+                        song.ImageUrl ?? song.Album!.ImageUrl))
+                    .AsNoTracking()
+                    .ToListAsync()
+            );
+
+            group.MapGet("/bandRandom/{bandId}/{count}", async (int bandId, int count, MyMuseContext dbContext)
+                => await dbContext.Songs
+                    .Where(song => song.BandId == bandId)
+                    .OrderBy(song => EF.Functions.Random())
+                    .Take(count)
+                    .Select(song => new SongDto(
+                        song.Id,
+                        song.Title,
+                        song.Album != null ? song.Album.Title : null,
+                        song.Band!.Name,
+                        song.BandId,
                         song.Lyrics,
                         song.AudioUrl,
                         song.Duration,

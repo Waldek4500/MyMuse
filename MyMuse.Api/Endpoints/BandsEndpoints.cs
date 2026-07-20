@@ -18,7 +18,8 @@ namespace MyMuse.Api.Endpoints
                             band.Id,
                             band.Name,
                             band.FoundingDate,
-                            band.Description))
+                            band.Description,
+                            band.ImageUrl))
                         .AsNoTracking()
                         .ToListAsync()
             );

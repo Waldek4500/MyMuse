@@ -4,6 +4,7 @@ using MyMuse.Maui.Pages;
 using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels;
 using MyMuse.Maui.Views;
+using MyMuse.Maui.Views.Home;
 
 namespace MyMuse.Maui
 {
