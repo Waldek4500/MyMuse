@@ -21,7 +21,7 @@ namespace MyMuse.Maui.Pages
                 if (_playerBar.Parent is ContentView previousSlot)
                     previousSlot.Content = null;
 
-                slot.Content = _playerBar;
+                 slot.Content = _playerBar;
             }
         }
     }

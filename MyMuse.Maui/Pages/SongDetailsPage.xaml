@@ -13,7 +13,7 @@
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
     </Shell.BackButtonBehavior>
-
+    
     <Grid RowDefinitions="Auto, *, Auto" Padding="20,10,20,0">
 
         <ActivityIndicator IsRunning="{Binding IsBuffering}"
@@ -35,7 +35,8 @@
                 <ImageButton.Source>
                     <FontImageSource Glyph="{Static icons:MaterialIcons.ArrowDown}"
                                      FontFamily="MaterialSymbols"
-                                     Color="White"/>
+                                     Color="White">
+                    </FontImageSource>
                 </ImageButton.Source>
             </ImageButton>
             
@@ -68,7 +69,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Margin="20">
-            <Image Source="{Binding Song.ImageUrl}"
+            <Image Source="{Binding CurrentSong.ImageUrl}"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    Aspect="AspectFit"/>
@@ -79,9 +80,9 @@
             <Grid ColumnDefinitions="*,*"
                   Margin="10">
                 <VerticalStackLayout>
-                    <Label Text="{Binding Song.Title}"
+                    <Label Text="{Binding CurrentSong.Title}"
                            Style="{StaticResource Large}"/>
-                    <Label Text="{Binding Song.Band}"
+                    <Label Text="{Binding CurrentSong.Band}"
                            Style="{StaticResource Micro}"/>
                 </VerticalStackLayout>
                 <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End"
@@ -141,7 +142,8 @@
                              VerticalOptions="Center"/>
                 <ImageButton Grid.Column="1"
                              WidthRequest="40"
-                             CornerRadius="20">
+                             CornerRadius="20"
+                             Command="{Binding PreviousSongCommand}">
                     <ImageButton.Source>
                         <FontImageSource Glyph="{Static icons:MaterialIcons.SkipPrevious}"
                                          FontFamily="MaterialSymbols"/>
@@ -157,20 +159,28 @@
                              Command="{Binding PlayPauseCommand}"/>
                 <ImageButton Grid.Column="3"
                              WidthRequest="40"
-                             CornerRadius="20">
+                             CornerRadius="20"
+                             Command="{Binding NextSongCommand}">
                     <ImageButton.Source>
                         <FontImageSource Glyph="{Static icons:MaterialIcons.SkipNext}"
-                         FontFamily="MaterialSymbols"/>
+                                         FontFamily="MaterialSymbols"/>
                     </ImageButton.Source>
                 </ImageButton>
                 <ImageButton Grid.Column="4"
                              CornerRadius="22"
-                             Padding="10"
-                             Source="repeat_icon.png"
+                             Padding="8"
                              Aspect="AspectFit"
                              WidthRequest="20"
+                             HeightRequest="20"
                              HorizontalOptions="End"
-                             VerticalOptions="Center"/>
+                             VerticalOptions="Center"
+                             Command="{Binding TogglePlayInLoopCommand}">
+                    <ImageButton.Source>
+                        <FontImageSource Glyph="{Static icons:MaterialIcons.Autorenew}"
+                                         FontFamily="MaterialSymbols"
+                                         Color="{Binding PlayInLoopBtnColor}"/>
+                    </ImageButton.Source>
+                </ImageButton>
             </Grid>
         </VerticalStackLayout>
 

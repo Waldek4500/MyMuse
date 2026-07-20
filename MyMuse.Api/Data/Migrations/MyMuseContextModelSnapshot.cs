@@ -67,6 +67,9 @@ namespace MyMuse.Api.Data.Migrations
                     b.Property<DateOnly>("FoundingDate")
                         .HasColumnType("date");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
