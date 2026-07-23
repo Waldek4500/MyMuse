@@ -3,14 +3,35 @@
     x:Class="MyMuse.Maui.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    xmlns:local="clr-namespace:MyMuse.Maui.Pages"
+    xmlns:home="clr-namespace:MyMuse.Maui.Features.Home"
+    xmlns:search="clr-namespace:MyMuse.Maui.Pages"
+    xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
     Title="MyMuse.Maui"
-    Shell.TabBarTitleColor="#07070F">
+    Shell.TabBarTitleColor="#994EE1"
+    Shell.TabBarUnselectedColor="#535172"
+    Shell.TabBarBackgroundColor="#0B0B18"
+    Shell.TabBarForegroundColor="#994EE1">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage"/>
+    <TabBar>
+        <Tab Title="Home"
+             Icon="{icons:Icon Home}">
+            <ShellContent ContentTemplate="{DataTemplate home:MainPage}"/>
+        </Tab>
+
+        <Tab Title="Search"
+             Icon="{icons:Icon Search}">
+            <ShellContent ContentTemplate="{DataTemplate search:SearchPage}"/>
+        </Tab>
+
+        <Tab Title="Library"
+             Icon="{icons:Icon Browse}">
+            <ShellContent ContentTemplate="{DataTemplate search:SearchPage}"/>
+        </Tab>
+
+        <Tab Title="Liked"
+             Icon="{icons:Icon Favorite}">
+            <ShellContent ContentTemplate="{DataTemplate search:SearchPage}"/>
+        </Tab>
+    </TabBar>
 
 </Shell>

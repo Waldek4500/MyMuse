@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:icons="clr-namespace:MyMuse.Maui.Resources.Images.Icons"
+             xmlns:iconsCodes="clr-namespace:MyMuse.Maui.Resources.Images.Icons"
+             xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
              xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MyMuse.Maui.Pages.SongDetailsPage"
@@ -31,15 +32,11 @@
                          WidthRequest="20"
                          HeightRequest="20"
                          Padding="8"
-                         Command="{Binding GoBackCommand}">
-                <ImageButton.Source>
-                    <FontImageSource Glyph="{Static icons:MaterialIcons.ArrowDown}"
-                                     FontFamily="MaterialSymbols"
-                                     Color="White">
-                    </FontImageSource>
-                </ImageButton.Source>
-            </ImageButton>
-            
+                         Command="{Binding GoBackCommand}"
+                         Source="{icons:Icon ArrowDown}"/>
+
+
+
             <Label Grid.Column="1"
                    Style="{StaticResource Small}"
                    FontFamily="Archivo"
@@ -47,20 +44,15 @@
                    TextColor="#AAFFFFFF"
                    HorizontalTextAlignment="Center"
                    VerticalTextAlignment="Center"/>
-            
+
             <ImageButton Grid.Column="2"
                          HorizontalOptions="End"
                          BackgroundColor="#44FFFFFF"
                          CornerRadius="22"
                          WidthRequest="20"
                          HeightRequest="20"
-                         Padding="8">
-                <ImageButton.Source>
-                    <FontImageSource Glyph="{Static icons:MaterialIcons.MoreHorizontal}"
-                                     FontFamily="MaterialSymbols"
-                                     Color="White"/>
-                </ImageButton.Source>
-            </ImageButton>
+                         Padding="8"
+                         Source="{icons:Icon MoreHorizontal}"/>
         </Grid>
 
         <!-- Row 1: Image -->
@@ -91,23 +83,14 @@
                                  CornerRadius="22"
                                  HeightRequest="20"
                                  WidthRequest="20"
-                                 Padding="8">
-                        <ImageButton.Source>
-                            <FontImageSource Glyph="{Static icons:MaterialIcons.AlignLeft}"
-                                             FontFamily="MaterialSymbols"
-                                             Color="White"/>
-                        </ImageButton.Source>
-                    </ImageButton>
+                                 Padding="8"
+                                 Source="{icons:Icon AlignLeft}"/>
+
                     <ImageButton HeightRequest="20"
                                  WidthRequest="20"
                                  Padding="8"
-                                 CornerRadius="20">
-                        <ImageButton.Source>
-                            <FontImageSource Glyph="{Static icons:MaterialIcons.Favorite}"
-                                             FontFamily="MaterialSymbols"
-                                             Color="White"/>
-                        </ImageButton.Source>
-                    </ImageButton>
+                                 CornerRadius="20"
+                                 Source="{icons:Icon Favorite}"/>
                 </HorizontalStackLayout>
             </Grid>
 
@@ -140,15 +123,13 @@
                              WidthRequest="20"
                              HorizontalOptions="Start"
                              VerticalOptions="Center"/>
+                
                 <ImageButton Grid.Column="1"
                              WidthRequest="40"
                              CornerRadius="20"
-                             Command="{Binding PreviousSongCommand}">
-                    <ImageButton.Source>
-                        <FontImageSource Glyph="{Static icons:MaterialIcons.SkipPrevious}"
-                                         FontFamily="MaterialSymbols"/>
-                    </ImageButton.Source>
-                </ImageButton>
+                             Command="{Binding PreviousSongCommand}"
+                             Source="{icons:Icon SkipPrevious}"/>
+                
                 <ImageButton Grid.Column="2"
                              Source="{Binding PlayPauseBtnImage}"
                              BackgroundColor="#A855F7"
@@ -157,15 +138,13 @@
                              CornerRadius="30"
                              Padding="15"
                              Command="{Binding PlayPauseCommand}"/>
+                
                 <ImageButton Grid.Column="3"
                              WidthRequest="40"
                              CornerRadius="20"
-                             Command="{Binding NextSongCommand}">
-                    <ImageButton.Source>
-                        <FontImageSource Glyph="{Static icons:MaterialIcons.SkipNext}"
-                                         FontFamily="MaterialSymbols"/>
-                    </ImageButton.Source>
-                </ImageButton>
+                             Command="{Binding NextSongCommand}"
+                             Source="{icons:Icon SkipNext}"/>
+                
                 <ImageButton Grid.Column="4"
                              CornerRadius="22"
                              Padding="8"
@@ -176,7 +155,7 @@
                              VerticalOptions="Center"
                              Command="{Binding TogglePlayInLoopCommand}">
                     <ImageButton.Source>
-                        <FontImageSource Glyph="{Static icons:MaterialIcons.Autorenew}"
+                        <FontImageSource Glyph="{Static iconsCodes:MaterialIcons.Autorenew}"
                                          FontFamily="MaterialSymbols"
                                          Color="{Binding PlayInLoopBtnColor}"/>
                     </ImageButton.Source>

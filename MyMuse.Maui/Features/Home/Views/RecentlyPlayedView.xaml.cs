@@ -1,4 +1,4 @@
-namespace MyMuse.Maui.Views.Home;
+namespace MyMuse.Maui.Features.Home.Views;
 
 public partial class RecentlyPlayedView : ContentView
 {

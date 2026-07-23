@@ -56,7 +56,7 @@ namespace MyMuse.Maui.Services
             return data ?? [];
         }
 
-        public async Task<List<SongDto>> GetQueueFromBand(int bandId, int count)
+        public async Task<List<SongDto>> GetRandomSongsFromBandAsync(int bandId, int count)
         {
             var response = await _httpClient.GetAsync($"{_host}/songs/bandRandom/{bandId}/{count}");
             response.EnsureSuccessStatusCode();

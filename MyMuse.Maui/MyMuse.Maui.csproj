@@ -72,6 +72,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Include="..\..\..\..\..\Pictures\equalizer.gif" Link="Resources\Images\equalizer.gif" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiImage Include="Resources\Images\Icons\pause_icon.svg" />
 	  <MauiImage Include="Resources\Images\Icons\play_icon.svg" />
 	  <MauiImage Include="Resources\Images\Icons\repeat_icon.svg" />
@@ -91,22 +95,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\SearchPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Buttons.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Resources\Styles\Labels.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Home\ArtistsView.xaml">
+	  <MauiXaml Update="Features\Home\Views\ArtistsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Home\FeaturedSongsView.xaml">
+	  <MauiXaml Update="Features\Home\Views\FeaturedSongsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Home\RecentlyPlayedView.xaml">
+	  <MauiXaml Update="Features\Home\Views\RecentlyPlayedView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Home\TrendingSongsView.xaml">
+	  <MauiXaml Update="Features\Home\Views\TrendingSongsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PartialViews\ImagePlaceholderView.xaml">
@@ -116,6 +123,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SongDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PartialViews\SelectedSongMarker.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

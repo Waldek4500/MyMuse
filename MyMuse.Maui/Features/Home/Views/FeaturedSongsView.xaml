@@ -2,10 +2,12 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:partialViews="clr-namespace:MyMuse.Maui.Views.PartialViews"
-             xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
-             xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
+             xmlns:viewmodel="clr-namespace:MyMuse.Maui.Features.Home"
+             xmlns:models="clr-namespace:MyMuse.Maui.Models"
+             xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
              x:DataType="viewmodel:MainPageViewModel"
-             x:Class="MyMuse.Maui.Views.Home.FeaturedSongsView">
+             x:Class="MyMuse.Maui.Features.Home.Views.FeaturedSongsView">
+
     <VerticalStackLayout Grid.Row="1">
         <Label Text="Featured Songs" Style="{StaticResource Large}"/>
         <CollectionView ItemsSource="{Binding FeaturedSongs}">
@@ -13,7 +15,7 @@
                 <GridItemsLayout Span="2" Orientation="Vertical" VerticalItemSpacing="10" HorizontalItemSpacing="10"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:SongDto">
+                <DataTemplate x:DataType="models:Song">
                     <Grid MaximumWidthRequest="300">
 
                         <partialViews:ImagePlaceholderView
@@ -22,7 +24,7 @@
                             ShowPlaceholder="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=ShowPlaceHolder[0]}"/>
 
                         <Border Stroke="Transparent" StrokeShape="RoundRectangle 20">
-                            <Image Source="{Binding ImageUrl}"
+                            <Image Source="{Binding Data.ImageUrl}"
                                    Aspect="AspectFill"/>
                         </Border>
 
@@ -34,17 +36,19 @@
                                         <GradientStop Color="#00000000" Offset="1"/>
                                     </LinearGradientBrush>
                                 </VerticalStackLayout.Background>
-                                <Label Text="{Binding Title}"
+                                <Label Text="{Binding Data.Title}"
                                    Style="{StaticResource Medium}"
                                    LineBreakMode="TailTruncation"
                                    MaxLines="1"/>
-                                <Label Text="{Binding Band}"
+                                <Label Text="{Binding Data.Band}"
                                    Style="{StaticResource Micro}"/>
                             </VerticalStackLayout>
                         </Border>
 
+                        <partialViews:SelectedSongMarker CornerRadius="20" PlayingImageHeight="40" PauseImageHeight="60"/>
+
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer CommandParameter="{Binding .}"
+                            <TapGestureRecognizer CommandParameter="{Binding Data}"
                                                   Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}},
                                                                 Path=GoToSongDetailsCommand}"/>
                         </Grid.GestureRecognizers>

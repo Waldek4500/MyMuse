@@ -1,6 +1,4 @@
-using MyMuse.Maui.ViewModels;
-
-namespace MyMuse.Maui.Views.Home;
+namespace MyMuse.Maui.Features.Home.Views;
 
 public partial class FeaturedSongsView : ContentView
 {

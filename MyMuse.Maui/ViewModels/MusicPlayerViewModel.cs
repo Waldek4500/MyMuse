@@ -17,7 +17,7 @@ namespace MyMuse.Maui.ViewModels
         #region Public Properties
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(HasTrack))]
-        public partial SongDto CurrentSong { get; set; } = new(0, "", null, "", 0, null, "", 0, new(1, 1, 1), false, 0, "");
+        public partial SongDto CurrentSong { get; set; } = new(-1, "", null, "", 0, null, "", 0, new(1, 1, 1), false, 0, "");
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsPlaying))]
@@ -29,13 +29,13 @@ namespace MyMuse.Maui.ViewModels
         public partial double PositionSeconds { get; set; }
 
         [ObservableProperty]
-        public partial string PositionText { get; set; }
+        public partial string? PositionText { get; set; }
 
         [ObservableProperty]
         public partial double DurationSeconds { get; set; }
 
         [ObservableProperty]
-        public partial string DurationText { get; set; }
+        public partial string? DurationText { get; set; }
 
         public double PositionProgress => DurationSeconds != 0 ? (PositionSeconds / DurationSeconds) : 0;
 
@@ -62,7 +62,7 @@ namespace MyMuse.Maui.ViewModels
 
         #region Private Fields
         private bool _isNavigating;
-        private SongsService _songsService;
+        private readonly SongsService _songsService;
         #endregion
 
         public MusicPlayerViewModel(SongsService songsService)
@@ -70,8 +70,12 @@ namespace MyMuse.Maui.ViewModels
             _songsService = songsService;
         }
 
-        #region Private Methods
 
+        partial void OnStateChanged(MediaElementState oldValue, MediaElementState newValue)
+        {
+            Debug.WriteLine($"==== State: {newValue}");
+        }
+        #region Private Methods
         async partial void OnCurrentSongChanged(SongDto oldValue, SongDto newValue)
         {
             if (oldValue is not null && newValue.Id == oldValue.Id)
@@ -93,7 +97,6 @@ namespace MyMuse.Maui.ViewModels
         #endregion
 
         #region Public Methods
-
         public void GoToNextSongWhenMusicOver()
         {
             if (ShouldPlayInLoop)
@@ -106,7 +109,7 @@ namespace MyMuse.Maui.ViewModels
         {
             try
             {
-                List<SongDto> songs = await _songsService.GetQueueFromBand(CurrentSong.BandId, 10);
+                List<SongDto> songs = await _songsService.GetRandomSongsFromBandAsync(CurrentSong.BandId, 10);
                 songs.Remove(CurrentSong);
 
                 foreach (SongDto song in songs)
@@ -161,14 +164,13 @@ namespace MyMuse.Maui.ViewModels
         }
         #endregion
 
-        #region Public Events
+        #region Events
         public event EventHandler? PlayRequested;
         public event EventHandler? PauseRequested;
         public event EventHandler<TimeSpan>? SliderSeekCompleted;
         #endregion
 
         #region Commands
-
         [RelayCommand]
         private void NextSong()
         {

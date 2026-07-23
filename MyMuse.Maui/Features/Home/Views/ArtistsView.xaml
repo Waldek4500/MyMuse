@@ -2,10 +2,10 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:partialViews="clr-namespace:MyMuse.Maui.Views.PartialViews"
-             xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
+             xmlns:viewmodel="clr-namespace:MyMuse.Maui.Features.Home"
              xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
              x:DataType="viewmodel:MainPageViewModel"
-             x:Class="MyMuse.Maui.Views.Home.ArtistsView">
+             x:Class="MyMuse.Maui.Features.Home.Views.ArtistsView">
     <VerticalStackLayout Grid.Row="4" Spacing="5">
         <Grid ColumnDefinitions="*,*">
             <Label Text="Artists for You"
