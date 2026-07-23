@@ -8,7 +8,7 @@ using MyMuse.Shared.Dtos;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
-namespace MyMuse.Maui.Pages
+namespace MyMuse.Maui.Features.Home
 {
     public partial class MainPage : MusicAwarePage
     {

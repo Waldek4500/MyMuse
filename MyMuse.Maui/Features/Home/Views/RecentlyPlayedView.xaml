@@ -2,10 +2,11 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:partialViews="clr-namespace:MyMuse.Maui.Views.PartialViews"
-             xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
-             xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
+             xmlns:viewmodel="clr-namespace:MyMuse.Maui.Features.Home"
+             xmlns:models="clr-namespace:MyMuse.Maui.Models"
+             xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
              x:DataType="viewmodel:MainPageViewModel"
-             x:Class="MyMuse.Maui.Views.Home.RecentlyPlayedView">
+             x:Class="MyMuse.Maui.Features.Home.Views.RecentlyPlayedView">
     <VerticalStackLayout Grid.Row="2" Spacing="5">
         <Grid ColumnDefinitions="*,*">
             <Label Text="Recently Played"
@@ -25,7 +26,7 @@
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:SongDto">
+                <DataTemplate x:DataType="models:Song">
                     <VerticalStackLayout>
 
                         <Grid>
@@ -35,20 +36,27 @@
                                 ShowPlaceholder="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=ShowPlaceHolder[1]}"/>
 
                             <Border Stroke="Transparent" StrokeShape="RoundRectangle 20" WidthRequest="120">
-                                <Image Source="{Binding ImageUrl}"
+                                <Image Source="{Binding Data.ImageUrl}"
                                        Aspect="AspectFill"
                                        HeightRequest="120"/>
                             </Border>
+
+                            <partialViews:SelectedSongMarker CornerRadius="20" PlayingImageHeight="20" PauseImageHeight="30"/>
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding Data}"
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=GoToSongDetailsCommand}"/>
+                            </Grid.GestureRecognizers>
                         </Grid>
 
                         <VerticalStackLayout Margin="2,5,0,0">
-                            <Label Text="{Binding Title}"
+                            <Label Text="{Binding Data.Title}"
                                    Style="{StaticResource Small}"
                                    LineBreakMode="TailTruncation"
                                    MaxLines="1"
                                    HorizontalOptions="Start"
                                    MaximumWidthRequest="100"/>
-                            <Label Text="{Binding Band}"
+                            <Label Text="{Binding Data.Band}"
                                    Style="{StaticResource MicroViolet}"/>
                         </VerticalStackLayout>
                     </VerticalStackLayout>

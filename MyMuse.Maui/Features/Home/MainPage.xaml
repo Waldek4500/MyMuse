@@ -2,18 +2,18 @@
 <pages:MusicAwarePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
-                      xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
+                      xmlns:viewmodel="clr-namespace:MyMuse.Maui.Features.Home"
                       xmlns:pages="clr-namespace:MyMuse.Maui.Pages"
                       xmlns:partialViews="clr-namespace:MyMuse.Maui.Views.PartialViews"
-                      xmlns:views="clr-namespace:MyMuse.Maui.Views.Home"
+                      xmlns:views="clr-namespace:MyMuse.Maui.Features.Home.Views"
                       x:DataType="viewmodel:MainPageViewModel"
-                      x:Class="MyMuse.Maui.Pages.MainPage"
+                      x:Class="MyMuse.Maui.Features.Home.MainPage"
                       Title=""
                       BackgroundColor="{StaticResource BackgroundDark}">
 
     <Grid RowDefinitions="*,Auto" Margin="0" Padding="0">
 
-        <ActivityIndicator IsVisible="{Binding IsBusy}"
+        <ActivityIndicator IsVisible="{Binding IsBusy}" 
                            IsRunning="{Binding IsBusy}"
                            HorizontalOptions="Fill"
                            VerticalOptions="Center"
@@ -31,6 +31,7 @@
                         <Label Text="Good Evening, Alex."
                            Style="{StaticResource Header}"
                            VerticalOptions="Center"/>
+
                         <Border Grid.Column="1"
                             WidthRequest="40"
                             HeightRequest="40"

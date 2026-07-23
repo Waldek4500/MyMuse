@@ -1,10 +1,11 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using MyMuse.Maui.Features.Home;
+using MyMuse.Maui.Models;
 using MyMuse.Maui.Pages;
 using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels;
 using MyMuse.Maui.Views;
-using MyMuse.Maui.Views.Home;
 
 namespace MyMuse.Maui
 {
@@ -29,6 +30,8 @@ namespace MyMuse.Maui
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainPageViewModel>();
             builder.Services.AddSingleton<SongsService>();
+
+            builder.Services.AddTransient<Song>();
 
             builder.Services.AddTransient<SongDetailsPage>();
             builder.Services.AddSingleton<MusicPlayerViewModel>();

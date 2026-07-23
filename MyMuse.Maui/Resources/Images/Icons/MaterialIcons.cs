@@ -13,5 +13,8 @@ namespace MyMuse.Maui.Resources.Images.Icons
         public const string SkipNext = "\uE044";
         public const string SkipPrevious = "\uE045";
         public const string Autorenew = "\uE863";
+        public const string Home = "\uE88a";
+        public const string Search = "\uE8b6";
+        public const string Browse = "\uEb13"; 
     }
 }

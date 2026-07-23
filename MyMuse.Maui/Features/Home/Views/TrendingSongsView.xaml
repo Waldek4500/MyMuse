@@ -2,10 +2,10 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:partialViews="clr-namespace:MyMuse.Maui.Views.PartialViews"
-             xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
-             xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
+             xmlns:viewmodel="clr-namespace:MyMuse.Maui.Features.Home"
+             xmlns:models="clr-namespace:MyMuse.Maui.Models"
              x:DataType="viewmodel:MainPageViewModel"
-             x:Class="MyMuse.Maui.Views.Home.TrendingSongsView">
+             x:Class="MyMuse.Maui.Features.Home.Views.TrendingSongsView">
     <VerticalStackLayout Grid.Row="3" Spacing="5">
         <Grid ColumnDefinitions="*,*">
             <Label Text="Trending"
@@ -21,29 +21,38 @@
         <VerticalStackLayout BindableLayout.ItemsSource="{Binding TrendingSongs}" 
                              Spacing="5">
             <BindableLayout.ItemTemplate>
-                <DataTemplate x:DataType="models:SongDto">
+                <DataTemplate x:DataType="models:Song">
                     <Grid ColumnDefinitions="Auto, *">
-                        <HorizontalStackLayout Spacing="10">
+                        <HorizontalStackLayout Spacing="10" MaximumWidthRequest="200">
                             <Grid>
                                 <Border Stroke="Transparent" StrokeShape="RoundRectangle 15">
-                                    <Image Source="{Binding ImageUrl}"
-                                           WidthRequest="70"
-                                           Aspect="AspectFill"/>
+
+                                    <Image Source="{Binding Data.ImageUrl}"
+                                            WidthRequest="70"
+                                            Aspect="AspectFill"/>
+
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding Data}"
+                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=GoToSongDetailsCommand}"/>
+                                    </Border.GestureRecognizers>
                                 </Border>
+                                
+                                <partialViews:SelectedSongMarker CornerRadius="15" PlayingImageHeight="20" PauseImageHeight="30"/>
                             </Grid>
                             <VerticalStackLayout VerticalOptions="Center">
-                                <Label Text="{Binding Title}"
-                                       Style="{StaticResource Small}"/>
-                                <Label Text="{Binding Band}"
-                                       Style="{StaticResource MicroViolet}"/>
+                                <Label Text="{Binding Data.Title}"
+                                       Style="{StaticResource Small}"
+                                       LineBreakMode="TailTruncation"/>
+                                <Label Text="{Binding Data.Band}"
+                                       Style="{StaticResource MicroViolet}"
+                                       LineBreakMode="TailTruncation"/>
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
-                            <Label Text="{Binding PlaysNumber, StringFormat='{0} Plays'}"
+                            <Label Text="{Binding Data.PlaysNumber, StringFormat='{0} Plays'}"
                                    Style="{StaticResource MicroViolet}"/>
                         </HorizontalStackLayout>
                     </Grid>
-
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </VerticalStackLayout>
