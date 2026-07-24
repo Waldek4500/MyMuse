@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:pages="clr-namespace:MyMuse.Maui.Pages"
+                      xmlns:search="clr-namespace:MyMuse.Maui.Features.Search"
+                      xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
+                      xmlns:views="clr-namespace:MyMuse.Maui.Views"
+                      x:DataType="search:SearchPageViewModel"
+                      x:Class="MyMuse.Maui.Features.Search.SearchPage"
+                      Title=""
+                      BackgroundColor="{StaticResource BackgroundDark}">
+    <Grid RowDefinitions="*, Auto">
+        <ScrollView VerticalScrollBarVisibility="Never">
+            <Grid RowDefinitions="Auto, Auto, Auto"
+                  Padding="20,10,20,0"
+                  RowSpacing="20">
+
+                <Label Text="Search"
+                   Style="{StaticResource Header}"/>
+
+                <Border Grid.Row="1" StrokeThickness="0" StrokeShape="RoundRectangle 20">
+                    <SearchBar BackgroundColor="#1A1A2E"
+                               SearchIconColor="#615F84"
+                               PlaceholderColor="#615F84"
+                               Placeholder="What's in your head?"
+                               TextColor="White"
+                               FontSize="14"
+                               MaximumWidthRequest="1000"
+                               HorizontalOptions="Fill"/>
+                </Border>
+
+                <CollectionView Grid.Row="2" ItemsSource="{Binding Genres}">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Span="2" Orientation="Vertical" HorizontalItemSpacing="10" VerticalItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:GenreDto">
+                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 10"
+                                    BackgroundColor="{Binding Color}"
+                                    MinimumHeightRequest="80"
+                                    MaximumHeightRequest="150">
+                                <Grid ColumnDefinitions="0.6*, 0.4*">
+                                    <Label Text="{Binding Name}"
+                                           Style="{StaticResource Medium}"
+                                           HorizontalOptions="Start"
+                                           VerticalOptions="Center"
+                                           Margin="10,0,0,0"/>
+
+                                    <Border Grid.Column="1" StrokeShape="RoundRectangle 10 0 0 0" StrokeThickness="0"
+                                            VerticalOptions="End"
+                                            HorizontalOptions="End">
+                                        <Image Source="https://images.unsplash.com/photo-1470225620780-dba8ba36b745"
+                                               Opacity="0.6"/>
+                                    </Border>
+                                    
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </Grid>
+        </ScrollView>
+
+        <views:MiniPlayerBar Grid.Row="1"/>
+    </Grid>
+</ContentPage>

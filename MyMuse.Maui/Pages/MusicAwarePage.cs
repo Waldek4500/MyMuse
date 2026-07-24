@@ -16,13 +16,13 @@ namespace MyMuse.Maui.Pages
         {
             base.OnAppearing();
 
-            if (this.FindByName<ContentView>("MiniPlayerSlot") is { } slot)
-            {
-                if (_playerBar.Parent is ContentView previousSlot)
-                    previousSlot.Content = null;
+            //if (this.FindByName<ContentView>("MiniPlayerSlot") is { } slot)
+            //{
+            //    if (_playerBar.Parent is ContentView previousSlot)
+            //        previousSlot.Content = null;
 
-                 slot.Content = _playerBar;
-            }
+            //     slot.Content = _playerBar;
+            //}
         }
     }
 }

@@ -1,26 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:vm="clr-namespace:MyMuse.Maui.ViewModels"
              x:Class="MyMuse.Maui.Views.MiniPlayerBar"
              x:DataType="vm:MusicPlayerViewModel">
 
     <Grid Padding="10,0,10,10">
-        <toolkit:MediaElement
-            x:Name="AudioPlayer"
-            IsVisible="Collapse"
-            Source="{Binding CurrentSong.AudioUrl}"
-            MetadataTitle="{Binding CurrentSong.Title}"
-            MetadataArtist="{Binding CurrentSong.Band}"
-            MetadataArtworkUrl="{Binding CurrentSong.ImageUrl}"
-            ShouldAutoPlay="True"
-            ShouldShowPlaybackControls="False"
-            StateChanged="AudioPlayer_StateChanged"
-            PropertyChanged="AudioPlayer_PropertyChanged"
-            PositionChanged="AudioPlayer_PositionChanged"
-            MediaEnded="AudioPlayer_MediaEnded"
-            ShouldLoopPlayback="{Binding ShouldPlayInLoop}"/>
+
 
         <Border IsVisible="{Binding HasTrack}"
                 Stroke="#25153B"

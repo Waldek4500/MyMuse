@@ -17,7 +17,19 @@ namespace MyMuse.Maui.ViewModels
         #region Public Properties
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(HasTrack))]
-        public partial SongDto CurrentSong { get; set; } = new(-1, "", null, "", 0, null, "", 0, new(1, 1, 1), false, 0, "");
+        public partial SongDto CurrentSong { get; set; }
+
+        [ObservableProperty]
+        public partial string AudioUrl { get; set; }
+
+        [ObservableProperty]
+        public partial string SongTitle { get; set; }
+
+        [ObservableProperty]
+        public partial string Band { get; set; }
+
+        [ObservableProperty]
+        public partial string ArtworkUrl { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsPlaying))]
@@ -44,7 +56,7 @@ namespace MyMuse.Maui.ViewModels
 
         public bool IsPlaying => State == MediaElementState.Playing;
 
-        public bool HasTrack => CurrentSong is not null && !String.IsNullOrEmpty(CurrentSong.AudioUrl);
+        public bool HasTrack => AudioUrl is not null && !String.IsNullOrEmpty(AudioUrl);
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(PlayInLoopBtnColor))]
@@ -70,16 +82,16 @@ namespace MyMuse.Maui.ViewModels
             _songsService = songsService;
         }
 
-
-        partial void OnStateChanged(MediaElementState oldValue, MediaElementState newValue)
-        {
-            Debug.WriteLine($"==== State: {newValue}");
-        }
         #region Private Methods
         async partial void OnCurrentSongChanged(SongDto oldValue, SongDto newValue)
         {
             if (oldValue is not null && newValue.Id == oldValue.Id)
                 return;
+
+            SongTitle = newValue.Title;
+            Band = newValue.Band;
+            ArtworkUrl = newValue.ImageUrl ?? "";
+            AudioUrl = newValue.AudioUrl;
 
             SongsQueue.Clear();
             await FillQueueAsync();

@@ -10,12 +10,12 @@ using System.Diagnostics;
 
 namespace MyMuse.Maui.Features.Home
 {
-    public partial class MainPage : MusicAwarePage
+    public partial class MainPage : ContentPage
     {
         private MainPageViewModel _mainPageViewModel;
         private bool _isInitalized;
 
-        public MainPage(MainPageViewModel mainPageViewModel, MiniPlayerBar miniPlayerBar) : base(miniPlayerBar)
+        public MainPage(MainPageViewModel mainPageViewModel)
         {
             InitializeComponent();
             BindingContext = _mainPageViewModel = mainPageViewModel;

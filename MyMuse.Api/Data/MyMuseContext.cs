@@ -12,4 +12,13 @@ public class MyMuseContext(DbContextOptions<MyMuseContext> options) : DbContext(
     public DbSet<Song> Songs => Set<Song>();
     public DbSet<Genre> Genres => Set<Genre>();
     public DbSet<SongGenre> SongGenres => Set<SongGenre>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Genre>()
+            .Property(g => g.AssociatedColor)
+            .HasDefaultValue("#7C3AED");
+    }
 }

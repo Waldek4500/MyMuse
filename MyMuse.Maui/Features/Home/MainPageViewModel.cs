@@ -17,6 +17,7 @@ namespace MyMuse.Maui.Features.Home
     {
         #region Private Members
         private readonly SongsService _songsService;
+        private readonly BandsService _bandsService;
         private readonly MusicPlayerViewModel _musicPlayerViewModel;
         #endregion
 
@@ -41,9 +42,10 @@ namespace MyMuse.Maui.Features.Home
         #endregion
 
         #region Constructor
-        public MainPageViewModel(SongsService songsService, MusicPlayerViewModel musicPlayerViewModel)
+        public MainPageViewModel(SongsService songsService, BandsService bandsService, MusicPlayerViewModel musicPlayerViewModel)
         {
             _songsService = songsService;
+            _bandsService = bandsService;
             _musicPlayerViewModel = musicPlayerViewModel;
 
             _musicPlayerViewModel.PropertyChanged += OnMusicPlayerViewModelPropertyChanged;
@@ -58,6 +60,9 @@ namespace MyMuse.Maui.Features.Home
         /// </summary>
         private void SyncIsPlayingFlags()
         {
+            if (!_musicPlayerViewModel.HasTrack)
+                return;
+
             var curentId = _musicPlayerViewModel.CurrentSong.Id;
             var isPlaying = _musicPlayerViewModel.IsPlaying;
 
@@ -97,7 +102,7 @@ namespace MyMuse.Maui.Features.Home
                 TrendingSongs = [.. (await _songsService.GetTrendingSongsAsync(5)).Select(song => new Song(song))];
                 ShowPlaceHolder[2] = false;
 
-                Bands = [.. await _songsService.GetBandsAsync()];
+                Bands = [.. await _bandsService.GetBandsAsync()];
                 ShowPlaceHolder[3] = false;
 
                 SyncIsPlayingFlags();
