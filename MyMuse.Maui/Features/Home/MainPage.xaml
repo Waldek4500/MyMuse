@@ -1,17 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:MusicAwarePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
                       xmlns:viewmodel="clr-namespace:MyMuse.Maui.Features.Home"
                       xmlns:pages="clr-namespace:MyMuse.Maui.Pages"
                       xmlns:partialViews="clr-namespace:MyMuse.Maui.Views.PartialViews"
-                      xmlns:views="clr-namespace:MyMuse.Maui.Features.Home.Views"
+                      xmlns:views="clr-namespace:MyMuse.Maui.Views"
+                      xmlns:homeViews="clr-namespace:MyMuse.Maui.Features.Home.Views"
                       x:DataType="viewmodel:MainPageViewModel"
                       x:Class="MyMuse.Maui.Features.Home.MainPage"
+                      xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
                       Title=""
                       BackgroundColor="{StaticResource BackgroundDark}">
 
     <Grid RowDefinitions="*,Auto" Margin="0" Padding="0">
+
+        <views:PlayerEngineHost/>
 
         <ActivityIndicator IsVisible="{Binding IsBusy}" 
                            IsRunning="{Binding IsBusy}"
@@ -44,20 +48,20 @@
                     </Grid>
 
                     <!-- Row 1: Featured Songs -->
-                    <views:FeaturedSongsView Grid.Row="1" />
+                    <homeViews:FeaturedSongsView Grid.Row="1" />
 
                     <!-- Row 2 -->
-                    <views:RecentlyPlayedView Grid.Row="2" />
+                    <homeViews:RecentlyPlayedView Grid.Row="2" />
 
                     <!-- Row 3: Trending -->
-                    <views:TrendingSongsView Grid.Row="3" />
+                    <homeViews:TrendingSongsView Grid.Row="3" />
 
                     <!-- Row 4: Artists -->
-                    <views:ArtistsView Grid.Row="4" />
+                    <homeViews:ArtistsView Grid.Row="4" />
                 </Grid>
             </ScrollView>
         </RefreshView>
         
-        <ContentView Grid.Row="1" x:Name="MiniPlayerSlot"/>
+        <views:MiniPlayerBar Grid.Row="1"/>
     </Grid>
-</pages:MusicAwarePage>
+</ContentPage>

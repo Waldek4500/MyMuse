@@ -16,3 +16,6 @@ GET {{MyMuse.Api_HostAddress}}/bands/
 
 ###
 GET {{MyMuse.Api_HostAddress}}/songs/bandRandom/2/5
+
+###
+GET {{MyMuse.Api_HostAddress}}/genres/

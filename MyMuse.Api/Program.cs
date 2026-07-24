@@ -22,5 +22,6 @@ app.MigrateDb();
 
 app.MapSongsEndpoints();
 app.MapBandsEndpoints();
+app.MapGenresEndpoints();
 
 app.Run();
