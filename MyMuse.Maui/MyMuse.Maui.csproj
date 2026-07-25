@@ -66,20 +66,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\Icons\pause_icon.svg" />
-	  <None Remove="Resources\Images\Icons\play_icon.svg" />
-	  <None Remove="Resources\Images\Icons\repeat_icon.svg" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <MauiImage Include="..\..\..\..\..\Pictures\equalizer.gif" Link="Resources\Images\equalizer.gif" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiImage Include="Resources\Images\Icons\pause_icon.svg" />
-	  <MauiImage Include="Resources\Images\Icons\play_icon.svg" />
-	  <MauiImage Include="Resources\Images\Icons\repeat_icon.svg" />
-	  <MauiImage Include="Resources\Images\Icons\shuffle_icon.svg" />
+	  <MauiImage Include="Resources\Images\Icons\pause.svg" />
+	  <MauiImage Include="Resources\Images\Icons\play.svg" />
+	  <MauiImage Include="Resources\Images\Icons\repeat.svg" />
+	  <MauiImage Include="Resources\Images\Icons\shuffle.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -93,6 +87,15 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\MyMuse.Shared\MyMuse.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Features\PlayerBar\PlayerBar.xaml.cs">
+	    <DependentUpon>PlayerBar.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Features\Player\PlayerPage.xaml.cs">
+	    <DependentUpon>PlayerPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -117,13 +120,16 @@
 	  <MauiXaml Update="Features\Home\Views\TrendingSongsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Resources\Styles\Converters.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\PartialViews\ImagePlaceholderView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\MiniPlayerBar.xaml">
+	  <MauiXaml Update="Features\PlayerBar\PlayerBar.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\SongDetailsPage.xaml">
+	  <MauiXaml Update="Features\Player\PlayerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PartialViews\SelectedSongMarker.xaml">

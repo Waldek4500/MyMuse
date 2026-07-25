@@ -3,10 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:iconsCodes="clr-namespace:MyMuse.Maui.Resources.Images.Icons"
              xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
-             xmlns:viewmodel="clr-namespace:MyMuse.Maui.ViewModels"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             x:Class="MyMuse.Maui.Pages.SongDetailsPage"
-             x:DataType="viewmodel:MusicPlayerViewModel"
+             xmlns:player="clr-namespace:MyMuse.Maui.Features.Player"
+             x:Class="MyMuse.Maui.Features.Player.PlayerPage"
+             x:DataType="player:PlayerPageViewModel"
              BackgroundColor="{StaticResource BackgroundDark}"
              Title=""
              Shell.PresentationMode="ModalAnimated">
@@ -14,11 +13,11 @@
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
     </Shell.BackButtonBehavior>
-    
+
     <Grid RowDefinitions="Auto, *, Auto" Padding="20,10,20,0">
 
-        <ActivityIndicator IsRunning="{Binding IsBuffering}"
-                           IsVisible="{Binding IsBuffering}"
+        <ActivityIndicator IsRunning="{Binding Player.IsBuffering}"
+                           IsVisible="{Binding Player.IsBuffering}"
                            Grid.RowSpan="3"
                            HorizontalOptions="Center"
                            VerticalOptions="Center"
@@ -34,8 +33,6 @@
                          Padding="8"
                          Command="{Binding GoBackCommand}"
                          Source="{icons:Icon ArrowDown}"/>
-
-
 
             <Label Grid.Column="1"
                    Style="{StaticResource Small}"
@@ -61,7 +58,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center"
                 Margin="20">
-            <Image Source="{Binding CurrentSong.ImageUrl}"
+            <Image Source="{Binding Player.ArtworkUrl}"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    Aspect="AspectFit"/>
@@ -72,9 +69,9 @@
             <Grid ColumnDefinitions="*,*"
                   Margin="10">
                 <VerticalStackLayout>
-                    <Label Text="{Binding CurrentSong.Title}"
+                    <Label Text="{Binding Player.SongTitle}"
                            Style="{StaticResource Large}"/>
-                    <Label Text="{Binding CurrentSong.Band}"
+                    <Label Text="{Binding Player.Band}"
                            Style="{StaticResource Micro}"/>
                 </VerticalStackLayout>
                 <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End"
@@ -99,52 +96,52 @@
                         MinimumTrackColor="#A855F7"
                         DragStarted="Slider_DragStarted"
                         DragCompleted="Slider_DragCompleted"
-                        Value="{Binding PositionSeconds}"
+                        Value="{Binding Player.PositionSeconds}"
                         Minimum="0"
-                        Maximum="{Binding DurationSeconds}"/>
+                        Maximum="{Binding Player.DurationSeconds}"/>
                 <Grid ColumnDefinitions="*, *"
                       Margin="10,0">
-                    <Label Text="{Binding PositionText}"
+                    <Label Text="{Binding Player.PositionText}"
                            Style="{StaticResource Micro}"
                            Margin="0" Padding="0"/>
                     <Label Grid.Column="1"
                            HorizontalTextAlignment="End"
-                           Text="{Binding DurationText}"
+                           Text="{Binding Player.DurationText}"
                            Style="{StaticResource Micro}"
                            Margin="0" Padding="0"/>
                 </Grid>
             </VerticalStackLayout>
             <Grid ColumnDefinitions="*,*,*,*,*"
                   Margin="10">
-                <ImageButton Source="shuffle_icon.png"
+                <ImageButton Source="shuffle.png"
                              CornerRadius="22"
                              Padding="10"
                              Aspect="AspectFit"
                              WidthRequest="20"
                              HorizontalOptions="Start"
                              VerticalOptions="Center"/>
-                
+
                 <ImageButton Grid.Column="1"
                              WidthRequest="40"
                              CornerRadius="20"
-                             Command="{Binding PreviousSongCommand}"
+                             Command="{Binding Queue.PreviousSongCommand}"
                              Source="{icons:Icon SkipPrevious}"/>
-                
+
                 <ImageButton Grid.Column="2"
-                             Source="{Binding PlayPauseBtnImage}"
+                             Source="{Binding Player.IsPlaying, Converter={StaticResource IsPlayingConverter}}"
                              BackgroundColor="#A855F7"
                              WidthRequest="60"
                              HeightRequest="60"
                              CornerRadius="30"
                              Padding="15"
-                             Command="{Binding PlayPauseCommand}"/>
-                
+                             Command="{Binding Player.PlayPauseCommand}"/>
+
                 <ImageButton Grid.Column="3"
                              WidthRequest="40"
                              CornerRadius="20"
-                             Command="{Binding NextSongCommand}"
+                             Command="{Binding Queue.NextSongCommand}"
                              Source="{icons:Icon SkipNext}"/>
-                
+
                 <ImageButton Grid.Column="4"
                              CornerRadius="22"
                              Padding="8"
@@ -153,15 +150,14 @@
                              HeightRequest="20"
                              HorizontalOptions="End"
                              VerticalOptions="Center"
-                             Command="{Binding TogglePlayInLoopCommand}">
+                             Command="{Binding Queue.TogglePlayInLoopCommand}">
                     <ImageButton.Source>
                         <FontImageSource Glyph="{Static iconsCodes:MaterialIcons.Autorenew}"
                                          FontFamily="MaterialSymbols"
-                                         Color="{Binding PlayInLoopBtnColor}"/>
+                                         Color="{Binding Player.ShouldPlayInLoop, Converter={StaticResource IsOptionEnabledConverter}}"/>
                     </ImageButton.Source>
                 </ImageButton>
             </Grid>
         </VerticalStackLayout>
-
     </Grid>
 </ContentPage>

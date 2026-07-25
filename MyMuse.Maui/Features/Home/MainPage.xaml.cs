@@ -1,14 +1,4 @@
-﻿using CommunityToolkit.Maui.Core;
-using CommunityToolkit.Maui.Views;
-using MyMuse.Maui.Pages;
-using MyMuse.Maui.Services;
-using MyMuse.Maui.ViewModels;
-using MyMuse.Maui.Views;
-using MyMuse.Shared.Dtos;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-
-namespace MyMuse.Maui.Features.Home
+﻿namespace MyMuse.Maui.Features.Home
 {
     public partial class MainPage : ContentPage
     {

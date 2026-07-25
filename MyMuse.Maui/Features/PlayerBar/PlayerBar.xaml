@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:MyMuse.Maui.ViewModels"
-             x:Class="MyMuse.Maui.Views.MiniPlayerBar"
-             x:DataType="vm:MusicPlayerViewModel">
+             xmlns:playerBar="clr-namespace:MyMuse.Maui.Features.PlayerBar"
+             x:Class="MyMuse.Maui.Features.PlayerBar.PlayerBar"
+             x:DataType="playerBar:PlayerBarViewModel">
 
     <Grid Padding="10,0,10,10">
-
-
-        <Border IsVisible="{Binding HasTrack}"
+        <Border IsVisible="{Binding Player.HasTrack}"
                 Stroke="#25153B"
                 StrokeThickness="1"
                 StrokeShape="RoundRectangle 10">
@@ -34,34 +32,34 @@
                             WidthRequest="50"
                             HeightRequest="50">
                         <Image Grid.Column="0"
-                               Source="{Binding CurrentSong.ImageUrl}"
+                               Source="{Binding Player.ArtworkUrl}"
                                Aspect="AspectFill"
                                WidthRequest="50"
                                HeightRequest="50" />
                     </Border>
 
                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="0">
-                        <Label Text="{Binding CurrentSong.Title}"
+                        <Label Text="{Binding Player.SongTitle}"
                                Style="{StaticResource Small}"
                                LineBreakMode="TailTruncation" />
-                        <Label Text="{Binding CurrentSong.Band}"
+                        <Label Text="{Binding Player.Band}"
                                Style="{StaticResource Micro}"
                                LineBreakMode="TailTruncation" />
                     </VerticalStackLayout>
 
                     <ImageButton Grid.Column="2"
-                                Source="{Binding PlayPauseBtnImage}"
+                                Source="{Binding Player.IsPlaying, Converter={StaticResource IsPlayingConverter}}"
                                 BackgroundColor="#A855F7"
                                 WidthRequest="40"
                                 HeightRequest="40"
                                 CornerRadius="22"
                                 Padding="12"
-                                Command="{Binding PlayPauseCommand}">
+                                Command="{Binding Player.PlayPauseCommand}">
                     </ImageButton>
                 </Grid>
                 <ProgressBar Grid.Row="1"
                              Grid.ColumnSpan="3"
-                             Progress="{Binding PositionProgress}"
+                             Progress="{Binding Player.PositionProgress}"
                              VerticalOptions="End"
                              HeightRequest="1"
                              ProgressColor="#A855F7"/>

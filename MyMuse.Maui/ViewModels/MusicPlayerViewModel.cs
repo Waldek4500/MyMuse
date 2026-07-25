@@ -1,39 +1,33 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MyMuse.Maui.Pages;
 using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels.Base;
 using MyMuse.Shared.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
 namespace MyMuse.Maui.ViewModels
 {
-    public partial class MusicPlayerViewModel : BaseViewModel, IQueryAttributable
+    public partial class MusicPlayerViewModel : BaseViewModel
     {
         #region Public Properties
         [ObservableProperty]
+        public partial SongDto? CurrentSong { get; set; }
+
+        [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(HasTrack))]
-        public partial SongDto CurrentSong { get; set; }
+        public partial string? AudioUrl { get; set; }
 
         [ObservableProperty]
-        public partial string AudioUrl { get; set; }
+        public partial string? SongTitle { get; set; }
 
         [ObservableProperty]
-        public partial string SongTitle { get; set; }
+        public partial string? Band { get; set; }
 
         [ObservableProperty]
-        public partial string Band { get; set; }
-
-        [ObservableProperty]
-        public partial string ArtworkUrl { get; set; }
+        public partial string? ArtworkUrl { get; set; }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(IsPlaying))]
-        [NotifyPropertyChangedFor(nameof(PlayPauseBtnImage))]
         public partial MediaElementState State { get; set; } = MediaElementState.None;
 
         [ObservableProperty]
@@ -59,21 +53,10 @@ namespace MyMuse.Maui.ViewModels
         public bool HasTrack => AudioUrl is not null && !String.IsNullOrEmpty(AudioUrl);
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(PlayInLoopBtnColor))]
         public partial bool ShouldPlayInLoop { get; set; }
-
-        public Color PlayInLoopBtnColor => ShouldPlayInLoop ? Color.FromRgba("#964DDBFF") : Colors.White;
-
-        public string PlayPauseBtnImage => IsPlaying ? "Icons/pause_icon.png" : "Icons/play_icon.png";
-
-        // Queue
-        public Queue<SongDto> SongsQueue { get; set; } = [];
-
-        public Stack<SongDto> PreviousSongs { get; set; } = [];
         #endregion
 
-        #region Private Fields
-        private bool _isNavigating;
+        #region Private Members
         private readonly SongsService _songsService;
         #endregion
 
@@ -83,9 +66,9 @@ namespace MyMuse.Maui.ViewModels
         }
 
         #region Private Methods
-        async partial void OnCurrentSongChanged(SongDto oldValue, SongDto newValue)
+        async partial void OnCurrentSongChanged(SongDto? oldValue, SongDto? newValue)
         {
-            if (oldValue is not null && newValue.Id == oldValue.Id)
+            if (newValue is null || newValue?.Id == oldValue?.Id)
                 return;
 
             SongTitle = newValue.Title;
@@ -93,8 +76,7 @@ namespace MyMuse.Maui.ViewModels
             ArtworkUrl = newValue.ImageUrl ?? "";
             AudioUrl = newValue.AudioUrl;
 
-            SongsQueue.Clear();
-            await FillQueueAsync();
+            SongChanged?.Invoke(this, newValue);
         }
 
         /// <summary>
@@ -109,31 +91,6 @@ namespace MyMuse.Maui.ViewModels
         #endregion
 
         #region Public Methods
-        public void GoToNextSongWhenMusicOver()
-        {
-            if (ShouldPlayInLoop)
-                return;
-
-            NextSong();
-        }
-
-        public async Task FillQueueAsync()
-        {
-            try
-            {
-                List<SongDto> songs = await _songsService.GetRandomSongsFromBandAsync(CurrentSong.BandId, 10);
-                songs.Remove(CurrentSong);
-
-                foreach (SongDto song in songs)
-                    SongsQueue.Enqueue(song);
-            }
-            catch(Exception ex)
-            {
-                Debug.WriteLine($"===Error in FillQueueAsync: {ex}");
-            }
-            
-        }
-
         /// <summary>
         /// Updates the current postion of song
         /// </summary>
@@ -155,57 +112,27 @@ namespace MyMuse.Maui.ViewModels
         }
 
         /// <summary>
-        /// When user starts dragging slider stops song
+        /// When user starts dragging slider, stops song
         /// </summary>
         public void BeginUserSeek() => PauseRequested?.Invoke(this, EventArgs.Empty);
 
-
         /// <summary>
-        /// When user complete dragging slider resume song and seek to new positon
+        /// When user complete dragging slider, resume song and seek to new positon
         /// </summary>
         /// <param name="seconds"></param>
         public void CompleteUserSeek(double seconds) =>
             SliderSeekCompleted?.Invoke(this, TimeSpan.FromSeconds(seconds));
-
-        public void ApplyQueryAttributes(IDictionary<string, object> query)
-        {
-            if (!query.TryGetValue("Song", out var song) || song is not SongDto)
-                return;
-
-            CurrentSong = (SongDto)query["Song"];
-        }
         #endregion
 
         #region Events
+        public event EventHandler<SongDto>? SongChanged;
+
         public event EventHandler? PlayRequested;
         public event EventHandler? PauseRequested;
         public event EventHandler<TimeSpan>? SliderSeekCompleted;
         #endregion
 
         #region Commands
-        [RelayCommand]
-        private void NextSong()
-        {
-            if (SongsQueue.TryDequeue(out SongDto? song))
-            {
-                PreviousSongs.Push(CurrentSong);
-                CurrentSong = song;
-            }
-        }
-
-        [RelayCommand]
-        private void PreviousSong()
-        {
-            if(PreviousSongs.TryPop(out SongDto? song))
-            {
-                SongsQueue.Enqueue(CurrentSong);
-                CurrentSong = song;
-            }
-        }
-
-        [RelayCommand]
-        private void TogglePlayInLoop() => ShouldPlayInLoop = !ShouldPlayInLoop;
-
         /// <summary>
         /// Plays or pauses the song
         /// </summary>
@@ -216,33 +143,6 @@ namespace MyMuse.Maui.ViewModels
                 PauseRequested?.Invoke(this, EventArgs.Empty);
             else
                 PlayRequested?.Invoke(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Navigates to previous page
-        /// </summary>
-        [RelayCommand]
-        private async Task GoBackAsync()
-        {
-            await Shell.Current.GoToAsync("..", true);
-        }
-
-        [RelayCommand]
-        private async Task GoToDetailsAsync()
-        {
-            if (_isNavigating)
-                return;
-
-            _isNavigating = true;
-
-            try
-            {
-                await Shell.Current.GoToAsync(nameof(SongDetailsPage));
-            }
-            finally
-            {
-                _isNavigating = false;
-            }    
         }
         #endregion
 

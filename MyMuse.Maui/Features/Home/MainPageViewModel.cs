@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MyMuse.Maui.Features.Player;
 using MyMuse.Maui.Helpers;
 using MyMuse.Maui.Models;
-using MyMuse.Maui.Pages;
 using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels;
 using MyMuse.Maui.ViewModels.Base;
@@ -60,7 +60,7 @@ namespace MyMuse.Maui.Features.Home
         /// </summary>
         private void SyncIsPlayingFlags()
         {
-            if (!_musicPlayerViewModel.HasTrack)
+            if (!_musicPlayerViewModel.HasTrack || _musicPlayerViewModel.CurrentSong is null)
                 return;
 
             var curentId = _musicPlayerViewModel.CurrentSong.Id;
@@ -133,7 +133,7 @@ namespace MyMuse.Maui.Features.Home
             if (song is null)
                 return;
 
-            await Shell.Current.GoToAsync(nameof(SongDetailsPage), true,
+            await Shell.Current.GoToAsync(nameof(PlayerPage), true,
                 new Dictionary<string, object>
                 {
                     {"Song", song }
