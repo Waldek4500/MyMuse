@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,5 +16,14 @@ namespace MyMuse.Maui.ViewModels.Base
         public partial bool IsBusy { get; set; }
 
         public bool IsNotBusy => !IsBusy;
+
+        /// <summary>
+        /// Navigates to previous page
+        /// </summary>
+        [RelayCommand]
+        private static async Task GoBackAsync()
+        {
+            await Shell.Current.GoToAsync("..", true);
+        }
     }
 }

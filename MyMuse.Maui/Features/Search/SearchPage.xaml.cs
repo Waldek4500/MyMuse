@@ -1,6 +1,3 @@
-using MyMuse.Maui.Pages;
-using MyMuse.Maui.Views;
-
 namespace MyMuse.Maui.Features.Search;
 
 public partial class SearchPage : ContentPage

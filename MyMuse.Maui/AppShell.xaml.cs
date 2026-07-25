@@ -1,4 +1,4 @@
-﻿using MyMuse.Maui.Pages;
+﻿using MyMuse.Maui.Features.Player;
 
 namespace MyMuse.Maui
 {
@@ -8,7 +8,7 @@ namespace MyMuse.Maui
         {
             InitializeComponent();
 
-            Routing.RegisterRoute(nameof(SongDetailsPage), typeof(SongDetailsPage));
+            Routing.RegisterRoute(nameof(PlayerPage), typeof(PlayerPage));
         }
     }
 }

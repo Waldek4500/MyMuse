@@ -1,4 +1,6 @@
-﻿using MyMuse.Maui.Models;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MyMuse.Maui.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,7 +8,7 @@ using System.Text;
 
 namespace MyMuse.Maui.Helpers
 {
-    public class SongHelper
+    public static partial class SongHelper
     {
         /// <summary>
         /// Changes IsSelected and IsPlaying song's properties to correct value
