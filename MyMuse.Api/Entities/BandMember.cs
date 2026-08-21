@@ -6,6 +6,6 @@ public class BandMember
     public required string FullName { get; set; }
     public int RoleId { get; set; }
     public Role? Role { get; set; }
-    public int BandId { get; set; }
-    public Band? Band { get; set; }
+    public int ArtistId { get; set; }
+    public Artist? Artist { get; set; }
 }

@@ -9,17 +9,18 @@
     <Border StrokeThickness="4" StrokeShape="{RoundRectangle CornerRadius={Binding Source={x:Reference This}, Path=CornerRadius}}" Stroke="White" IsVisible="{Binding IsSelected, FallbackValue='False'}">
         <Grid>
             <Image Source="equalizer.gif"
-               IsAnimationPlaying="True"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               HeightRequest="{Binding Source={x:Reference This}, Path=PlayingImageHeight}"
-               IsVisible="{Binding IsPlaying}"/>
+                   IsAnimationPlaying="True"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HeightRequest="{Binding Source={x:Reference This}, Path=PlayingImageHeight}"
+                   IsVisible="{Binding IsPlaying}"/>
 
-            <Image Source="{icons:Icon MoreHorizontal}"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               HeightRequest="{Binding Source={x:Reference This}, Path=PauseImageHeight}"
-               IsVisible="{Binding IsPaused}"/>
+            <Image Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.MoreHorizontal}}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   HeightRequest="{Binding Source={x:Reference This}, Path=PauseImageHeight}"
+                   IsVisible="{Binding IsPaused}"
+                   MaximumWidthRequest="60"/>
         </Grid>
     </Border>
 </ContentView>

@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
+using CommunityToolkit.Mvvm.Collections;
+using MyMuse.Maui.Features.SearchResults;
 
 namespace MyMuse.Maui.Features.Search
 {
@@ -15,11 +17,18 @@ namespace MyMuse.Maui.Features.Search
     {
         #region Private Members
         private readonly GenresService _genresService;
+
+        private int _pageNumber = 1;
+        private const int _pageSize = 6;
         #endregion
 
         #region Public Properties
         [ObservableProperty]
-        public partial ObservableCollection<GenreDto> Genres {  get; set; }
+        public partial ObservableCollection<GenreDto> Genres { get; set; } = [];
+
+        [ObservableProperty]
+        public partial bool CanExpand { get; set; } = true;
+
         #endregion
 
         #region Constructor
@@ -39,7 +48,16 @@ namespace MyMuse.Maui.Features.Search
             {
                 IsBusy = true;
 
-                Genres = [.. await _genresService.GetGenresAsync()];
+                List<GenreDto> genres = [.. await _genresService.GetGenresAsync(_pageSize, _pageNumber)];
+
+                if (genres.Count < _pageSize || genres.Count == 0)
+                {
+                    CanExpand = false;
+                    return;
+                }
+
+                foreach (var genre in genres)
+                    Genres.Add(genre);
             }
             catch (Exception ex)
             {
@@ -51,5 +69,18 @@ namespace MyMuse.Maui.Features.Search
             }
         }
 
+        [RelayCommand]
+        private async Task ShowMore()
+        {
+            _pageNumber += 1;
+            await GetGenresAsync();
+        }
+
+        [RelayCommand]
+        private async Task SearchBarTapped()
+        {
+            Debug.WriteLine($"===TEST");
+            await Shell.Current.GoToAsync(nameof(SearchResultsPage));
+        }
     }
 }

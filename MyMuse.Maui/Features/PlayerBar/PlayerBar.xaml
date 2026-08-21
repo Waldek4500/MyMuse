@@ -42,7 +42,7 @@
                         <Label Text="{Binding Player.SongTitle}"
                                Style="{StaticResource Small}"
                                LineBreakMode="TailTruncation" />
-                        <Label Text="{Binding Player.Band}"
+                        <Label Text="{Binding Player.Artist}"
                                Style="{StaticResource Micro}"
                                LineBreakMode="TailTruncation" />
                     </VerticalStackLayout>

@@ -3,4 +3,58 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <Style TargetType="Button" x:Key="FlatBtn">
+        <Setter Property="TextColor" Value="#80FFFFFF"/>
+        <Setter Property="BackgroundColor" Value="#14FFFFFF"/>
+        <Setter Property="CornerRadius" Value="15"/>
+        <Setter Property="MinimumHeightRequest" Value="0"/>
+        <Setter Property="Padding" Value="20,5"/>
+        <Setter Property="FontFamily" Value="DMSans"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="FilterButtonStyle" TargetType="RadioButton">
+        <Setter Property="ControlTemplate">
+            <ControlTemplate>
+                <Border StrokeThickness="0"
+                        StrokeShape="RoundRectangle 15"
+                        x:Name="border"
+                        Padding="15,0"
+                        HeightRequest="30">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroupList>
+                            <VisualStateGroup Name="CheckedStates">
+                                <VisualState Name="Checked">
+                                    <VisualState.Setters>
+                                        <Setter TargetName="border" Property="Border.BackgroundColor"
+                                                Value="{StaticResource Purple}"/>
+                                        <Setter TargetName="label" Property="Label.TextColor"
+                                                Value="White"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState Name="Unchecked">
+                                    <VisualState.Setters>
+                                        <Setter TargetName="border" Property="Border.BackgroundColor"
+                                                Value="#14a855f7"/>
+                                        <Setter TargetName="label" Property="Label.TextColor"
+                                                Value="#80FFFFFF"/>
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateGroupList>
+                    </VisualStateManager.VisualStateGroups>
+                    
+                    <Label Text="{TemplateBinding Content}"
+                           Style="{StaticResource Small}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           x:Name="label"
+                           Padding="0"
+                           Margin="0"/>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

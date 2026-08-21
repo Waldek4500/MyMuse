@@ -56,7 +56,7 @@
                                    MaxLines="1"
                                    HorizontalOptions="Start"
                                    MaximumWidthRequest="100"/>
-                            <Label Text="{Binding Data.Band}"
+                            <Label Text="{Binding Data.Artist}"
                                    Style="{StaticResource MicroViolet}"/>
                         </VerticalStackLayout>
                     </VerticalStackLayout>

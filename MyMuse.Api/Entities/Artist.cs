@@ -1,6 +1,6 @@
 ﻿namespace MyMuse.Api.Entities;
 
-public class Band
+public class Artist
 {
     public int Id { get; set; }
     public required string Name { get; set; }

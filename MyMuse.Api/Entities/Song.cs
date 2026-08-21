@@ -6,8 +6,8 @@ public class Song
     public required string Title { get; set; }
     public int? AlbumId { get; set; }
     public Album? Album { get; set; }
-    public int BandId { get; set; }
-    public Band? Band { get; set; }
+    public int ArtistId { get; set; }
+    public Artist? Artist { get; set; }
     public string? Lyrics { get; set; }
     public required string AudioUrl { get; set; }
     public int Duration { get; set; }

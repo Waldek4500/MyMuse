@@ -5,35 +5,54 @@
              xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
              xmlns:views="clr-namespace:MyMuse.Maui.Views"
              xmlns:playerBar="clr-namespace:MyMuse.Maui.Features.PlayerBar"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
              x:DataType="search:SearchPageViewModel"
              x:Class="MyMuse.Maui.Features.Search.SearchPage"
              Title=""
+             ClassId="SearchPage"
              BackgroundColor="{StaticResource BackgroundDark}">
     <Grid RowDefinitions="*, Auto">
+
         <ScrollView VerticalScrollBarVisibility="Never">
             <Grid RowDefinitions="Auto, Auto, Auto"
                   Padding="20,10,20,0"
                   RowSpacing="20">
 
+                <!-- Searchbar -->
                 <Label Text="Search"
-                   Style="{StaticResource Header}"/>
+                        Style="{StaticResource Header}"/>
 
-                <Border Grid.Row="1" StrokeThickness="0" StrokeShape="RoundRectangle 20">
-                    <SearchBar BackgroundColor="#1A1A2E"
+                <Border StrokeThickness="0" StrokeShape="RoundRectangle 20"
+                        Grid.Row="1">
+                    <SearchBar x:Name="SearchBar"
+                               BackgroundColor="#1A1A2E"
                                SearchIconColor="#615F84"
                                PlaceholderColor="#615F84"
                                Placeholder="What's in your head?"
                                TextColor="White"
                                FontSize="14"
                                MaximumWidthRequest="1000"
-                               HorizontalOptions="Fill"/>
+                               IsReadOnly="True"
+                               InputTransparent="True">
+                    </SearchBar>
                 </Border>
+                <Button Grid.Row="1"
+                        Command="{Binding SearchBarTappedCommand}" 
+                        MaximumWidthRequest="1000"
+                        Opacity="0"/>
 
+                <!-- Collection of music's genres -->
                 <CollectionView Grid.Row="2" ItemsSource="{Binding Genres}">
-
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout Span="2" Orientation="Vertical" HorizontalItemSpacing="10" VerticalItemSpacing="10"/>
                     </CollectionView.ItemsLayout>
+
+                    <CollectionView.Header>
+                            <Label Text="BROWSE CATEGORIES"
+                                   Style="{StaticResource SmallViolet}"
+                                   Margin="0,0,0,5"/>
+                    </CollectionView.Header>
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:GenreDto">
@@ -51,19 +70,34 @@
                                     <Border Grid.Column="1" StrokeShape="RoundRectangle 10 0 0 0" StrokeThickness="0"
                                             VerticalOptions="End"
                                             HorizontalOptions="End">
-                                        <Image Source="https://images.unsplash.com/photo-1470225620780-dba8ba36b745"
+                                        <Image Source="{Binding ImageUrl}"
                                                Opacity="0.6"/>
                                     </Border>
-                                    
                                 </Grid>
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
 
-                </CollectionView>
+                    <CollectionView.Footer>
+                        <Label Text="Show More"
+                               Style="{StaticResource SmallViolet}"
+                               HorizontalOptions="Center"
+                               IsVisible="{Binding CanExpand}"
+                               Margin="0,5,0,0">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShowMoreCommand}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </CollectionView.Footer>
 
+                </CollectionView>
             </Grid>
         </ScrollView>
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
 
         <playerBar:PlayerBar Grid.Row="1"/>
     </Grid>

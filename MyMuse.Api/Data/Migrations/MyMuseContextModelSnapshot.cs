@@ -17,9 +17,10 @@ namespace MyMuse.Api.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.9")
+                .HasAnnotation("ProductVersion", "10.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "pg_trgm");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("MyMuse.Api.Entities.Album", b =>
@@ -30,7 +31,7 @@ namespace MyMuse.Api.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BandId")
+                    b.Property<int>("ArtistId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Description")
@@ -48,12 +49,12 @@ namespace MyMuse.Api.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BandId");
+                    b.HasIndex("ArtistId");
 
                     b.ToTable("Albums");
                 });
 
-            modelBuilder.Entity("MyMuse.Api.Entities.Band", b =>
+            modelBuilder.Entity("MyMuse.Api.Entities.Artist", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,7 +77,7 @@ namespace MyMuse.Api.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bands");
+                    b.ToTable("Artists");
                 });
 
             modelBuilder.Entity("MyMuse.Api.Entities.BandMember", b =>
@@ -87,7 +88,7 @@ namespace MyMuse.Api.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BandId")
+                    b.Property<int>("ArtistId")
                         .HasColumnType("integer");
 
                     b.Property<string>("FullName")
@@ -99,7 +100,7 @@ namespace MyMuse.Api.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BandId");
+                    b.HasIndex("ArtistId");
 
                     b.HasIndex("RoleId");
 
@@ -120,8 +121,16 @@ namespace MyMuse.Api.Data.Migrations
                         .HasColumnType("text")
                         .HasDefaultValue("#7C3AED");
 
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsFeatured")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -160,12 +169,12 @@ namespace MyMuse.Api.Data.Migrations
                     b.Property<int?>("AlbumId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("ArtistId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("AudioUrl")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("BandId")
-                        .HasColumnType("integer");
 
                     b.Property<int>("Duration")
                         .HasColumnType("integer");
@@ -193,7 +202,7 @@ namespace MyMuse.Api.Data.Migrations
 
                     b.HasIndex("AlbumId");
 
-                    b.HasIndex("BandId");
+                    b.HasIndex("ArtistId");
 
                     b.ToTable("Songs");
                 });
@@ -223,20 +232,20 @@ namespace MyMuse.Api.Data.Migrations
 
             modelBuilder.Entity("MyMuse.Api.Entities.Album", b =>
                 {
-                    b.HasOne("MyMuse.Api.Entities.Band", "Band")
+                    b.HasOne("MyMuse.Api.Entities.Artist", "Artist")
                         .WithMany()
-                        .HasForeignKey("BandId")
+                        .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Band");
+                    b.Navigation("Artist");
                 });
 
             modelBuilder.Entity("MyMuse.Api.Entities.BandMember", b =>
                 {
-                    b.HasOne("MyMuse.Api.Entities.Band", "Band")
+                    b.HasOne("MyMuse.Api.Entities.Artist", "Artist")
                         .WithMany()
-                        .HasForeignKey("BandId")
+                        .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -246,7 +255,7 @@ namespace MyMuse.Api.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Band");
+                    b.Navigation("Artist");
 
                     b.Navigation("Role");
                 });
@@ -257,15 +266,15 @@ namespace MyMuse.Api.Data.Migrations
                         .WithMany()
                         .HasForeignKey("AlbumId");
 
-                    b.HasOne("MyMuse.Api.Entities.Band", "Band")
+                    b.HasOne("MyMuse.Api.Entities.Artist", "Artist")
                         .WithMany()
-                        .HasForeignKey("BandId")
+                        .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Album");
 
-                    b.Navigation("Band");
+                    b.Navigation("Artist");
                 });
 
             modelBuilder.Entity("MyMuse.Api.Entities.SongGenre", b =>

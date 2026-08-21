@@ -2,7 +2,9 @@ namespace MyMuse.Maui.Features.Search;
 
 public partial class SearchPage : ContentPage
 {
-	private readonly SearchPageViewModel _searchPageViewModel;
+    private bool _isInitalized;
+
+    private readonly SearchPageViewModel _searchPageViewModel;
 
 	public SearchPage(SearchPageViewModel searchPageViewModel)
 	{
@@ -14,6 +16,10 @@ public partial class SearchPage : ContentPage
     {
         base.OnNavigatedTo(args);
 
-		//await _searchPageViewModel.InitializeAsync();	
+        if (_isInitalized)
+            return;
+
+        _isInitalized = true;
+		await _searchPageViewModel.InitializeAsync();
     }
 }

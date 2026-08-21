@@ -14,22 +14,22 @@
 
     <TabBar>
         <Tab Title="Home"
-             Icon="{icons:Icon Home}">
+             Icon="{icons:Icon Glyph={x:Static icons:MaterialIcons.Home}}">
             <ShellContent ContentTemplate="{DataTemplate home:MainPage}"/>
         </Tab>
 
         <Tab Title="Search"
-             Icon="{icons:Icon Search}">
+             Icon="{icons:Icon Glyph={x:Static icons:MaterialIcons.Search}}">
             <ShellContent ContentTemplate="{DataTemplate search:SearchPage}"/>
         </Tab>
 
         <Tab Title="Library"
-             Icon="{icons:Icon Browse}">
+             Icon="{icons:Icon Glyph={x:Static icons:MaterialIcons.Browse}}">
             <ShellContent ContentTemplate="{DataTemplate search:SearchPage}"/>
         </Tab>
 
         <Tab Title="Liked"
-             Icon="{icons:Icon Favorite}">
+             Icon="{icons:Icon Glyph={x:Static icons:MaterialIcons.Favorite}}">
             <ShellContent ContentTemplate="{DataTemplate search:SearchPage}"/>
         </Tab>
     </TabBar>

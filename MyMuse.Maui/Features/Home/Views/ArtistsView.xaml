@@ -18,13 +18,13 @@
                    HorizontalOptions="End"
                    VerticalOptions="Center"/>
         </Grid>
-        <CollectionView ItemsSource="{Binding Bands}" HorizontalScrollBarVisibility="Never">
+        <CollectionView ItemsSource="{Binding Artists}" HorizontalScrollBarVisibility="Never">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:BandDto">
+                <DataTemplate x:DataType="models:ArtistDto">
                     <VerticalStackLayout>
                         <Grid>
                             <partialViews:ImagePlaceholderView

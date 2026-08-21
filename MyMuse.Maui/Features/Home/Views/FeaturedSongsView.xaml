@@ -4,7 +4,6 @@
              xmlns:partialViews="clr-namespace:MyMuse.Maui.Views.PartialViews"
              xmlns:viewmodel="clr-namespace:MyMuse.Maui.Features.Home"
              xmlns:models="clr-namespace:MyMuse.Maui.Models"
-             xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
              x:DataType="viewmodel:MainPageViewModel"
              x:Class="MyMuse.Maui.Features.Home.Views.FeaturedSongsView">
 
@@ -40,7 +39,7 @@
                                    Style="{StaticResource Medium}"
                                    LineBreakMode="TailTruncation"
                                    MaxLines="1"/>
-                                <Label Text="{Binding Data.Band}"
+                                <Label Text="{Binding Data.Artist}"
                                    Style="{StaticResource Micro}"/>
                             </VerticalStackLayout>
                         </Border>
