@@ -1,4 +1,5 @@
 ﻿using MyMuse.Maui.Features.Player;
+using MyMuse.Maui.Features.SearchResults;
 
 namespace MyMuse.Maui
 {
@@ -9,6 +10,7 @@ namespace MyMuse.Maui
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(PlayerPage), typeof(PlayerPage));
+            Routing.RegisterRoute(nameof(SearchResultsPage), typeof(SearchResultsPage));
         }
     }
 }

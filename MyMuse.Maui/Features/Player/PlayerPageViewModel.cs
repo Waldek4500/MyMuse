@@ -23,6 +23,6 @@ namespace MyMuse.Maui.Features.Player
                 return;
 
             Player.CurrentSong = (SongDto)query["Song"];
-        }
+         }
     }
 }

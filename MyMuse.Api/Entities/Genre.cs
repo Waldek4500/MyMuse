@@ -6,5 +6,7 @@
         public required string Name { get; set; }
         public string AssociatedColor { get; set; } = "#7C3AED";
         public string? ImageUrl { get; set; }
+        public int DisplayOrder { get; set; }
+        public bool IsFeatured { get; set; } = true;
     }
 }

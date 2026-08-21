@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                      xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
-                      xmlns:viewmodel="clr-namespace:MyMuse.Maui.Features.Home"
-                      xmlns:partialViews="clr-namespace:MyMuse.Maui.Views.PartialViews"
-                      xmlns:views="clr-namespace:MyMuse.Maui.Views"
-                      xmlns:homeViews="clr-namespace:MyMuse.Maui.Features.Home.Views"
-                      xmlns:playerBar="clr-namespace:MyMuse.Maui.Features.PlayerBar"
-                      x:DataType="viewmodel:MainPageViewModel"
-                      x:Class="MyMuse.Maui.Features.Home.MainPage"
-                      xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-                      Title=""
-                      BackgroundColor="{StaticResource BackgroundDark}">
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
+             xmlns:viewmodel="clr-namespace:MyMuse.Maui.Features.Home"
+             xmlns:partialViews="clr-namespace:MyMuse.Maui.Views.PartialViews"
+             xmlns:views="clr-namespace:MyMuse.Maui.Views"
+             xmlns:homeViews="clr-namespace:MyMuse.Maui.Features.Home.Views"
+             xmlns:playerBar="clr-namespace:MyMuse.Maui.Features.PlayerBar"
+             x:DataType="viewmodel:MainPageViewModel"
+             x:Class="MyMuse.Maui.Features.Home.MainPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             Title=""
+             BackgroundColor="{StaticResource BackgroundDark}">
 
     <Grid RowDefinitions="*,Auto" Margin="0" Padding="0">
 

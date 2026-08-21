@@ -43,7 +43,7 @@
                                 <Label Text="{Binding Data.Title}"
                                        Style="{StaticResource Small}"
                                        LineBreakMode="TailTruncation"/>
-                                <Label Text="{Binding Data.Band}"
+                                <Label Text="{Binding Data.Artist}"
                                        Style="{StaticResource MicroViolet}"
                                        LineBreakMode="TailTruncation"/>
                             </VerticalStackLayout>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:iconsCodes="clr-namespace:MyMuse.Maui.Resources.Images.Icons"
              xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
              xmlns:player="clr-namespace:MyMuse.Maui.Features.Player"
              x:Class="MyMuse.Maui.Features.Player.PlayerPage"
@@ -32,7 +31,7 @@
                          HeightRequest="20"
                          Padding="8"
                          Command="{Binding GoBackCommand}"
-                         Source="{icons:Icon ArrowDown}"/>
+                         Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.ArrowDown}}"/>
 
             <Label Grid.Column="1"
                    Style="{StaticResource Small}"
@@ -49,7 +48,7 @@
                          WidthRequest="20"
                          HeightRequest="20"
                          Padding="8"
-                         Source="{icons:Icon MoreHorizontal}"/>
+                         Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.MoreHorizontal}}"/>
         </Grid>
 
         <!-- Row 1: Image -->
@@ -71,7 +70,7 @@
                 <VerticalStackLayout>
                     <Label Text="{Binding Player.SongTitle}"
                            Style="{StaticResource Large}"/>
-                    <Label Text="{Binding Player.Band}"
+                    <Label Text="{Binding Player.Artist}"
                            Style="{StaticResource Micro}"/>
                 </VerticalStackLayout>
                 <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End"
@@ -81,13 +80,13 @@
                                  HeightRequest="20"
                                  WidthRequest="20"
                                  Padding="8"
-                                 Source="{icons:Icon AlignLeft}"/>
+                                 Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.AlignLeft}}"/>
 
                     <ImageButton HeightRequest="20"
                                  WidthRequest="20"
                                  Padding="8"
                                  CornerRadius="20"
-                                 Source="{icons:Icon Favorite}"/>
+                                 Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.Favorite}}"/>
                 </HorizontalStackLayout>
             </Grid>
 
@@ -125,7 +124,7 @@
                              WidthRequest="40"
                              CornerRadius="20"
                              Command="{Binding Queue.PreviousSongCommand}"
-                             Source="{icons:Icon SkipPrevious}"/>
+                             Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.SkipPrevious}}"/>
 
                 <ImageButton Grid.Column="2"
                              Source="{Binding Player.IsPlaying, Converter={StaticResource IsPlayingConverter}}"
@@ -140,7 +139,7 @@
                              WidthRequest="40"
                              CornerRadius="20"
                              Command="{Binding Queue.NextSongCommand}"
-                             Source="{icons:Icon SkipNext}"/>
+                             Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.SkipNext}}"/>
 
                 <ImageButton Grid.Column="4"
                              CornerRadius="22"
@@ -152,7 +151,7 @@
                              VerticalOptions="Center"
                              Command="{Binding Queue.TogglePlayInLoopCommand}">
                     <ImageButton.Source>
-                        <FontImageSource Glyph="{Static iconsCodes:MaterialIcons.Autorenew}"
+                        <FontImageSource Glyph="{Static icons:MaterialIcons.Autorenew}"
                                          FontFamily="MaterialSymbols"
                                          Color="{Binding Player.ShouldPlayInLoop, Converter={StaticResource IsOptionEnabledConverter}}"/>
                     </ImageButton.Source>

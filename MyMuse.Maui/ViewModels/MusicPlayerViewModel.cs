@@ -21,7 +21,7 @@ namespace MyMuse.Maui.ViewModels
         public partial string? SongTitle { get; set; }
 
         [ObservableProperty]
-        public partial string? Band { get; set; }
+        public partial string? Artist { get; set; }
 
         [ObservableProperty]
         public partial string? ArtworkUrl { get; set; }
@@ -68,11 +68,11 @@ namespace MyMuse.Maui.ViewModels
         #region Private Methods
         async partial void OnCurrentSongChanged(SongDto? oldValue, SongDto? newValue)
         {
-            if (newValue is null || newValue?.Id == oldValue?.Id)
+            if (newValue is null || newValue.Id == oldValue?.Id)
                 return;
 
             SongTitle = newValue.Title;
-            Band = newValue.Band;
+            Artist = newValue.Artist;
             ArtworkUrl = newValue.ImageUrl ?? "";
             AudioUrl = newValue.AudioUrl;
 

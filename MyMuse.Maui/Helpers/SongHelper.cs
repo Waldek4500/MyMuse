@@ -8,7 +8,7 @@ using System.Text;
 
 namespace MyMuse.Maui.Helpers
 {
-    public static partial class SongHelper
+    public static class SongHelper
     {
         /// <summary>
         /// Changes IsSelected and IsPlaying song's properties to correct value

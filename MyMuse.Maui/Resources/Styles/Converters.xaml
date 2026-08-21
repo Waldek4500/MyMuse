@@ -2,7 +2,8 @@
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:converters="clr-namespace:MyMuse.Maui.Converters">
 
     <toolkit:BoolToObjectConverter x:Key="IsOptionEnabledConverter"
                                    TrueObject="{StaticResource Purple}"
@@ -11,4 +12,8 @@
     <toolkit:BoolToObjectConverter x:Key="IsPlayingConverter"
                                    TrueObject="pause.png"
                                    FalseObject="play.png"/>
+
+    <converters:EqualsConverter x:Key="EqualsConverter"/>
+
+    <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
 </ResourceDictionary>

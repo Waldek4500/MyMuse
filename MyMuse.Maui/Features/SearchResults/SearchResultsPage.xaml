@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:searchResults="clr-namespace:MyMuse.Maui.Features.SearchResults"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
+             xmlns:playerBar="clr-namespace:MyMuse.Maui.Features.PlayerBar"
+             xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
+             x:DataType="searchResults:SearchResultsPageViewModel"
+             x:Class="MyMuse.Maui.Features.SearchResults.SearchResultsPage"
+             Title=""
+             BackgroundColor="{StaticResource BackgroundDark}">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False"/>
+    </Shell.BackButtonBehavior>
+
+    <Grid RowDefinitions="*, Auto">
+
+        <Grid RowDefinitions="Auto, *"
+              Padding="20,10,20,0">
+            <Grid ColumnDefinitions="Auto,*"
+                  Margin="0,0,0,20">
+                <ImageButton BackgroundColor="#44FFFFFF"
+                             CornerRadius="22"
+                             WidthRequest="20"
+                             HeightRequest="20"
+                             HorizontalOptions="Start"
+                             Padding="16,12,12,12"
+                             Margin="0,0,10,0"
+                             Command="{Binding GoBackCommand}"
+                             Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.ArrowBack}}"/>
+                <Border StrokeThickness="0" StrokeShape="RoundRectangle 20"
+                        Grid.Column="1">
+                    <SearchBar Text="{Binding SearchText, Mode=TwoWay}"
+                               x:Name="SearchBar"
+                               BackgroundColor="#1A1A2E"
+                               SearchIconColor="#615F84"
+                               PlaceholderColor="#615F84"
+                               Placeholder="What's in your head?"
+                               TextColor="White"
+                               FontSize="14"
+                               MaximumWidthRequest="1000"
+                               SearchCommand="{Binding ShowResultsCommand}">
+                        <SearchBar.Behaviors>
+                            <toolkit:EventToCommandBehavior EventName="Focused"
+                                                            BindingContext="{Binding Source={x:Reference SearchBar}, Path=BindingContext}"
+                                                            Command="{Binding Source={x:Reference SearchBar}, Path=BindingContext.ShowSuggestionsCommand}"/>
+                        </SearchBar.Behaviors>
+                    </SearchBar>
+                </Border>
+            </Grid>
+
+            <!-- Suggetsions -->
+            <CollectionView Grid.Row="1" ItemsSource="{Binding FilteredResults}"
+                            IsVisible="{Binding SearchState, Converter={StaticResource EqualsConverter}, ConverterParameter={x:Static searchResults:SearchState.Suggestions}}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SearchResultDto">
+                        <Grid ColumnDefinitions="*, Auto"
+                              Padding="10"
+                              ColumnSpacing="10">
+
+                            <Grid>
+                                <Grid ColumnDefinitions="0.2*, *"
+                                      ColumnSpacing="10">
+                                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 15">
+                                        <Image Source="{Binding ImageUrl}" Aspect="AspectFit"/>
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         VerticalOptions="Center"
+                                                         Spacing="2">
+                                        <Label Text="{Binding Title}"
+                                               Style="{StaticResource Medium}"/>
+                                        <HorizontalStackLayout Spacing="5">
+                                            <Border StrokeThickness="0"
+                                                    StrokeShape="RoundRectangle 10"
+                                                    BackgroundColor="#1F1332" Padding="8,4"
+                                                    VerticalOptions="Center">
+                                                <Label Text="{Binding Type}" FontSize="10" TextColor="#A855F7" TextTransform="Uppercase"/>
+                                            </Border>
+                                            <Label Text="{Binding Subtitle}" Style="{StaticResource MicroViolet}"
+                                                   VerticalOptions="Center"/>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type searchResults:SearchResultsPageViewModel}}, Path=GoToSelectedCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                            
+                            <Label Text="|" Grid.Column="2" TextColor="White" VerticalOptions="Center"/>
+                            
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Full results -->
+            <CollectionView Grid.Row="2"
+                            IsVisible="{Binding SearchState, Converter={StaticResource EqualsConverter}, ConverterParameter={x:Static searchResults:SearchState.Results}}"
+                            ItemsSource="{Binding FilteredResults}"
+                            RemainingItemsThreshold="3"
+                            RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
+
+                <CollectionView.EmptyViewTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Margin="0,25,0,0" HorizontalOptions="Center">
+                            <Image Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.Search}, Size=50, Color=#252436}"/>
+                            <Label Text="{Binding Source={x:Reference SearchBar}, Path=Text, StringFormat='No results for &quot;{0}&quot;'}"
+                                   Style="{StaticResource SmallViolet}"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.EmptyViewTemplate>
+
+                <CollectionView.Header>
+                    <HorizontalStackLayout Margin="0,0,0,20" Spacing="15">
+                        <RadioButton Style="{StaticResource FilterButtonStyle}"
+                                     Content="All"
+                                     IsChecked="{Binding SelectedFilter, Converter={StaticResource EqualsConverter}, ConverterParameter={x:Static searchResults:SearchFilter.All}}"/>
+                        <RadioButton Style="{StaticResource FilterButtonStyle}"
+                                     Content="Songs"
+                                     IsChecked="{Binding SelectedFilter, Converter={StaticResource EqualsConverter}, ConverterParameter={x:Static searchResults:SearchFilter.Songs}}"/>
+                        <RadioButton Style="{StaticResource FilterButtonStyle}"
+                                     Content="Albums"
+                                     IsChecked="{Binding SelectedFilter, Converter={StaticResource EqualsConverter}, ConverterParameter={x:Static searchResults:SearchFilter.Albums}}"/>
+                        <RadioButton Style="{StaticResource FilterButtonStyle}"
+                                     Content="Artists"
+                                     IsChecked="{Binding SelectedFilter, Converter={StaticResource EqualsConverter}, ConverterParameter={x:Static searchResults:SearchFilter.Artists}}"/>
+                    </HorizontalStackLayout>
+                </CollectionView.Header>
+                
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SearchResultDto">
+                        <Grid ColumnDefinitions="*, Auto"
+                              Padding="10"
+                              ColumnSpacing="10">
+                            
+                            <Grid>
+                                <Grid ColumnDefinitions="0.2*, *"
+                                      ColumnSpacing="10">
+                                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 15">
+                                        <Image Source="{Binding ImageUrl}" Aspect="AspectFit"/>
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         VerticalOptions="Center"
+                                                         Spacing="2">
+                                        <Label Text="{Binding Title}"
+                                               Style="{StaticResource Medium}"/>
+                                        <HorizontalStackLayout Spacing="5">
+                                            <Border StrokeThickness="0"
+                                                    StrokeShape="RoundRectangle 10"
+                                                    BackgroundColor="#26A855f7" Padding="8,4"
+                                                    VerticalOptions="Center">
+                                                <Label Text="{Binding Type}" FontSize="10" TextColor="#A855f7" TextTransform="Uppercase"/>
+                                            </Border>
+                                            <Label Text="{Binding Subtitle}" Style="{StaticResource MicroViolet}"
+                                                   VerticalOptions="Center"/>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                          Command="{Binding Source={RelativeSource AncestorType={x:Type searchResults:SearchResultsPageViewModel}}, Path=GoToSelectedCommand}"/>
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                            
+                            <ImageButton Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.MoreVert}}"
+                                         Grid.Column="2"
+                                         VerticalOptions="Center"
+                                         HorizontalOptions="End"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+
+        <ActivityIndicator HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"/>
+
+        <playerBar:PlayerBar Grid.Row="1"/>
+    </Grid>
+</ContentPage>

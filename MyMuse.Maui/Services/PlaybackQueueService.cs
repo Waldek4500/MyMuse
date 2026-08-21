@@ -13,7 +13,6 @@ public partial class PlaybackQueueService
     public Queue<SongDto> SongsQueue { get; set; } = [];
     public Stack<SongDto> PreviousSongs { get; set; } = [];
 
-
     public PlaybackQueueService(MusicPlayerViewModel player, SongsService songsService)
     {
         _player = player;
@@ -38,7 +37,7 @@ public partial class PlaybackQueueService
     {
         try
         {
-            List<SongDto> songs = await _songsService.GetRandomSongsFromBandAsync(currentSong.BandId, 10);
+            List<SongDto> songs = await _songsService.GetRandomFromBandAsync(currentSong.ArtistId, 10);
             songs.Remove(currentSong);
 
             foreach (SongDto song in songs)

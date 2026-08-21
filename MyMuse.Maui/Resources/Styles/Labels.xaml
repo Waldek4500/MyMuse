@@ -27,12 +27,22 @@
         <Setter Property="FontAttributes" Value="Bold"/>
     </Style>
 
+    <Style TargetType="Label" BasedOn="{StaticResource Medium}"
+           x:Key="MediumViolet">
+        <Setter Property="TextColor" Value="{StaticResource Violet}"/>
+    </Style>
+
     <Style TargetType="Label"
        x:Key="Small">
         <Setter Property="FontFamily" Value="DMSans"/>
         <Setter Property="TextColor" Value="White"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style TargetType="Label" BasedOn="{StaticResource Small}"
+           x:Key="SmallViolet">
+        <Setter Property="TextColor" Value="{StaticResource Violet}"/>
     </Style>
 
     <Style TargetType="Label"
@@ -42,11 +52,9 @@
         <Setter Property="FontSize" Value="13"/>
     </Style>
 
-    <Style TargetType="Label"
-       x:Key="MicroViolet">
-        <Setter Property="FontFamily" Value="DMSans"/>
-        <Setter Property="TextColor" Value="#5E5C80"/>
-        <Setter Property="FontSize" Value="13"/>
+    <Style TargetType="Label" BasedOn="{StaticResource Micro}"
+           x:Key="MicroViolet">
+        <Setter Property="TextColor" Value="{StaticResource Violet}"/>
     </Style>
 
 </ResourceDictionary>

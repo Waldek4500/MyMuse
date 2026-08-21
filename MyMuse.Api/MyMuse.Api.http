@@ -6,16 +6,16 @@ GET {{MyMuse.Api_HostAddress}}/songs/
 GET {{MyMuse.Api_HostAddress}}/songs/album/1
 
 ###
-GET {{MyMuse.Api_HostAddress}}/songs/featured/5
+GET {{MyMuse.Api_HostAddress}}/songs/featured?limit=5
 
 ###
-GET {{MyMuse.Api_HostAddress}}/songs/trending/4
+GET {{MyMuse.Api_HostAddress}}/songs/trending?limit=4
 
 ###
-GET {{MyMuse.Api_HostAddress}}/bands/
+GET {{MyMuse.Api_HostAddress}}/bands
 
 ###
-GET {{MyMuse.Api_HostAddress}}/songs/bandRandom/2/5
+GET {{MyMuse.Api_HostAddress}}/songs/randomFromBand/1?limit=1
 
 ###
-GET {{MyMuse.Api_HostAddress}}/genres/
+GET {{MyMuse.Api_HostAddress}}/genres?offset=0&limit=40

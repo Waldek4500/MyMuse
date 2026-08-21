@@ -4,8 +4,10 @@ using MyMuse.Maui.Features.Home;
 using MyMuse.Maui.Features.Player;
 using MyMuse.Maui.Features.PlayerBar;
 using MyMuse.Maui.Features.Search;
+using MyMuse.Maui.Features.SearchResults;
 using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels;
+using System.Text.Json;
 
 namespace MyMuse.Maui
 {
@@ -29,9 +31,15 @@ namespace MyMuse.Maui
                 });
 
             builder.Services.AddSingleton<SongsService>();
-            builder.Services.AddSingleton<BandsService>();
+            builder.Services.AddSingleton<ArtistsService>();
             builder.Services.AddSingleton<GenresService>();
+            builder.Services.AddSingleton<SearchService>();
             builder.Services.AddSingleton<PlaybackQueueService>();
+            builder.Services.AddSingleton<HttpClient>(new HttpClient()
+            {
+                BaseAddress = new Uri("http://192.168.0.52:5010"),
+                Timeout = TimeSpan.FromSeconds(5)
+            });
 
             builder.Services.AddSingleton<MusicPlayerViewModel>();
 
@@ -46,6 +54,9 @@ namespace MyMuse.Maui
 
             builder.Services.AddSingleton<SearchPage>();
             builder.Services.AddSingleton<SearchPageViewModel>();
+
+            builder.Services.AddTransient<SearchResultsPage>();
+            builder.Services.AddTransient<SearchResultsPageViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();

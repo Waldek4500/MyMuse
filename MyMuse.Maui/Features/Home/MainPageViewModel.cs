@@ -17,7 +17,7 @@ namespace MyMuse.Maui.Features.Home
     {
         #region Private Members
         private readonly SongsService _songsService;
-        private readonly BandsService _bandsService;
+        private readonly ArtistsService _bandsService;
         private readonly MusicPlayerViewModel _musicPlayerViewModel;
         #endregion
 
@@ -32,7 +32,7 @@ namespace MyMuse.Maui.Features.Home
         public partial ObservableCollection<Song> TrendingSongs { get; set; } = [.. new Song[5]];
 
         [ObservableProperty]
-        public partial ObservableCollection<BandDto> Bands { get; set; } = [.. new BandDto[4]];
+        public partial ObservableCollection<ArtistDto> Artists { get; set; } = [.. new ArtistDto[4]];
 
         [ObservableProperty]
         public partial bool[] ShowPlaceHolder { get; set; } = { true, true, true, true };
@@ -42,10 +42,10 @@ namespace MyMuse.Maui.Features.Home
         #endregion
 
         #region Constructor
-        public MainPageViewModel(SongsService songsService, BandsService bandsService, MusicPlayerViewModel musicPlayerViewModel)
+        public MainPageViewModel(SongsService songsService, ArtistsService artistsService, MusicPlayerViewModel musicPlayerViewModel)
         {
             _songsService = songsService;
-            _bandsService = bandsService;
+            _bandsService = artistsService;
             _musicPlayerViewModel = musicPlayerViewModel;
 
             _musicPlayerViewModel.PropertyChanged += OnMusicPlayerViewModelPropertyChanged;
@@ -93,28 +93,28 @@ namespace MyMuse.Maui.Features.Home
                 IsRefreshing = false;
                 IsBusy = true;
 
-                FeaturedSongs = [.. (await _songsService.GetFeaturedSongsAsync(4)).Select(song => new Song(song)) ];
+                FeaturedSongs = [.. (await _songsService.GetFeaturedAsync(4)).Select(song => new Song(song)) ];
                 ShowPlaceHolder[0] = false;
 
-                RecentSongs = [.. (await _songsService.GetRecentSongsAsync()).Select(song => new Song(song))];
+                RecentSongs = [.. (await _songsService.GetRecentAsync()).Select(song => new Song(song))];
                 ShowPlaceHolder[1] = false;
 
-                TrendingSongs = [.. (await _songsService.GetTrendingSongsAsync(5)).Select(song => new Song(song))];
+                TrendingSongs = [.. (await _songsService.GetTrendingAsync(5)).Select(song => new Song(song))];
                 ShowPlaceHolder[2] = false;
 
-                Bands = [.. await _bandsService.GetBandsAsync()];
+                Artists = [.. await _bandsService.GetBandsAsync()];
                 ShowPlaceHolder[3] = false;
 
                 SyncIsPlayingFlags();
             }
             catch (Exception ex)
             {
+                Debug.WriteLine($"====GetSongsAsync Error: {ex}");
+
                 bool isAccepted = await Shell.Current.DisplayAlertAsync("Error occurred", "We coudn't provide you songs.", "Try again", "Cancel");
                 
                 if(isAccepted || ShowPlaceHolder[0])
                     await GetSongsAsync();
-
-                Debug.WriteLine($"====GetSongsAsync Error: {ex}");
             }
             finally
             {
