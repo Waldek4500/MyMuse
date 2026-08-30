@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
              xmlns:player="clr-namespace:MyMuse.Maui.Features.Player"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="MyMuse.Maui.Features.Player.PlayerPage"
              x:DataType="player:PlayerPageViewModel"
-             BackgroundColor="{StaticResource BackgroundDark}"
              Title=""
              Shell.PresentationMode="ModalAnimated">
 
@@ -13,7 +13,7 @@
         <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
     </Shell.BackButtonBehavior>
 
-    <Grid RowDefinitions="Auto, *, Auto" Padding="20,10,20,0">
+    <Grid RowDefinitions="Auto, *, Auto" Padding="20,10,20,40">
 
         <ActivityIndicator IsRunning="{Binding Player.IsBuffering}"
                            IsVisible="{Binding Player.IsBuffering}"
@@ -24,12 +24,9 @@
 
         <!-- Row 0: Header -->
         <Grid ColumnDefinitions="Auto, *, Auto">
-            <ImageButton BackgroundColor="#44FFFFFF"
-                         CornerRadius="22"
-                         HorizontalOptions="Start"
-                         WidthRequest="20"
-                         HeightRequest="20"
+            <ImageButton Style="{StaticResource RoundBtn}"
                          Padding="8"
+                         HorizontalOptions="Start"
                          Command="{Binding GoBackCommand}"
                          Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.ArrowDown}}"/>
 
@@ -43,10 +40,7 @@
 
             <ImageButton Grid.Column="2"
                          HorizontalOptions="End"
-                         BackgroundColor="#44FFFFFF"
-                         CornerRadius="22"
-                         WidthRequest="20"
-                         HeightRequest="20"
+                         Style="{StaticResource RoundBtn}"
                          Padding="8"
                          Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.MoreHorizontal}}"/>
         </Grid>
@@ -60,11 +54,12 @@
             <Image Source="{Binding Player.ArtworkUrl}"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
-                   Aspect="AspectFit"/>
+                   Aspect="AspectFit"
+                   MaximumHeightRequest="500"/>
         </Border>
 
         <!-- Row 2: Audio Player -->
-        <VerticalStackLayout Grid.Row="2" Margin="0,0,0,20">
+        <VerticalStackLayout Grid.Row="2">
             <Grid ColumnDefinitions="*,*"
                   Margin="10">
                 <VerticalStackLayout>
@@ -75,29 +70,35 @@
                 </VerticalStackLayout>
                 <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End"
                                        Spacing="10">
-                    <ImageButton BackgroundColor="#44FFFFFF"
-                                 CornerRadius="22"
-                                 HeightRequest="20"
-                                 WidthRequest="20"
+                    <ImageButton Style="{StaticResource RoundBtn}"
                                  Padding="8"
                                  Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.AlignLeft}}"/>
 
-                    <ImageButton HeightRequest="20"
-                                 WidthRequest="20"
+                    <ImageButton HeightRequest="40"
+                                 WidthRequest="40"
                                  Padding="8"
-                                 CornerRadius="20"
+                                 CornerRadius="22"
                                  Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.Favorite}}"/>
                 </HorizontalStackLayout>
             </Grid>
 
             <VerticalStackLayout>
                 <Slider ThumbColor="White"
-                        MinimumTrackColor="#A855F7"
-                        DragStarted="Slider_DragStarted"
-                        DragCompleted="Slider_DragCompleted"
+                        MinimumTrackColor="{StaticResource Purple}"
                         Value="{Binding Player.PositionSeconds}"
                         Minimum="0"
-                        Maximum="{Binding Player.DurationSeconds}"/>
+                        Maximum="{Binding Player.DurationSeconds}"
+                        x:Name="Slider">
+                    <Slider.Behaviors>
+                        <toolkit:EventToCommandBehavior EventName="DragStarted"
+                                                        BindingContext="{Binding Source={x:Reference Slider}, Path=BindingContext}"
+                                                        Command="{Binding Source={x:Reference Slider}, Path=BindingContext.PauseCommand}"/>
+                        <toolkit:EventToCommandBehavior EventName="DragCompleted"
+                                                        BindingContext="{Binding Source={x:Reference Slider}, Path=BindingContext}"
+                                                        CommandParameter="{Binding Source={x:Reference Slider}, Path=Value}"
+                                                        Command="{Binding Source={x:Reference Slider}, Path=BindingContext.SeekToAndResumeCommand}"/>
+                    </Slider.Behaviors>
+                </Slider>
                 <Grid ColumnDefinitions="*, *"
                       Margin="10,0">
                     <Label Text="{Binding Player.PositionText}"
@@ -110,43 +111,40 @@
                            Margin="0" Padding="0"/>
                 </Grid>
             </VerticalStackLayout>
-            <Grid ColumnDefinitions="*,*,*,*,*"
+            <Grid ColumnDefinitions="*, Auto, *"
                   Margin="10">
                 <ImageButton Source="shuffle.png"
                              CornerRadius="22"
                              Padding="10"
-                             Aspect="AspectFit"
-                             WidthRequest="20"
+                             WidthRequest="40"
                              HorizontalOptions="Start"
                              VerticalOptions="Center"/>
 
-                <ImageButton Grid.Column="1"
-                             WidthRequest="40"
-                             CornerRadius="20"
-                             Command="{Binding Queue.PreviousSongCommand}"
-                             Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.SkipPrevious}}"/>
+                <HorizontalStackLayout Grid.Column="1"
+                                       Spacing="20">
+                    <ImageButton WidthRequest="40"
+                                 CornerRadius="20"
+                                 Command="{Binding Queue.PreviousSongCommand}"
+                                 Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.SkipPrevious}, Size=40}"/>
 
-                <ImageButton Grid.Column="2"
-                             Source="{Binding Player.IsPlaying, Converter={StaticResource IsPlayingConverter}}"
-                             BackgroundColor="#A855F7"
-                             WidthRequest="60"
-                             HeightRequest="60"
-                             CornerRadius="30"
-                             Padding="15"
-                             Command="{Binding Player.PlayPauseCommand}"/>
+                    <ImageButton Source="{Binding Player.IsPlaying, Converter={StaticResource IsPlayingConverter}}"
+                                 BackgroundColor="#A855F7"
+                                 WidthRequest="60"
+                                 HeightRequest="60"
+                                 CornerRadius="30"
+                                 Padding="15"
+                                 Command="{Binding Player.PlayPauseCommand}"/>
 
-                <ImageButton Grid.Column="3"
-                             WidthRequest="40"
-                             CornerRadius="20"
-                             Command="{Binding Queue.NextSongCommand}"
-                             Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.SkipNext}}"/>
+                    <ImageButton WidthRequest="40"
+                                 CornerRadius="20"
+                                 Command="{Binding Queue.NextSongCommand}"
+                                 Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.SkipNext}, Size=40}"/>
+                </HorizontalStackLayout>
 
                 <ImageButton Grid.Column="4"
-                             CornerRadius="22"
+                             Style="{StaticResource RoundBtn}"
+                             BackgroundColor="Transparent"
                              Padding="8"
-                             Aspect="AspectFit"
-                             WidthRequest="20"
-                             HeightRequest="20"
                              HorizontalOptions="End"
                              VerticalOptions="Center"
                              Command="{Binding Queue.TogglePlayInLoopCommand}">

@@ -10,7 +10,7 @@ namespace MyMuse.Api.Features.Songs
                 song.Id,
                 song.Title,
                 song.Album?.Title,
-                song.Artist is not null ? song.Artist.Name : "Unknown",
+                song.Artist!.Name,
                 song.ArtistId,
                 song.Lyrics,
                 song.AudioUrl,

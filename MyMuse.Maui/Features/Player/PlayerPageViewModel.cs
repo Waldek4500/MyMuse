@@ -24,5 +24,11 @@ namespace MyMuse.Maui.Features.Player
 
             Player.CurrentSong = (SongDto)query["Song"];
          }
+
+        [RelayCommand]
+        private void Pause() => Player.Pause();
+
+        [RelayCommand]
+        private void SeekToAndResume(double seconds) => Player.SeekToAndResume(seconds);
     }
 }

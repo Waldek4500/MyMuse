@@ -15,12 +15,12 @@ namespace MyMuse.Maui.Helpers
         /// </summary>
         /// <param name="songs">Collection of the songs to sync</param>
         /// <param name="currentSongId">Id of the currently playing song</param>
-        public static void SyncCollection(ObservableCollection<Song> songs, int currentSongId, bool isPlaying)
+        public static void SyncCollection(IEnumerable<Song> songs, int? currentSongId, bool isPlaying)
         {
             foreach (Song song in songs)
             {
-                if (song is null)
-                    continue;
+                if(currentSongId is null)
+                    song.IsSelected = song.IsPlaying = false;
 
                 song.IsSelected = song.Data is not null && song.Data.Id == currentSongId;
                 song.IsPlaying = song.Data is not null && song.Data.Id == currentSongId && isPlaying;

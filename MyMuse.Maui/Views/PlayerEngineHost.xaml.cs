@@ -17,8 +17,8 @@ public partial class PlayerEngineHost : ContentView
 
         BindingContext = _playerViewModel;
 
-        _playerViewModel.PlayRequested += (_, _) => AudioPlayer.Play();
-        _playerViewModel.PauseRequested += (_, _) => AudioPlayer.Pause();
+        _playerViewModel.PlayRequested += () => AudioPlayer.Play();
+        _playerViewModel.PauseRequested += () => AudioPlayer.Pause();
         _playerViewModel.SliderSeekCompleted += async (_, position) =>
         {
             await AudioPlayer.SeekTo(position, CancellationToken.None);

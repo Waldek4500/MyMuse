@@ -22,24 +22,20 @@
                              Spacing="5">
             <BindableLayout.ItemTemplate>
                 <DataTemplate x:DataType="models:Song">
-                    <Grid ColumnDefinitions="Auto, *">
-                        <HorizontalStackLayout Spacing="10" MaximumWidthRequest="200">
+                    <Grid ColumnDefinitions="*, Auto">
+
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
                             <Grid>
                                 <Border Stroke="Transparent" StrokeShape="RoundRectangle 15">
 
                                     <Image Source="{Binding Data.ImageUrl}"
-                                            WidthRequest="70"
-                                            Aspect="AspectFill"/>
-
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer CommandParameter="{Binding Data}"
-                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=GoToSongDetailsCommand}"/>
-                                    </Border.GestureRecognizers>
+                                           WidthRequest="70"
+                                           Aspect="AspectFill"/>
                                 </Border>
-                                
+
                                 <partialViews:SelectedSongMarker CornerRadius="15" PlayingImageHeight="20" PauseImageHeight="30"/>
                             </Grid>
-                            <VerticalStackLayout VerticalOptions="Center">
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
                                 <Label Text="{Binding Data.Title}"
                                        Style="{StaticResource Small}"
                                        LineBreakMode="TailTruncation"/>
@@ -47,7 +43,12 @@
                                        Style="{StaticResource MicroViolet}"
                                        LineBreakMode="TailTruncation"/>
                             </VerticalStackLayout>
-                        </HorizontalStackLayout>
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding Data}"
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=GoToSongDetailsCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
                         <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center">
                             <Label Text="{Binding Data.PlaysNumber, StringFormat='{0} Plays'}"
                                    Style="{StaticResource MicroViolet}"/>

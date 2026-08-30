@@ -15,5 +15,9 @@
 
     <converters:EqualsConverter x:Key="EqualsConverter"/>
 
+    <converters:SearchResultTypeToColorConverter x:Key="ResultTypeToColorConverter"/>
+
+    <converters:SearchResultTypeToCornerRadiusConverter x:Key="ResultTypeToCornerRadiusConverter"/>
+
     <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter"/>
 </ResourceDictionary>

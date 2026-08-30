@@ -7,9 +7,9 @@ using System.Text;
 
 namespace MyMuse.Maui.Models
 {
-    public partial class Song : ObservableObject
+    public partial class Song(SongDto song) : ObservableObject
     {
-        public SongDto Data { get; }
+        public SongDto Data { get; } = song;
 
         [ObservableProperty]
         public partial bool IsSelected { get; set; } = false;
@@ -20,9 +20,11 @@ namespace MyMuse.Maui.Models
 
         public bool IsPaused => !IsPlaying;
 
-        public Song(SongDto song)
-        {
-            Data = song;
-        }
+        /// <summary>
+        /// For numbering puproses
+        /// </summary>
+        public int Number { get; set; }
+
+        public string DurationText => TimeSpan.FromSeconds(Data.Duration).ToString(@"mm\:ss");
     }
 }
