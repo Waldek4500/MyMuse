@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using MyMuse.Maui.Features.Album;
 using MyMuse.Maui.Features.Home;
 using MyMuse.Maui.Features.Player;
 using MyMuse.Maui.Features.PlayerBar;
@@ -31,10 +32,12 @@ namespace MyMuse.Maui
                 });
 
             builder.Services.AddSingleton<SongsService>();
+            builder.Services.AddSingleton<AlbumsService>();
             builder.Services.AddSingleton<ArtistsService>();
             builder.Services.AddSingleton<GenresService>();
             builder.Services.AddSingleton<SearchService>();
             builder.Services.AddSingleton<PlaybackQueueService>();
+            builder.Services.AddTransient<NowPlayingSyncService>();
             builder.Services.AddSingleton<HttpClient>(new HttpClient()
             {
                 BaseAddress = new Uri("http://192.168.0.52:5010"),
@@ -57,6 +60,9 @@ namespace MyMuse.Maui
 
             builder.Services.AddTransient<SearchResultsPage>();
             builder.Services.AddTransient<SearchResultsPageViewModel>();
+
+            builder.Services.AddTransient<AlbumPage>();
+            builder.Services.AddTransient<AlbumPageViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();

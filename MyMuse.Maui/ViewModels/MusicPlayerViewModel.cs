@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MyMuse.Maui.Helpers;
 using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels.Base;
 using MyMuse.Shared.Dtos;
@@ -50,7 +51,7 @@ namespace MyMuse.Maui.ViewModels
 
         public bool IsPlaying => State == MediaElementState.Playing;
 
-        public bool HasTrack => AudioUrl is not null && !String.IsNullOrEmpty(AudioUrl);
+        public bool HasTrack => !String.IsNullOrEmpty(AudioUrl);
 
         [ObservableProperty]
         public partial bool ShouldPlayInLoop { get; set; }
@@ -66,7 +67,7 @@ namespace MyMuse.Maui.ViewModels
         }
 
         #region Private Methods
-        async partial void OnCurrentSongChanged(SongDto? oldValue, SongDto? newValue)
+        partial void OnCurrentSongChanged(SongDto? oldValue, SongDto? newValue)
         {
             if (newValue is null || newValue.Id == oldValue?.Id)
                 return;
@@ -76,6 +77,7 @@ namespace MyMuse.Maui.ViewModels
             ArtworkUrl = newValue.ImageUrl ?? "";
             AudioUrl = newValue.AudioUrl;
 
+            PlayRequested?.Invoke();
             SongChanged?.Invoke(this, newValue);
         }
 
@@ -92,43 +94,43 @@ namespace MyMuse.Maui.ViewModels
 
         #region Public Methods
         /// <summary>
-        /// Updates the current postion of song
+        /// Updates the current postion of song.
         /// </summary>
         /// <param name="postion">New song position</param>
         public void UpdatePostion(TimeSpan postion)
         {
             PositionSeconds = postion.TotalSeconds;
-            PositionText = FormatTime(postion);
+            PositionText = TimeHelper.FormatTime(postion);
         }
 
         /// <summary>
-        /// Updates the song duration
+        /// Updates the song duration.
         /// </summary>
         /// <param name="duration">Song duration</param>
         public void UpdateDuration(TimeSpan duration)
         {
             DurationSeconds = duration.TotalSeconds;
-            DurationText = FormatTime(duration);
+            DurationText = TimeHelper.FormatTime(duration);
         }
 
         /// <summary>
-        /// When user starts dragging slider, stops song
+        /// Pauses audio playback.
         /// </summary>
-        public void BeginUserSeek() => PauseRequested?.Invoke(this, EventArgs.Empty);
+        public void Pause() => PauseRequested?.Invoke();
 
         /// <summary>
-        /// When user complete dragging slider, resume song and seek to new positon
+        /// Resumes song and seek to new positon.
         /// </summary>
         /// <param name="seconds"></param>
-        public void CompleteUserSeek(double seconds) =>
+        public void SeekToAndResume(double seconds) =>
             SliderSeekCompleted?.Invoke(this, TimeSpan.FromSeconds(seconds));
         #endregion
 
         #region Events
         public event EventHandler<SongDto>? SongChanged;
 
-        public event EventHandler? PlayRequested;
-        public event EventHandler? PauseRequested;
+        public event Action? PlayRequested;
+        public event Action? PauseRequested;
         public event EventHandler<TimeSpan>? SliderSeekCompleted;
         #endregion
 
@@ -140,22 +142,10 @@ namespace MyMuse.Maui.ViewModels
         private void PlayPause()
         {
             if (IsPlaying)
-                PauseRequested?.Invoke(this, EventArgs.Empty);
+                PauseRequested?.Invoke();
             else
-                PlayRequested?.Invoke(this, EventArgs.Empty);
+                PlayRequested?.Invoke();
         }
-        #endregion
-
-        #region Helpers
-        /// <summary>
-        /// Changes TimeSpan to string with correct format
-        /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
-        private static string FormatTime(TimeSpan time) =>
-            time.Hours > 0
-                ? time.ToString(@"hh\:mm\:ss")
-                : time.ToString(@"mm\:ss");
         #endregion
     }
 }

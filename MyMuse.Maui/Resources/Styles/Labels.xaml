@@ -33,7 +33,7 @@
     </Style>
 
     <Style TargetType="Label"
-       x:Key="Small">
+           x:Key="Small">
         <Setter Property="FontFamily" Value="DMSans"/>
         <Setter Property="TextColor" Value="White"/>
         <Setter Property="FontSize" Value="14"/>

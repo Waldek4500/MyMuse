@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MyMuse.Maui.Features.Album;
 using MyMuse.Maui.Features.Player;
 using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels.Base;
@@ -210,6 +211,9 @@ namespace MyMuse.Maui.Features.SearchResults
                     {
                         Debug.WriteLine($"Error in GoToSelectedAsync: {ex}");
                     }
+                    break;
+                case SearchResultType.Album:
+                    await Shell.Current.GoToAsync($"{nameof(AlbumPage)}?AlbumId={searchResultDto.Id}");
                     break;
             }
         }

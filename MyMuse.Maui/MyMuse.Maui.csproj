@@ -80,7 +80,6 @@
 		<PackageReference Include="CommunityToolkit.Maui" Version="14.2.0" />
 		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="10.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="10.0.80" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
 	</ItemGroup>
@@ -99,7 +98,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Features\Album\AlbumPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Features\SearchResults\SearchResultsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Features\SearchResults\Views\SearchResultsViews.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Features\SearchResults\Views\SearchSuggestionsView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Features\Search\SearchPage.xaml">

@@ -77,9 +77,8 @@ namespace MyMuse.Maui.Features.Search
         }
 
         [RelayCommand]
-        private async Task SearchBarTapped()
+        private async Task GoToSearchResultsAsync()
         {
-            Debug.WriteLine($"===TEST");
             await Shell.Current.GoToAsync(nameof(SearchResultsPage));
         }
     }

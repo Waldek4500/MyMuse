@@ -55,7 +55,25 @@ namespace MyMuse.Maui.Services
 
         public async Task<List<SongDto>> GetRandomFromBandAsync(int artistId, int count)
         {
-            var response = await _httpClient.GetAsync($"api/songs?ArtistId={artistId}&PageSize={count}");
+            var response = await _httpClient.GetAsync($"api/songs?ArtistId={artistId}&PageSize={count}&OrderBy=Random");
+            response.EnsureSuccessStatusCode();
+
+            var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
+            return data ?? [];
+        }
+
+        public async Task<List<SongDto>> GetRandomAsync(int count)
+        {
+            var response = await _httpClient.GetAsync($"api/songs?PageSize={count}&OrderBy=Random");
+            response.EnsureSuccessStatusCode();
+
+            var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();
+            return data ?? [];
+        }
+
+        public async Task<List<SongDto>> GetAllFromAlbum(int albumId)
+        {
+            var response = await _httpClient.GetAsync($"api/songs?AlbumId={albumId}&PageSize=40");
             response.EnsureSuccessStatusCode();
 
             var data = await response.Content.ReadFromJsonAsync<List<SongDto>>();

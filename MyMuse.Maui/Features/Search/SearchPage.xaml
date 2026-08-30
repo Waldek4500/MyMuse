@@ -10,8 +10,7 @@
              x:DataType="search:SearchPageViewModel"
              x:Class="MyMuse.Maui.Features.Search.SearchPage"
              Title=""
-             ClassId="SearchPage"
-             BackgroundColor="{StaticResource BackgroundDark}">
+             ClassId="SearchPage">
     <Grid RowDefinitions="*, Auto">
 
         <ScrollView VerticalScrollBarVisibility="Never">
@@ -38,7 +37,7 @@
                     </SearchBar>
                 </Border>
                 <Button Grid.Row="1"
-                        Command="{Binding SearchBarTappedCommand}" 
+                        Command="{Binding GoToSearchResultsCommand}" 
                         MaximumWidthRequest="1000"
                         Opacity="0"/>
 

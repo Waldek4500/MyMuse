@@ -18,7 +18,7 @@ namespace MyMuse.Maui.Features.Home
         #region Private Members
         private readonly SongsService _songsService;
         private readonly ArtistsService _bandsService;
-        private readonly MusicPlayerViewModel _musicPlayerViewModel;
+        private readonly NowPlayingSyncService _syncService;
         #endregion
 
         #region Public Properties
@@ -42,42 +42,19 @@ namespace MyMuse.Maui.Features.Home
         #endregion
 
         #region Constructor
-        public MainPageViewModel(SongsService songsService, ArtistsService artistsService, MusicPlayerViewModel musicPlayerViewModel)
+        public MainPageViewModel(SongsService songsService, ArtistsService artistsService,
+                                 NowPlayingSyncService syncService)
         {
             _songsService = songsService;
             _bandsService = artistsService;
-            _musicPlayerViewModel = musicPlayerViewModel;
+            _syncService = syncService;
 
-            _musicPlayerViewModel.PropertyChanged += OnMusicPlayerViewModelPropertyChanged;
+            _syncService.Track(() => FeaturedSongs, () => RecentSongs, () => TrendingSongs);
         }
         #endregion
 
         #region Methods
         public async Task InitializeAsync() => await GetSongsAsync();
-
-        /// <summary>
-        /// Changes IsSelected and IsPlaying song's properties for each collection to correct value by invoking SyncCollection method
-        /// </summary>
-        private void SyncIsPlayingFlags()
-        {
-            if (!_musicPlayerViewModel.HasTrack || _musicPlayerViewModel.CurrentSong is null)
-                return;
-
-            var curentId = _musicPlayerViewModel.CurrentSong.Id;
-            var isPlaying = _musicPlayerViewModel.IsPlaying;
-
-            SongHelper.SyncCollection(FeaturedSongs, curentId, isPlaying);
-            SongHelper.SyncCollection(RecentSongs, curentId, isPlaying);
-            SongHelper.SyncCollection(TrendingSongs, curentId, isPlaying);
-        }
-
-        private void OnMusicPlayerViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName != nameof(MusicPlayerViewModel.CurrentSong) && e.PropertyName != nameof(MusicPlayerViewModel.IsPlaying))
-                return;
-
-            MainThread.BeginInvokeOnMainThread(SyncIsPlayingFlags);
-        }
         #endregion
 
         #region Commands
@@ -105,7 +82,7 @@ namespace MyMuse.Maui.Features.Home
                 Artists = [.. await _bandsService.GetBandsAsync()];
                 ShowPlaceHolder[3] = false;
 
-                SyncIsPlayingFlags();
+                _syncService.SyncNow();
             }
             catch (Exception ex)
             {

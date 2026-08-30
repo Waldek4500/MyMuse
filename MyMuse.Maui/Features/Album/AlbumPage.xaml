@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:album="clr-namespace:MyMuse.Maui.Features.Album"
+             xmlns:playerBar="clr-namespace:MyMuse.Maui.Features.PlayerBar"
+             xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
+             xmlns:models="clr-namespace:MyMuse.Maui.Models"
+             x:DataType="album:AlbumPageViewModel"
+             x:Class="MyMuse.Maui.Features.Album.AlbumPage"
+             Title="">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsVisible="False"/>
+    </Shell.BackButtonBehavior>
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView HorizontalScrollBarVisibility="Never"
+                    VerticalScrollBarVisibility="Never">
+            <Grid RowDefinitions="300, Auto, Auto">
+
+                <!-- Album Cover -->
+                <Grid ColumnDefinitions="*,4*,*">
+                    <Image Grid.Column="1"
+                           Source="{Binding Album.ImageUrl}"
+                           Aspect="AspectFit"/>
+
+                    <ImageButton Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.ArrowBack}}"
+                                 CornerRadius="22"
+                                 WidthRequest="40"
+                                 HeightRequest="40"
+                                 Padding="5"
+                                 HorizontalOptions="Start"
+                                 VerticalOptions="Start"
+                                 Command="{Binding GoBackCommand}"
+                                 Margin="10,0,0,0"/>
+                </Grid>
+
+                <!-- Album info -->
+                <VerticalStackLayout Grid.Row="1" Padding="20,0,20,10">
+                    <Label Text="{Binding Album.Title}"
+                            Style="{StaticResource Header}"/>
+                    <Label Text="{Binding Album.Artist}"
+                            Style="{StaticResource Large}"
+                            TextColor="{StaticResource Purple}"/>
+                    <HorizontalStackLayout Spacing="8" Margin="0,10,0,0">
+                        <Image Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.Album}, Color={StaticResource Violet}}"
+                               VerticalOptions="Center"
+                               HeightRequest="20"/>
+                        <Label Text="Album"
+                               Style="{StaticResource SmallViolet}"
+                               VerticalOptions="Center"/>
+                        <Label Text="·"
+                               Style="{StaticResource SmallViolet}"
+                               VerticalOptions="Center"/>
+                        <Label Text="{Binding Album.ReleaseDate.Year}"
+                               Style="{StaticResource SmallViolet}"
+                               VerticalOptions="Center"/>
+                        <Label Text="·"
+                               Style="{StaticResource SmallViolet}"
+                               VerticalOptions="Center"/>
+                        <Label Text="{Binding Songs.Count, StringFormat='{0} songs'}"
+                               Style="{StaticResource SmallViolet}"
+                               VerticalOptions="Center"/>
+                        <Label Text="·"
+                               Style="{StaticResource SmallViolet}"
+                               VerticalOptions="Center"/>
+                        <Image Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.Pace}, Color={StaticResource Violet}}"
+                               HeightRequest="20"/>
+                        <Label Text="{Binding FullDurationText}"
+                               Style="{StaticResource SmallViolet}"
+                               VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+
+                    <!-- Controls -->
+                    <Grid ColumnDefinitions="*, Auto, Auto" Margin="0,15,0,20"
+                          ColumnSpacing="15">
+                        <Button Text="Play"
+                                Command="{Binding PlayAlbumCommand}"
+                                FontSize="15"
+                                FontFamily="Archivo"
+                                TextColor="White"
+                                ImageSource="play.png"
+                                BackgroundColor="{StaticResource Purple}"
+                                CornerRadius="20">
+                            <Button.Shadow>
+                                <Shadow Radius="10" Opacity="0.3" Brush="{StaticResource Purple}" Offset="0,1"/>
+                            </Button.Shadow>
+                        </Button>
+                        <ImageButton Grid.Column="1"
+                                     Command="{Binding PlayAlbumInRandomOrderCommand}"
+                                     Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.Shuffle}, Color={StaticResource Violet}}"
+                                     Style="{StaticResource SquareBtn}"/>
+                        <ImageButton Grid.Column="2"
+                                     Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.MoreHorizontal}, Color={StaticResource Violet}}"
+                                     Style="{StaticResource SquareBtn}"/>
+                    </Grid>
+
+                    <Border Stroke="{StaticResource Purple}"
+                            Opacity="0.3"
+                            StrokeThickness="0.5"/>
+                </VerticalStackLayout>
+            
+                <!-- Songs list -->
+                <VerticalStackLayout Grid.Row="2" BindableLayout.ItemsSource="{Binding Songs}"
+                                     Margin="20,0">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:Song">
+                            <Grid>
+                                <!-- For selected song -->
+                                <Border IsVisible="{Binding IsSelected}"
+                                        BackgroundColor="#30A855F7"
+                                        StrokeShape="RoundRectangle 15"
+                                        StrokeThickness="0.5"
+                                        Stroke="{StaticResource Purple}"/>
+
+                                <Grid ColumnDefinitions="Auto, *, Auto"
+                                      Padding="10">
+
+                                    <Grid WidthRequest="30"
+                                          Margin="0,0,10,0">
+                                        <!-- Selected -->
+                                        <Image IsVisible="{Binding IsPlaying}"
+                                               Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.Equalizer}, Color={StaticResource Purple}}"
+                                               WidthRequest="20"
+                                               HorizontalOptions="Center"/>
+                                        
+                                        <!-- Not selected -->
+                                        <Label IsVisible="{Binding IsPlaying, Converter={StaticResource InvertedBoolConverter}}"
+                                               Text="{Binding Number}"
+                                               Style="{StaticResource SmallViolet}"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Center"/>
+                                    </Grid>
+
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         Spacing="3">
+                                        <Label Text="{Binding Data.Title}"
+                                                Style="{StaticResource Medium}"
+                                               TextColor="{Binding IsSelected, Converter={StaticResource IsOptionEnabledConverter}}"/>
+                                        <Label Text="{Binding Data.Artist}"
+                                                Style="{StaticResource MicroViolet}"/>
+                                    </VerticalStackLayout>
+
+                                    <HorizontalStackLayout Grid.Column="2" HorizontalOptions="End"
+                                                           Spacing="10">
+                                        <Label Text="{Binding DurationText}"
+                                               Style="{StaticResource SmallViolet}"
+                                               VerticalOptions="Center"/>
+                                        <ImageButton Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.MoreVert}, Color={StaticResource Violet}}"
+                                                     CornerRadius="10"/>
+                                    </HorizontalStackLayout>
+
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type album:AlbumPageViewModel}}, Path=GoToSongDetailsCommand}"/>
+                                    </Grid.GestureRecognizers>
+                            
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </Grid>
+        </ScrollView>
+
+        <playerBar:PlayerBar Grid.Row="1"/>
+    </Grid>
+</ContentPage>

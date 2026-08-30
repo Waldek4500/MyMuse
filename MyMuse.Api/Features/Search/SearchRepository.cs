@@ -35,7 +35,7 @@ namespace MyMuse.Api.Features.Search
                             similarity(al.""Title"", {0})
                     FROM ""Albums"" al
                     JOIN ""Artists"" ar ON ar.""Id"" = al.""ArtistId""
-                    WHERE al.""Title"" % {0}
+                    WHERE al.""Title"" % {0} OR similarity(ar.""Name"", {0}) > 0.5
 
                     UNION ALL
 

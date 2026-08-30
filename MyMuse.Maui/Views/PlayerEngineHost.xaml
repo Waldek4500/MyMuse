@@ -9,12 +9,12 @@
     
     <toolkit:MediaElement
             x:Name="AudioPlayer"
-            IsVisible="Collapse"
+            IsVisible="False"
             Source="{Binding AudioUrl}"
             MetadataTitle="{Binding SongTitle}"
-            MetadataArtist="{Binding Band}"
+            MetadataArtist="{Binding Artist}"
             MetadataArtworkUrl="{Binding ArtworkUrl}"
-            ShouldAutoPlay="True"
+            ShouldAutoPlay="False"
             ShouldShowPlaybackControls="False"
             StateChanged="AudioPlayer_StateChanged"
             PropertyChanged="AudioPlayer_PropertyChanged"
