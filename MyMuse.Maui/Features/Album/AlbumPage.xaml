@@ -163,6 +163,11 @@
             </Grid>
         </ScrollView>
 
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Center"/>
+
         <playerBar:PlayerBar Grid.Row="1"/>
     </Grid>
 </ContentPage>

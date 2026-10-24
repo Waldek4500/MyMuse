@@ -5,6 +5,10 @@ namespace MyMuse.Api.Data
 {
     public static class DataExtensions
     {
+
+        /// <summary>
+        /// Automatically applies new migrations.
+        /// </summary>
         public static void MigrateDb(this WebApplication app)
         {
             using var scope = app.Services.CreateScope();
@@ -13,6 +17,11 @@ namespace MyMuse.Api.Data
             dbContext.Database.Migrate();
         }
 
+
+        /// <summary>
+        /// Configures the database connection and registers database context in the application, including initial seeding.
+        /// </summary>
+        /// <param name="builder"></param>
         public static void AddMyMuseConnection(this WebApplicationBuilder builder)
         {
             var conString = builder.Configuration.GetConnectionString("MyMuse");

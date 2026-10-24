@@ -6,16 +6,10 @@ using MyMuse.Shared.Dtos;
 
 namespace MyMuse.Maui.Features.Player
 {
-    public partial class PlayerPageViewModel : BaseViewModel, IQueryAttributable
+    public partial class PlayerPageViewModel(MusicPlayerViewModel player, PlaybackQueueService queue) : BaseViewModel, IQueryAttributable
     {
-        public MusicPlayerViewModel Player { get; }
-        public PlaybackQueueService Queue { get; }
-
-        public PlayerPageViewModel(MusicPlayerViewModel player, PlaybackQueueService queue)
-        {
-            Player = player;
-            Queue = queue;
-        }
+        public MusicPlayerViewModel Player { get; } = player;
+        public PlaybackQueueService Queue { get; } = queue;
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {

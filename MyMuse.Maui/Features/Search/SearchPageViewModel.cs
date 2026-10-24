@@ -19,7 +19,7 @@ namespace MyMuse.Maui.Features.Search
         private readonly GenresService _genresService;
 
         private int _pageNumber = 1;
-        private const int _pageSize = 6;
+        private const int PageSize = 6;
         #endregion
 
         #region Public Properties
@@ -28,7 +28,6 @@ namespace MyMuse.Maui.Features.Search
 
         [ObservableProperty]
         public partial bool CanExpand { get; set; } = true;
-
         #endregion
 
         #region Constructor
@@ -41,16 +40,18 @@ namespace MyMuse.Maui.Features.Search
 
         public async Task InitializeAsync() => await GetGenresAsync();
 
-        [RelayCommand]
+        /// <summary>
+        /// Gets specific page of genres from the API 
+        /// </summary>
         private async Task GetGenresAsync()
         {
             try
             {
                 IsBusy = true;
 
-                List<GenreDto> genres = [.. await _genresService.GetGenresAsync(_pageSize, _pageNumber)];
+                List<GenreDto> genres = [.. await _genresService.GetGenresAsync(PageSize, _pageNumber)];
 
-                if (genres.Count < _pageSize || genres.Count == 0)
+                if (genres.Count < PageSize || genres.Count == 0)
                 {
                     CanExpand = false;
                     return;

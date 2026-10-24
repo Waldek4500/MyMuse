@@ -5,8 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:home="clr-namespace:MyMuse.Maui.Features.Home"
     xmlns:search="clr-namespace:MyMuse.Maui.Features.Search"
+    xmlns:library="clr-namespace:MyMuse.Maui.Features.Library"
+    xmlns:about="clr-namespace:MyMuse.Maui.Features.About"
     xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
-    Title="MyMuse.Maui"
+    Title="My Muse"
     Shell.TabBarTitleColor="#994EE1"
     Shell.TabBarUnselectedColor="#535172"
     Shell.TabBarBackgroundColor="#0B0B18"
@@ -25,12 +27,12 @@
 
         <Tab Title="Library"
              Icon="{icons:Icon Glyph={x:Static icons:MaterialIcons.Browse}}">
-            <ShellContent ContentTemplate="{DataTemplate search:SearchPage}"/>
+            <ShellContent ContentTemplate="{DataTemplate library:LibraryPage}"/>
         </Tab>
 
-        <Tab Title="Liked"
-             Icon="{icons:Icon Glyph={x:Static icons:MaterialIcons.Favorite}}">
-            <ShellContent ContentTemplate="{DataTemplate search:SearchPage}"/>
+        <Tab Title="About"
+             Icon="{icons:Icon Glyph={x:Static icons:MaterialIcons.Info}}">
+            <ShellContent ContentTemplate="{DataTemplate about:AboutPage}"/>
         </Tab>
     </TabBar>
 

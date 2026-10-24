@@ -7,9 +7,9 @@
              xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
              x:DataType="viewmodel:MainPageViewModel"
              x:Class="MyMuse.Maui.Features.Home.Views.RecentlyPlayedView">
-    <VerticalStackLayout Grid.Row="2" Spacing="5">
+    <VerticalStackLayout Spacing="5">
         <Grid ColumnDefinitions="*,*">
-            <Label Text="Recently Played"
+            <Label Text="More Tracks"
                    Style="{StaticResource Large}"
                    HorizontalOptions="Start"
                    VerticalOptions="Center"/>
@@ -35,7 +35,7 @@
                                 CornerRadius="20"
                                 ShowPlaceholder="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=ShowPlaceHolder[1]}"/>
 
-                            <Border Stroke="Transparent" StrokeShape="RoundRectangle 20" WidthRequest="120">
+                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 20" WidthRequest="120">
                                 <Image Source="{Binding Data.ImageUrl}"
                                        Aspect="AspectFill"
                                        HeightRequest="120"/>
@@ -57,7 +57,10 @@
                                    HorizontalOptions="Start"
                                    MaximumWidthRequest="100"/>
                             <Label Text="{Binding Data.Artist}"
-                                   Style="{StaticResource MicroViolet}"/>
+                                   Style="{StaticResource MicroViolet}"
+                                   LineBreakMode="TailTruncation"
+                                   MaximumWidthRequest="100"
+                                   HorizontalOptions="Start"/>
                         </VerticalStackLayout>
                     </VerticalStackLayout>
                 </DataTemplate>

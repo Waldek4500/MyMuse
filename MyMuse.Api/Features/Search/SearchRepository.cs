@@ -8,6 +8,12 @@ namespace MyMuse.Api.Features.Search
     {
         private readonly MyMuseContext _dbContext = dbContext;
 
+        /// <summary>
+        /// Searches for the records that are similar to the given query.
+        /// </summary>
+        /// <param name="query">The phrase to search for.</param>
+        /// <param name="ct">The cancellation token.</param>
+        /// <returns>List of found records.</returns>
         public async Task<List<SearchResultItem>> SearchAsync(SearchQuery query, CancellationToken ct)
         {
             var sql = @"
@@ -23,7 +29,7 @@ namespace MyMuse.Api.Features.Search
                     FROM ""Songs"" s
                     JOIN ""Artists"" ar ON ar.""Id"" = s.""ArtistId""
                     LEFT JOIN ""Albums"" al ON al.""Id"" = s.""AlbumId""
-                    WHERE s.""Title"" % {0} OR similarity(ar.""Name"", {0}) > 0.5
+                    WHERE s.""Title"" % {0} OR similarity(ar.""Name"", {0}) > 0.5 OR similarity(al.""Title"", {0}) > 0.5
 
                     UNION ALL
 

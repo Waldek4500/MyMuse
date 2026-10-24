@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>net10.0-android</TargetFrameworks>
@@ -28,10 +28,10 @@
 		<!-- <MauiXamlInflator>SourceGen</MauiXamlInflator> -->
 
 		<!-- Display name -->
-		<ApplicationTitle>MyMuse.Maui</ApplicationTitle>
+		<ApplicationTitle>My Muse</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.mymuse.maui</ApplicationId>
+		<ApplicationId>pl.waldemarz.mymuse.maui</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -47,12 +47,16 @@
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
+	  <AndroidPackageFormat>apk</AndroidPackageFormat>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#5E17EB" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#5E17EB" BaseSize="128,128" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -66,10 +70,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiImage Include="..\..\..\..\..\Pictures\equalizer.gif" Link="Resources\Images\equalizer.gif" />
+	  <None Remove="Resources\Images\Icons\ellipsis.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Include="Resources\Images\Icons\ellipsis.svg" />
 	  <MauiImage Include="Resources\Images\Icons\pause.svg" />
 	  <MauiImage Include="Resources\Images\Icons\play.svg" />
 	  <MauiImage Include="Resources\Images\Icons\repeat.svg" />
@@ -98,7 +103,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Features\About\AboutPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Features\Album\AlbumPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Features\Home\Views\AlbumsView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Features\Library\LibraryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Features\SearchResults\SearchResultsPage.xaml">

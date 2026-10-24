@@ -9,7 +9,7 @@ public record SongDto(
     string? Lyrics,
     string AudioUrl,
     int Duration,
-    DateOnly ReleaseDate,
+    DateOnly? ReleaseDate,
     bool IsSingle,
     int PlaysNumber,
     string? ImageUrl

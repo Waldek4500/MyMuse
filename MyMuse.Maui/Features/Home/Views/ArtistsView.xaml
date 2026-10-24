@@ -31,7 +31,7 @@
                                 HeightRequest="80"
                                 WidthRequest="80"
                                 CornerRadius="40"
-                                ShowPlaceholder="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=ShowPlaceHolder[3]}"/>
+                                ShowPlaceholder="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=ShowPlaceHolder[4]}"/>
 
                             <Border Stroke="Transparent" StrokeShape="RoundRectangle 40" WidthRequest="80">
                                 <Image Source="{Binding ImageUrl}"

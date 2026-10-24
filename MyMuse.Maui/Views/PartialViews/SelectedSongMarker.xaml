@@ -15,12 +15,12 @@
                    HeightRequest="{Binding Source={x:Reference This}, Path=PlayingImageHeight}"
                    IsVisible="{Binding IsPlaying}"/>
 
-            <Image Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.MoreHorizontal}}"
+            <Image Source="ellipsis.png"
+                   Margin="0,10,0,0"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"
                    HeightRequest="{Binding Source={x:Reference This}, Path=PauseImageHeight}"
-                   IsVisible="{Binding IsPaused}"
-                   MaximumWidthRequest="60"/>
+                   IsVisible="{Binding IsPaused}"/>
         </Grid>
     </Border>
 </ContentView>

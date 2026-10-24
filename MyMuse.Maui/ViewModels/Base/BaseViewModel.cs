@@ -12,13 +12,11 @@ namespace MyMuse.Maui.ViewModels.Base
         public partial string Title { get; set; }
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(IsNotBusy))]
         public partial bool IsBusy { get; set; }
 
-        public bool IsNotBusy => !IsBusy;
 
         /// <summary>
-        /// Navigates to previous page
+        /// Navigates to the previous page
         /// </summary>
         [RelayCommand]
         private static async Task GoBackAsync()

@@ -11,7 +11,7 @@ public class Song
     public string? Lyrics { get; set; }
     public required string AudioUrl { get; set; }
     public int Duration { get; set; }
-    public DateOnly ReleaseDate { get; set; }
+    public DateOnly? ReleaseDate { get; set; }
     public bool IsSingle { get; set; }
     public int PlaysNumber { get; set; }
     public string? ImageUrl { get; set; }

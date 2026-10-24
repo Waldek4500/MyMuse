@@ -1,14 +1,19 @@
-﻿namespace MyMuse.Maui.Features.Home
+﻿using MyMuse.Maui.Views;
+
+namespace MyMuse.Maui.Features.Home
 {
     public partial class MainPage : ContentPage
     {
-        private MainPageViewModel _mainPageViewModel;
+        private readonly MainPageViewModel _mainPageViewModel;
         private bool _isInitalized;
 
-        public MainPage(MainPageViewModel mainPageViewModel)
+        public MainPage(MainPageViewModel mainPageViewModel, PlayerEngineHost playerEngineHost)
         {
             InitializeComponent();
             BindingContext = _mainPageViewModel = mainPageViewModel;
+
+            // Assigns MediaElement control
+            PlayerEnginge.Content = playerEngineHost;
         }
 
         protected override async void OnAppearing()

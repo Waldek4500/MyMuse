@@ -36,15 +36,15 @@
                                     </LinearGradientBrush>
                                 </VerticalStackLayout.Background>
                                 <Label Text="{Binding Data.Title}"
-                                   Style="{StaticResource Medium}"
-                                   LineBreakMode="TailTruncation"
-                                   MaxLines="1"/>
+                                       Style="{StaticResource Medium}"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="1"/>
                                 <Label Text="{Binding Data.Artist}"
-                                   Style="{StaticResource Micro}"/>
+                                       Style="{StaticResource Micro}"/>
                             </VerticalStackLayout>
                         </Border>
 
-                        <partialViews:SelectedSongMarker CornerRadius="20" PlayingImageHeight="40" PauseImageHeight="60"/>
+                        <partialViews:SelectedSongMarker CornerRadius="20" PlayingImageHeight="40" PauseImageHeight="50"/>
 
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer CommandParameter="{Binding Data}"
