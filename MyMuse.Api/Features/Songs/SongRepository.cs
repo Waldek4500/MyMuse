@@ -15,12 +15,14 @@ namespace MyMuse.Api.Features.Songs
                             .Include(s => s.Album)
                             .AsQueryable();
 
+            // Filtering by ArtistId or AlbumId
             if(query.ArtistId is not null)
                 songs = songs.Where(song => song.ArtistId == query.ArtistId);
 
             if(query.AlbumId is not null)
                 songs = songs.Where(song => song.AlbumId == query.AlbumId);
 
+            // Sorting by PlaysNumber or randomly
             if (!String.IsNullOrWhiteSpace(query.OrderBy))
             {
                 if (query.OrderBy.Equals("PlaysNumber", StringComparison.OrdinalIgnoreCase))

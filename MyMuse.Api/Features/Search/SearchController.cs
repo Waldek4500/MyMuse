@@ -11,7 +11,7 @@ namespace MyMuse.Api.Features.Search
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<SearchResultDto>), StatusCodes.Status200OK)]
-        [EndpointSummary("Search for items similar to query")]
+        [EndpointSummary("Search for items similar to the query.")]
         public async Task<ActionResult<IEnumerable<SearchResultDto>>> Search([FromQuery] SearchQuery query, CancellationToken ct = default)
         {
             var results = await _searchRepo.SearchAsync(query, ct);

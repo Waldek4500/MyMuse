@@ -30,12 +30,14 @@ namespace MyMuse.Maui.Features.SearchResults
         #endregion
 
         #region Public Properties
+        // The current state of search results page
         [ObservableProperty]
         public partial SearchState SearchState { get; set; } = SearchState.Suggestions;
 
         [ObservableProperty]
         public partial SearchFilter SelectedFilter { get; set; } = SearchFilter.All;
 
+        // Text that user enetered
         [ObservableProperty]
         public partial string SearchText { get; set; } = string.Empty;
 
@@ -65,7 +67,7 @@ namespace MyMuse.Maui.Features.SearchResults
 
         #region Private Methods
         /// <summary>
-        /// Invokes searching when user types new char, it inludes debounce
+        /// Invokes searching when the user types new char, it includes debounce
         /// </summary>
         /// <param name="value">The new search value</param>
         async partial void OnSearchTextChanged(string value)
@@ -115,7 +117,7 @@ namespace MyMuse.Maui.Features.SearchResults
         }
 
         /// <summary>
-        /// Filters results and assings its to <see cref="FilteredResults"/>
+        /// Filters results and assings matching values to the <see cref="FilteredResults"/>
         /// </summary>
         private void ApplyFilter()
         {
@@ -159,7 +161,7 @@ namespace MyMuse.Maui.Features.SearchResults
         }
 
         /// <summary>
-        /// Load next page of results from API
+        /// Loads the next page of results from the API
         /// </summary>
         /// <returns></returns>
         [RelayCommand]
@@ -187,8 +189,8 @@ namespace MyMuse.Maui.Features.SearchResults
         /// <summary>
         /// Depending on what type of search result user has selected:
         /// 1. for song it loads song and navigates to player
-        /// 2. for album it loads album and navigates to album page
-        /// 3. for artist it loads artist and navigates to artist page
+        /// 2. for album it navigates to album page
+        /// 3. (TBD) for artist it loads artist and navigates to artist page
         /// </summary>
         /// <param name="searchResultDto">Selected search result</param>
         [RelayCommand]

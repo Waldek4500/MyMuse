@@ -7,6 +7,7 @@
              xmlns:views="clr-namespace:MyMuse.Maui.Views"
              xmlns:homeViews="clr-namespace:MyMuse.Maui.Features.Home.Views"
              xmlns:playerBar="clr-namespace:MyMuse.Maui.Features.PlayerBar"
+             xmlns:icons="clr-namespace:MyMuse.Maui.MarkupExtensions"
              x:DataType="viewmodel:MainPageViewModel"
              x:Class="MyMuse.Maui.Features.Home.MainPage"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
@@ -14,7 +15,8 @@
 
     <Grid RowDefinitions="*,Auto" Margin="0" Padding="0">
 
-        <views:PlayerEngineHost/>
+        <!-- A single MediaElement control for entire application -->
+        <ContentView x:Name="PlayerEnginge"/>
 
         <ActivityIndicator IsVisible="{Binding IsBusy}" 
                            IsRunning="{Binding IsBusy}"
@@ -25,37 +27,55 @@
         <RefreshView Command="{Binding GetSongsCommand}"
                      IsRefreshing="{Binding IsRefreshing}">
             <ScrollView VerticalScrollBarVisibility="Never">
-                <VerticalStackLayout Spacing="25"
+                <VerticalStackLayout Spacing="30"
                                      Padding="20,10,20,0">
 
-                    <!-- Row 0: Header -->
+                    <!-- Header -->
                     <Grid ColumnDefinitions="Auto, *">
                         <Label Text="My Muse"
                                Style="{StaticResource Header}"
                                VerticalOptions="Center"/>
 
-                        <Border Grid.Column="1"
-                            WidthRequest="40"
-                            HeightRequest="40"
-                            Stroke="#a855f7"
-                            StrokeShape="RoundRectangle 20"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center">
-                            <Image Grid.Column="1" Source="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde"/>
-                        </Border>
+                        <HorizontalStackLayout Grid.Column="1"
+                                               Spacing="10"
+                                               HorizontalOptions="End">
+                            <!-- Refresh button for desktop -->
+                            <ImageButton HeightRequest="40"
+                                         WidthRequest="40"
+                                         CornerRadius="22"
+                                         IsEnabled="{Binding IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                                         IsVisible="{OnIdiom Default=False, Desktop=True}"
+                                         Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.Refresh}}"
+                                         Command="{Binding GetSongsCommand}"/>
+                            <Border Grid.Column="1"
+                                    WidthRequest="44"
+                                    HeightRequest="44"
+                                    Stroke="{StaticResource Purple}"
+                                    StrokeShape="RoundRectangle 22"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center">
+                                <Image Grid.Column="1" 
+                                       Source="{icons:Icon Glyph={x:Static icons:MaterialIcons.Person}}"
+                                       HeightRequest="{x:OnIdiom Desktop=24, Default=36}"
+                                       WidthRequest="{x:OnIdiom Desktop=24, Default=36}"/>
+                            </Border>
+                        </HorizontalStackLayout>
                     </Grid>
 
-                    <!-- Row 1: Featured Songs -->
-                    <homeViews:FeaturedSongsView Grid.Row="1" />
+                    <!-- Featured Songs -->
+                    <homeViews:FeaturedSongsView/>
 
-                    <!-- Row 2 -->
-                    <homeViews:RecentlyPlayedView Grid.Row="2" />
+                    <!-- Recently played -->
+                    <homeViews:RecentlyPlayedView/>
 
-                    <!-- Row 3: Trending -->
-                    <homeViews:TrendingSongsView Grid.Row="3" />
+                    <!-- Albums -->
+                    <homeViews:AlbumsView/>
 
-                    <!-- Row 4: Artists -->
-                    <homeViews:ArtistsView Grid.Row="4" />
+                    <!-- Trending -->
+                    <homeViews:TrendingSongsView/>
+
+                    <!-- Artists -->
+                    <homeViews:ArtistsView/>
                 </VerticalStackLayout>
             </ScrollView>
         </RefreshView>

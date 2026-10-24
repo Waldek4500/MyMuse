@@ -5,10 +5,10 @@
              xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
              xmlns:searchResults="clr-namespace:MyMuse.Maui.Features.SearchResults"
              x:DataType="searchResults:SearchResultsPageViewModel"
-             x:Class="MyMuse.Maui.Features.SearchResults.Views.SearchResultsViews"
-             x:Name="This">
+             x:Class="MyMuse.Maui.Features.SearchResults.Views.SearchResultsViews">
     
-    <VerticalStackLayout>
+    <Grid RowDefinitions="Auto, *">
+        <!-- Filters -->
         <HorizontalStackLayout Margin="0,0,0,20" Spacing="15">
             <RadioButton Style="{StaticResource FilterButtonStyle}"
                          Content="All"
@@ -24,9 +24,12 @@
                          IsChecked="{Binding SelectedFilter, Converter={StaticResource EqualsConverter}, ConverterParameter={x:Static searchResults:SearchFilter.Artists}}"/>
         </HorizontalStackLayout>
 
-        <CollectionView ItemsSource="{Binding FilteredResults}"
+        <!-- Results -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding FilteredResults}"
                         RemainingItemsThreshold="3"
-                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}">
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreCommand}"
+                        VerticalScrollBarVisibility="Never">
 
             <CollectionView.EmptyView>
                     <VerticalStackLayout Margin="0,25,0,0" HorizontalOptions="Center" VerticalOptions="Center">
@@ -83,5 +86,5 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </VerticalStackLayout>
+    </Grid>
 </ContentView>

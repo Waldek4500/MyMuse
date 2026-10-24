@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:MyMuse.Maui.Features.Home"
+             xmlns:models="clr-namespace:MyMuse.Shared.Dtos;assembly=MyMuse.Shared"
+             xmlns:partialVies="clr-namespace:MyMuse.Maui.Views.PartialViews"
+             x:DataType="viewmodel:MainPageViewModel"
+             x:Class="MyMuse.Maui.Features.Home.Views.AlbumsView">
+    <VerticalStackLayout Spacing="5">
+        <Grid ColumnDefinitions="*,*">
+            <Label Text="Featured Albums"
+                   Style="{StaticResource Large}"
+                   HorizontalOptions="Start"
+                   VerticalOptions="Center"/>
+            <Label Grid.Column="1"
+                   Text="See all  >"
+                   Style="{StaticResource MicroViolet}"
+                   HorizontalOptions="End"
+                   VerticalOptions="Center"/>
+        </Grid>
+
+        <CollectionView ItemsSource="{Binding Albums}"
+                        HorizontalScrollBarVisibility="Never">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:AlbumDto">
+                    <VerticalStackLayout>
+                        <Grid>
+                            <partialVies:ImagePlaceholderView HeightRequest="130"
+                                                              CornerRadius="20"
+                                                              IsVisible="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=ShowPlaceHolder[2]}"/>
+                            <Border StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 20"
+                                    WidthRequest="130"
+                                    HeightRequest="130">
+                                <Image Source="{Binding ImageUrl}"
+                                       Aspect="AspectFill"/>
+                            </Border>
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding Id}"
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MainPageViewModel}}, Path=GoToAlbumDetailsCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <VerticalStackLayout Margin="2,5,0,0">
+                            <Label Text="{Binding Title}"
+                                   Style="{StaticResource Small}"
+                                   MaxLines="1"
+                                   LineBreakMode="TailTruncation"
+                                   HorizontalOptions="Start"
+                                   MaximumWidthRequest="120"/>
+                            <Label Text="{Binding Artist}"
+                                   Style="{StaticResource MicroViolet}"
+                                   MaxLines="1"
+                                   LineBreakMode="TailTruncation"
+                                   HorizontalOptions="Start"
+                                   MaximumWidthRequest="120"/>
+                        </VerticalStackLayout>
+                        
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+    </VerticalStackLayout>
+</ContentView>

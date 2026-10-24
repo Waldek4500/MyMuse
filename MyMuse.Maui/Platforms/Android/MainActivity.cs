@@ -13,8 +13,13 @@ namespace MyMuse.Maui
         {
             base.OnCreate(savedInstanceState);
 
-            var controller = WindowCompat.GetInsetsController(Window, Window.DecorView);
-            controller.AppearanceLightStatusBars = false;
+            if(Window is not null)
+            {
+                var controller = WindowCompat.GetInsetsController(Window, Window.DecorView);
+
+                //White status bar icons for a dark background
+                controller?.AppearanceLightStatusBars = false;
+            }
         }
     }
 }

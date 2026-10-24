@@ -21,7 +21,7 @@ namespace MyMuse.Maui.Models
         public bool IsPaused => !IsPlaying;
 
         /// <summary>
-        /// For numbering puproses
+        /// For numbering purposes when the track is part of an album or sequence
         /// </summary>
         public int Number { get; set; }
 

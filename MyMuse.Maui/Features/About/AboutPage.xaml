@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:MyMuse.Maui.Features.About"
+             x:Class="MyMuse.Maui.Features.About.AboutPage"
+             x:DataType="viewmodel:AboutPageViewModel"
+             Title="AboutPage">
+    <VerticalStackLayout Padding="20,5" Spacing="5">
+        <Label Text="About"
+               Style="{StaticResource Header}"/>
+
+        <Label LineBreakMode="WordWrap"
+                Style="{StaticResource Medium}">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="The application uses audio files licensed under CC BY 4.0 or CC BY-NC 4.0, open-source NuGet packages, most of which are licensed under the MIT License, Google Material Icons licensed under the Apache License 2.0, Google Fonts licensed under the SIL Open Font License, and Lucide icons licensed under the ISC License. A complete list of authors, sources, and license terms is available in the "/>
+                    <Span FontAttributes="Bold" TextColor="Green" Text="THIRD-PARTY-NOTICES.md"/>
+                    <Span Text=" file on GitHub repository."/>
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <Label Text="(https://github.com/Waldek4500/MyMuse)"
+                Style="{StaticResource Medium}"
+                TextColor="LightBlue"
+                TextDecorations="Underline">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GoToUrlCommand}"
+                                      CommandParameter="https://github.com/Waldek4500/MyMuse"/>
+            </Label.GestureRecognizers>
+        </Label>
+
+
+    </VerticalStackLayout>
+</ContentPage>

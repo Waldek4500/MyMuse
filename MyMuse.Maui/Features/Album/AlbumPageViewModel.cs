@@ -8,7 +8,6 @@ using MyMuse.Maui.ViewModels;
 using MyMuse.Maui.ViewModels.Base;
 using MyMuse.Shared.Dtos;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 
 namespace MyMuse.Maui.Features.Album;
@@ -25,12 +24,15 @@ public partial class AlbumPageViewModel: BaseViewModel, IQueryAttributable
     #endregion
 
     #region Public Properties
+    // The full list of tracks
     [ObservableProperty]
     public partial ObservableCollection<Song> Songs { get; set; } = [];
 
+    // Album info
     [ObservableProperty]
     public partial AlbumDto? Album { get; set; }
 
+    // Full duration of album's tracks in text
     [ObservableProperty]
     public partial string FullDurationText { get; set; } = String.Empty;
     #endregion
@@ -60,16 +62,21 @@ public partial class AlbumPageViewModel: BaseViewModel, IQueryAttributable
     {
         try
         {
+            IsBusy = true;
             Album = await _albumsService.GetByIdAsync(id);
         }
         catch (Exception ex)
         {
             Debug.WriteLine($"==Error in GetAlbumAsync: {ex}");
         }
+        finally
+        {
+            IsBusy = false; 
+        }
     }
 
     /// <summary>
-    /// Gets all songs for an album when its change.
+    /// Gets all songs for an album when it's changed.
     /// </summary>
     /// <param name="value">New album value</param>
     async partial void OnAlbumChanged(AlbumDto? value)
@@ -95,6 +102,12 @@ public partial class AlbumPageViewModel: BaseViewModel, IQueryAttributable
         }
     }
 
+    /// <summary>
+    /// Navigates to specific track
+    /// </summary>
+    /// <param name="song">The song we navigate to</param>
+    /// <param name="shouldShuffleQueue">Should the playback queue be in random order</param>
+    /// <returns></returns>
     private async Task NavigateToSongAsync(Song song, bool shouldShuffleQueue = false)
     {
         await Shell.Current.GoToAsync(nameof(PlayerPage), true,
@@ -105,7 +118,7 @@ public partial class AlbumPageViewModel: BaseViewModel, IQueryAttributable
 
         _queueService.PreviousSongs.Clear();
 
-        //Set in a sequence previous songs and queue
+        // Sets in a sequence previous songs and the playback queue according to an album order
         if (!shouldShuffleQueue)
         {
             for (int i = 0; i < song.Number - 1; i++)
@@ -114,7 +127,7 @@ public partial class AlbumPageViewModel: BaseViewModel, IQueryAttributable
             _queueService.SongsQueue = [.. Songs.Skip(song.Number).Select(s => s.Data)];
         }
 
-        //Set in a random order queue without previous songs
+        // Sets in a random order the playback queue without previous songs
         if (shouldShuffleQueue)
             _queueService.SongsQueue = [.. Songs.Where(s => s.Data.Id != song.Data.Id).Shuffle().Select(s => s.Data)];
         

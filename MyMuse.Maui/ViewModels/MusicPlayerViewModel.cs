@@ -5,12 +5,14 @@ using MyMuse.Maui.Helpers;
 using MyMuse.Maui.Services;
 using MyMuse.Maui.ViewModels.Base;
 using MyMuse.Shared.Dtos;
+using System.Diagnostics;
 
 namespace MyMuse.Maui.ViewModels
 {
     public partial class MusicPlayerViewModel : BaseViewModel
     {
         #region Public Properties
+        // Full data of the current track
         [ObservableProperty]
         public partial SongDto? CurrentSong { get; set; }
 
@@ -55,41 +57,43 @@ namespace MyMuse.Maui.ViewModels
 
         [ObservableProperty]
         public partial bool ShouldPlayInLoop { get; set; }
+
+        public bool ShoudAutoPlay;
         #endregion
 
         #region Private Members
         private readonly SongsService _songsService;
         #endregion
 
-        public MusicPlayerViewModel(SongsService songsService)
-        {
-            _songsService = songsService;
-        }
+        public MusicPlayerViewModel(SongsService songsService) => _songsService = songsService;
 
         #region Private Methods
-        partial void OnCurrentSongChanged(SongDto? oldValue, SongDto? newValue)
+        /// <summary>
+        /// Updates song's info when it's changed
+        /// </summary>
+        async partial void OnCurrentSongChanged(SongDto? oldValue, SongDto? newValue)
         {
             if (newValue is null || newValue.Id == oldValue?.Id)
                 return;
 
             SongTitle = newValue.Title;
-            Artist = newValue.Artist;
+            Artist = newValue.Artist + "  ";
             ArtworkUrl = newValue.ImageUrl ?? "";
             AudioUrl = newValue.AudioUrl;
 
-            PlayRequested?.Invoke();
+            // Plays the track
+            ShoudAutoPlay = true;
+            Debug.WriteLine("Buffering 1:" + IsBuffering);
+
+            // Notifies the QueueService of a track change
             SongChanged?.Invoke(this, newValue);
         }
 
         /// <summary>
-        /// Sets a new value of State property when MediaElement's state changed
+        /// Responds to the new state of <see cref="MediaElementState"/>
         /// </summary>
         /// <param name="value">New MediaElement's state</param>
-        partial void OnStateChanged(MediaElementState value)
-        {
-            IsBuffering = value is MediaElementState.Opening or MediaElementState.Buffering;
-            PlayPauseCommand.NotifyCanExecuteChanged();
-        }
+        partial void OnStateChanged(MediaElementState value) => IsBuffering = value is MediaElementState.Opening or MediaElementState.Buffering;
         #endregion
 
         #region Public Methods
@@ -121,7 +125,7 @@ namespace MyMuse.Maui.ViewModels
         /// <summary>
         /// Resumes song and seek to new positon.
         /// </summary>
-        /// <param name="seconds"></param>
+        /// <param name="seconds">The specific second of track to seek to</param>
         public void SeekToAndResume(double seconds) =>
             SliderSeekCompleted?.Invoke(this, TimeSpan.FromSeconds(seconds));
         #endregion
@@ -131,12 +135,16 @@ namespace MyMuse.Maui.ViewModels
 
         public event Action? PlayRequested;
         public event Action? PauseRequested;
+
+        /// <summary>
+        /// Event to trigger when the user finishes dragging the silder.
+        /// </summary>
         public event EventHandler<TimeSpan>? SliderSeekCompleted;
         #endregion
 
         #region Commands
         /// <summary>
-        /// Plays or pauses the song
+        /// Toggles between playback and pause
         /// </summary>
         [RelayCommand]
         private void PlayPause()

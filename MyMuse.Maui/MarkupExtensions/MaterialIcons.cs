@@ -18,4 +18,7 @@ public static class MaterialIcons
     public const string Pace = "\uF6b8";
     public const string Shuffle = "\uE043";
     public const string Equalizer = "\uE01d";
+    public const string Person = "\uE7fd";
+    public const string Refresh = "\uE5d5";
+    public const string Info = "\uE88e";
 }

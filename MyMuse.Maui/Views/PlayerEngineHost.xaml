@@ -19,6 +19,7 @@
             StateChanged="AudioPlayer_StateChanged"
             PropertyChanged="AudioPlayer_PropertyChanged"
             PositionChanged="AudioPlayer_PositionChanged"
+            MediaOpened="AudioPlayer_MediaOpened"
             MediaEnded="AudioPlayer_MediaEnded"
             ShouldLoopPlayback="{Binding ShouldPlayInLoop}"/>
 </ContentView>

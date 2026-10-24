@@ -65,7 +65,7 @@ namespace MyMuse.Api.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("FoundingDate")
+                    b.Property<DateOnly?>("FoundingDate")
                         .HasColumnType("date");
 
                     b.Property<string>("ImageUrl")
@@ -158,6 +158,33 @@ namespace MyMuse.Api.Data.Migrations
                     b.ToTable("Roles");
                 });
 
+            modelBuilder.Entity("MyMuse.Api.Entities.SearchResultItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("text");
+
+                    b.Property<float>("Score")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Subtitle")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.ToTable((string)null);
+
+                    b.ToView(null, (string)null);
+                });
+
             modelBuilder.Entity("MyMuse.Api.Entities.Song", b =>
                 {
                     b.Property<int>("Id")
@@ -191,7 +218,7 @@ namespace MyMuse.Api.Data.Migrations
                     b.Property<int>("PlaysNumber")
                         .HasColumnType("integer");
 
-                    b.Property<DateOnly>("ReleaseDate")
+                    b.Property<DateOnly?>("ReleaseDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Title")
