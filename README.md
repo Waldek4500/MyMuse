@@ -8,11 +8,11 @@
 
 | Home                       | Song page                       | Album page                       |
 | -------------------------- | ------------------------------- | -------------------------------- |
-| ![alt text](docs\home.jpg) | ![alt text](docs\song_page.jpg) | ![alt text](docs\album_page.jpg) |
+| ![home page](./docs/home.jpg) | ![song details](./docs/song_page.jpg) | ![album page](./docs/album_page.jpg) |
 
 | Search                            | Home (Windows)                     |
 | --------------------------------- | ---------------------------------- |
-| ![alt text](docs\search_page.jpg) | ![alt text](docs\home_desktop.png) |
+| ![search page](./docs/search_page.jpg) | ![home page on Windows](./docs/home_desktop.png) |
 
 ## Supported Platforms
 
