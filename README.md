@@ -1,8 +1,8 @@
 # My Muse
 
-#### My Muse is a cross-platform music streaming application built with .NET MAUI and ASP.NET Core (both .NET 10) and PostgreSQL. It provides a music discovery and playback experience inspired by modern music streaming platforms.
+My Muse is a cross-platform music streaming application built with .NET MAUI and ASP.NET Core (both targeting .NET 10), and PostgreSQL. It offers a music discovery and playback experience inspired by modern music streaming platforms.
 
-#### This project was created as a personal portfolio project to develop my skills in C#, ASP.NET Core, REST API design and .NET MAUI.
+This project was created as a personal portfolio project to develop my skills in C#, ASP.NET Core, REST API design and .NET MAUI.
 
 ## Screenshots
 
@@ -37,7 +37,7 @@
 
 ## Tech Stack
 
-- ### Frontend
+### Frontend
   - **C#**
   - **.NET MAUI (.NET 10)** — cross-platform UI
   - **MVVM architecture**
@@ -47,7 +47,7 @@
     - **CommunityToolkit.MediaElement** — audio playback
   - The UI concept was designed in Figma with AI assistance.
 
-- ### Backend (REST API)
+### Backend (REST API)
   - **ASP.NET Core (.NET 10)**
   - **Controller-based**
   - **Repository Pattern**
@@ -56,22 +56,22 @@
   - **PostgreSQL**
   - **PostgreSQL's pg_trgm extension** — similarity-based searching
 
-- ### Infrastructure and Tools
+### Infrastructure and Tools
   - **Cloudflare R2** — remote audio and image storage.
   - **Northflank** — API and database hosting.
   - **Git & GitHub** — version control.
 
-- ### Architecture
+### Architecture
   - The codebase is organized by features, taking inspiration from Vertical Slice Architecture.
   - The backend uses the Repository Pattern to separate data access from other application logic.
 
 ## Installation
 
-#### 1. Go to the [Releases page](https://github.com/Waldek4500/MyMuse/releases).
+1. Go to the [Releases page](https://github.com/Waldek4500/MyMuse/releases).
 
-#### 2. Download the latest pre-release for your platform: Windows (.zip) or Android (.apk).
+2. Download the latest pre-release for your platform: Windows (.zip) or Android (.apk).
 
-#### 3. Extract the archive and run the .exe file on Windows, or install the .apk file on your Android device. If you choose to install the .apk file, you might need to allow the installation of apps from unknown sources.
+3. Extract the archive and run the .exe file on Windows, or install the .apk file on your Android device. If you choose to install the .apk file, you might need to allow the installation of apps from unknown sources.
 
 ## Getting Started
 
@@ -87,7 +87,7 @@ These instructions describe how to run My Muse project in a local development en
 
 ### 1. Clone the repository
 
-`https://github.com/Waldek4500/MyMuse.git`
+`git clone https://github.com/Waldek4500/MyMuse.git`
 
 ### 2. Configure the database connection
 
@@ -123,7 +123,7 @@ The database also needs valid URLs for the remote audio files and images used by
 
 ### 5. Configure the API address
 
-In MauiProgram.cs, configure the API BaseAddress to point to an address reachable from your target platform.
+In `MauiProgram.cs`, configure the HttpClient `BaseAddress` to point to an API address reachable from your target platform.
 
 The ASP.NET Core API is configured to listen on 0.0.0.0 on port 5010, allowing connections from other devices on the network.
 
@@ -149,8 +149,8 @@ The project may contain bugs, and future improvements are not guaranteed.
 
 ## Missing Improvements
 
-- User accounts and authentication
 - Artist page
+- User accounts and authentication
 - User's music library
 - Song's options
 - Searching by song genre
@@ -161,4 +161,4 @@ The original source code developed for My Muse is licensed under the MIT License
 
 Third-party assets, including music tracks, album artwork, images, fonts and icons, are excluded from this license and remain subject to their respective licenses and copyright terms.
 
-See `THIRD-PARTY-NOTICES.md` for information about third-party assets and their applicable licenses.
+See [THIRD-PARTY-NOTICES.md](https://github.com/Waldek4500/MyMuse/blob/master/THIRD-PARTY-NOTICES.md) for information about third-party assets and their applicable licenses.
